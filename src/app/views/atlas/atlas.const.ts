@@ -2,7 +2,7 @@ import {LatLngTuple, MapOptions, TileLayerOptions, latLng, tileLayer} from 'leaf
 
 import {COPYRIGHT} from 'src/app/shared/constants/app.const';
 
-const CENTER_POS = [45.6525767, 25.526423] as LatLngTuple;
+const CENTER_POS = [48, 10] as LatLngTuple;
 
 const LAYER_OPTIONS = {
     attribution: `Maps &copy; <a href="${COPYRIGHT.ORGANIZATION.URI}" target="_blank">${COPYRIGHT.ORGANIZATION.name}</a>`
@@ -74,7 +74,7 @@ const BASE_LAYER = LAYERS.OPEN_STREET_MAP.BASE.layer;
 
 const MAP_OPTIONS = {
     center: latLng(CENTER_POS),
-    zoom: 7
+    zoom: 5
 } as MapOptions;
 
 export {
