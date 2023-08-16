@@ -1,0 +1,25 @@
+@import 'src/assets/styles/variables';
+
+$atlas-header-height: 26px;
+
+:host {
+    display: block;
+    height: calc(100% - $atlas-header-height);
+
+    .map {
+        height: 100%;
+        padding: 0;
+        z-index: 1;
+
+        #filter-controller > a {
+            font-size: 30px;
+        }
+
+        ::ng-deep {
+            .leaflet-control-layers-toggle {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    }
+}

@@ -1,3 +1,11 @@
-<div>TODO:</div>
+<div id="header">
+    <button
+        id="logo-button"
+        type="button"
+        class="btn"
+    >Quality of Life Index Map</button>
+</div>
+
+<qoli-atlas (openSidebar)="onOpenSidebar($event, 'filter-button')"></qoli-atlas>
 
 <router-outlet></router-outlet>

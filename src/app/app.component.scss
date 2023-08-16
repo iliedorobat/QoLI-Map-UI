@@ -1,0 +1,32 @@
+::ng-deep {
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+
+        #header {
+            display: flex;
+            position: relative;
+            background-color: #F8F9FA;
+
+            > button {
+                border-radius: 0;
+                min-width: 150px;
+                padding: 0 12px;
+                color: midnightblue;
+
+                &#logo-button {
+                    font-family: cursive;
+                    font-weight: 700;
+                    cursor: initial;
+                }
+
+                > i {
+                    margin-right: 2px;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}

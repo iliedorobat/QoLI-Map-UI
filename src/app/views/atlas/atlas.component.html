@@ -1,0 +1,14 @@
+<div class="map" leaflet
+     [leafletOptions]="MAP_OPTIONS"
+     [leafletLayers]="layers"
+     [leafletLayersControl]="layersControl"
+     (leafletMapReady)="onMapReady($event)"
+>
+    <div *ngIf="false" [leafletLayer]="layers[1]"></div>
+</div>
+
+<div class="leaflet-bar" id="filter-controller">
+    <a href="#" role="button" aria-disabled="false" (click)="onOpenSidebar($event)">
+        <i class="bi bi-arrow-right-short"></i>
+    </a>
+</div>

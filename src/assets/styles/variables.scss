@@ -1,0 +1,17 @@
+// TODO: check why rfs override bootstrap rules
+//@import 'node_modules/bootstrap/scss/bootstrap';
+//$bootstrap-modal-margin: $modal-dialog-margin-y-sm-up;
+
+$black: #000000;
+$blue: #0078a8;
+$indigo: #004290;
+$white: #fcfcfc;
+
+$bootstrap-modal-margin: 1.75rem;
+
+$cho-filter-header-height: 30px;
+$cho-filter-padding: 16px; // 1rem // var(--bs-offcanvas-padding-y);
+$cho-filter-header-box: $cho-filter-header-height + (2 * $cho-filter-padding);
+
+$offcanvas-width: 400px; // var(--bs-offcanvas-width);
+$offcanvas-padding: 16px; // 1rem // var(--bs-offcanvas-padding-y)
