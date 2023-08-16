@@ -8,7 +8,7 @@ import {LayersService} from './services/layers.service';
 import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './atlas.const';
 
 @Component({
-  selector: 'qoli-atlas',
+  selector: 'app-atlas',
   templateUrl: './atlas.component.html',
   styleUrls: ['./atlas.component.scss']
 })
