@@ -4,7 +4,7 @@ import {GeoJSON, geoJSON, Layer, Map} from 'leaflet';
 import * as _ from 'lodash';
 
 import {GeoFeature} from '../constants/geo.types';
-import * as COUNTRIES from '../constants/geo.json';
+import * as COUNTRIES from '../constants/eu.json';
 
 const FEATURES = _.get(COUNTRIES, 'features', []) as Array<GeoFeature>;
 
