@@ -1,25 +1,25 @@
 import {Component, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import * as _ from 'lodash';
-import {LifeIndexFilterType} from '../../atlas/types/LifeIndexFilter.types';
-import {GlobalFilterService} from './global-filter.service';
+import {AtlasFilterType} from './atlas-filter.types';
+import {AtlasFilterService} from './atlas-filter.service';
 
 @Component({
-  selector: 'app-global-filter',
-  templateUrl: './global-filter.component.html',
-  styleUrls: ['./global-filter.component.scss']
+  selector: 'app-atlas-filter',
+  templateUrl: './atlas-filter.component.html',
+  styleUrls: ['./atlas-filter.component.scss']
 })
 // TODO: rename it to AtlasFilterComponent
-export class GlobalFilterComponent {
+export class AtlasFilterComponent {
     constructor(
-        private globalFilterService: GlobalFilterService
+        private globalFilterService: AtlasFilterService
     ) {}
 
-    @Input() filter: LifeIndexFilterType = new LifeIndexFilterType();
+    @Input() filter: AtlasFilterType = new AtlasFilterType();
     @Input() onActiveButtonResets: Function = _.noop;
     @Input() onFilterApply: Function = _.noop;
 
-    form: FormGroup = this.globalFilterService.initGlobalFilter(this.filter);
+    form: FormGroup = this.globalFilterService.initFilter(this.filter);
 
     onSectionReset(event: Event) {
         event.stopPropagation();

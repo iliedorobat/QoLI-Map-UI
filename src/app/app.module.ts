@@ -6,10 +6,10 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AtlasComponent} from './views/atlas/atlas.component';
+import {AtlasFilterComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.component';
+import {AtlasFilterMainSectionComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/atlas-filter-main-section.component';
 import {AtlasService} from './views/atlas/services/atlas.service';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
-import {GlobalFilterComponent} from './views/sidebar/global-filter/global-filter.component';
-import {GlobalFilterMainSectionComponent} from './views/sidebar/global-filter/global-filter-main-section/global-filter-main-section.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {NgbActiveOffcanvas, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -24,9 +24,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     declarations: [
         AppComponent,
         AtlasComponent,
-        SidebarComponent,
-        GlobalFilterComponent,
-        GlobalFilterMainSectionComponent
+        AtlasFilterComponent,
+        AtlasFilterMainSectionComponent,
+        SidebarComponent
     ],
     imports: [
         HttpClientModule,

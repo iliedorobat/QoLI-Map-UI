@@ -1,15 +1,14 @@
 import {Component, Input} from '@angular/core';
-import {LifeIndexFilterType} from '../../../atlas/types/LifeIndexFilter.types';
+import {AtlasFilterType} from '../atlas-filter.types';
 import {FormControl, FormGroup} from '@angular/forms';
-import {LIFE_INDEX_CATEGORIES, LIFE_INDEX_YEARS} from '../../../../shared/constants/filter.enums';
+import {LIFE_INDEX_CATEGORIES, LIFE_INDEX_YEARS} from '../../../../../shared/constants/filter.enums';
 
 @Component({
-  selector: 'app-global-filter-main-section',
-  templateUrl: './global-filter-main-section.component.html',
-  styleUrls: ['./global-filter-main-section.component.scss']
+  selector: 'app-atlas-filter-main-section',
+  templateUrl: './atlas-filter-main-section.component.html'
 })
-export class GlobalFilterMainSectionComponent {
-    @Input() filter: LifeIndexFilterType = new LifeIndexFilterType();
+export class AtlasFilterMainSectionComponent {
+    @Input() filter: AtlasFilterType = new AtlasFilterType();
     @Input() form: FormGroup = new FormGroup({
         category: new FormControl(this.filter.category, []),
         year: new FormControl(this.filter.category, [])

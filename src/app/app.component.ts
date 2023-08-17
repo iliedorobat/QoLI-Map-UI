@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NgbActiveOffcanvas, NgbModal, NgbOffcanvas} from '@ng-bootstrap/ng-bootstrap';
-import {LifeIndexFilterType} from './views/atlas/types/LifeIndexFilter.types';
+import {AtlasFilterType} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {SidebarComponent} from './views/sidebar/sidebar.component';
 
 @Component({
@@ -22,7 +22,7 @@ export class AppComponent {
     }
 
     activeButtonId: string = 'map-button';
-    atlasFilter: LifeIndexFilterType = new LifeIndexFilterType();
+    atlasFilter: AtlasFilterType = new AtlasFilterType();
     title: string = 'QoLI Map';
 
     onOpenSidebar(event: Event, buttonId: string) {

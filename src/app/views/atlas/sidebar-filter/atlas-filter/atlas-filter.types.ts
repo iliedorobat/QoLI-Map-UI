@@ -1,4 +1,4 @@
-export class LifeIndexFilterType {
+export class AtlasFilterType {
     public category: string | null = null;
     public year: string | null = null;
 
