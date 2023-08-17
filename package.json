@@ -23,6 +23,8 @@
         "@asymmetrik/ngx-leaflet": "^15.0.1",
         "@ng-bootstrap/ng-bootstrap": "^14.0.1",
         "@ngx-translate/core": "^14.0.0",
+        "@ngx-translate/http-loader": "^7.0.0",
+        "@popperjs/core": "^2.11.6",
         "bootstrap": "^5.2.3",
         "bootstrap-icons": "^1.10.3",
         "leaflet": "^1.9.3",

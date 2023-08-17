@@ -1,0 +1,16 @@
+<div class="offcanvas-header">
+    <h5 class="offcanvas-title">Quality of Life Index Filter</h5>
+    <button
+        type="button"
+        class="btn-close text-reset"
+        aria-label="Close"
+        (click)="onSidebarClose()"
+    ></button>
+</div>
+
+<div class="offcanvas-body">
+    <app-global-filter
+        [filter]="filter"
+        [onActiveButtonResets]="onActiveButtonResets"
+    ></app-global-filter>
+</div>

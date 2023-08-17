@@ -1,0 +1,28 @@
+<div [formGroup]="form">
+    <div class="row">
+        <div class="col-md-8 mb-3">
+            <select
+                class="form-select form-select-sm"
+                id="year"
+                formControlName="year"
+                [(ngModel)]="filter.year"
+            >
+                <option [ngValue]="null" selected disabled>Analyzed Year</option>
+                <option *ngFor="let year of LIFE_INDEX_YEARS" [ngValue]="year">{{ year }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 mb-3">
+            <select
+                class="form-select form-select-sm"
+                id="category"
+                formControlName="category"
+                [(ngModel)]="filter.category"
+            >
+                <option [ngValue]="null" selected disabled>Dimension Name</option>
+                <option *ngFor="let category of LIFE_INDEX_CATEGORIES" [ngValue]="category">{{ category }}</option>
+            </select>
+        </div>
+</div>

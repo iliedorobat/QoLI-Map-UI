@@ -44,7 +44,7 @@ export class AtlasComponent {
     }
 
     onOpenSidebar(event: Event) {
-        // this.openSidebar.emit(event);
+        this.openSidebar.emit(event);
     }
 
     // ngOnDestroy(): void {
