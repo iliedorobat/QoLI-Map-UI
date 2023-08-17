@@ -9,17 +9,16 @@ import {AtlasFilterService} from './atlas-filter.service';
   templateUrl: './atlas-filter.component.html',
   styleUrls: ['./atlas-filter.component.scss']
 })
-// TODO: rename it to AtlasFilterComponent
 export class AtlasFilterComponent {
     constructor(
-        private globalFilterService: AtlasFilterService
+        private atlasFilterService: AtlasFilterService
     ) {}
 
     @Input() filter: AtlasFilterType = new AtlasFilterType();
     @Input() onActiveButtonResets: Function = _.noop;
     @Input() onFilterApply: Function = _.noop;
 
-    form: FormGroup = this.globalFilterService.initFilter(this.filter);
+    form: FormGroup = this.atlasFilterService.initFilter(this.filter);
 
     onSectionReset(event: Event) {
         event.stopPropagation();
