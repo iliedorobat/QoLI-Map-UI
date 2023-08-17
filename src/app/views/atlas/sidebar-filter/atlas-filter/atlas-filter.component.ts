@@ -26,7 +26,7 @@ export class AtlasFilterComponent {
         const value = _.get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
 
         switch (value) {
-            case 'global-filter-main-section':
+            case 'atlas-filter-main-section':
                 this.filter.category = null;
                 this.filter.year = null;
                 break;
