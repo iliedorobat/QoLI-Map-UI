@@ -5,7 +5,7 @@ import {AtlasService} from './services/atlas.service';
 import {EventsService} from './services/events.service';
 import {LayersService} from './services/layers.service';
 
-import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './atlas.const';
+import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
 
 @Component({
   selector: 'app-atlas',
@@ -22,7 +22,7 @@ export class AtlasComponent {
 
     MAP_OPTIONS = MAP_OPTIONS;
     private map: Map | undefined;
-    layers: Layer[] | GeoJSON[] = [BASE_LAYER];
+    layers: (Layer | GeoJSON)[] = [BASE_LAYER];
     layersControl = {
         baseLayers: {
             [LAYERS.OPEN_STREET_MAP.BASE.name]: LAYERS.OPEN_STREET_MAP.BASE.layer,
@@ -39,20 +39,8 @@ export class AtlasComponent {
 
     onMapReady(map: Map) {
         this.map = map;
-        this.onButtonFilterAdd(map);
-    }
-
-    onButtonFilterAdd(map: Map) {
-        const CustomControl = Control.extend({
-            onAdd(map: Map) {
-                return DomUtil.get('filter-controller');
-            },
-            onRemove(map: Map) {}
-        });
-        const custom = new CustomControl({
-            position: 'topleft'
-        });
-        map.addControl(custom)
+        this.atlasService.onFilterControlAdd(map);
+        this.layersService.onLayersReady(map, this.layers);
     }
 
     onOpenSidebar(event: Event) {
