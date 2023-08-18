@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 
 import {AtlasFilterService} from './atlas-filter.service';
 import {AtlasFilterType} from './atlas-filter.types';
+import {LocalService} from '../../services/local.service';
 
 @Component({
   selector: 'app-atlas-filter',
@@ -12,14 +13,19 @@ import {AtlasFilterType} from './atlas-filter.types';
 })
 export class AtlasFilterComponent {
     constructor(
-        private atlasFilterService: AtlasFilterService
+        private atlasFilterService: AtlasFilterService,
+        private localService: LocalService
     ) {}
 
-    @Input() filter: AtlasFilterType = this.atlasFilterService.initFilter();
     @Input() onActiveButtonResets: Function = _.noop;
-    @Input() onFilterApply: Function = _.noop;
 
+    filter: AtlasFilterType = this.atlasFilterService.getFilter();
     form: FormGroup = this.atlasFilterService.initFilterForm(this.filter);
+
+    onFilterApply() {
+        this.atlasFilterService.setFilter(this.filter);
+        this.localService.lifeIndexSubscription(this.filter);
+    }
 
     onSectionReset(event: Event) {
         event.stopPropagation();
@@ -35,6 +41,8 @@ export class AtlasFilterComponent {
             default:
                 break;
         }
+
+        this.atlasFilterService.setFilter(this.filter);
     }
 
     onReset() {

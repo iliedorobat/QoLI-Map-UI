@@ -2,7 +2,7 @@ import {LatLngTuple, MapOptions, TileLayerOptions, latLng, tileLayer} from 'leaf
 
 import {COPYRIGHT} from 'src/app/shared/constants/app.const';
 
-const CENTER_POS = [48, 10] as LatLngTuple;
+const CENTER_POS = [49, 15] as LatLngTuple;
 
 const LAYER_OPTIONS = {
     attribution: `Maps &copy; <a href="${COPYRIGHT.ORGANIZATION.URI}" target="_blank">${COPYRIGHT.ORGANIZATION.name}</a>`

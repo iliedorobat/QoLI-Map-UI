@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 
 import {AtlasFilterType} from './atlas-filter.types';
+
 import {LIFE_INDEX_ACCESSORS} from '../../../../shared/constants/app.const';
 import {LIFE_INDEX_CATEGORIES} from './atlas-filter.enums';
 
@@ -9,7 +10,15 @@ import {LIFE_INDEX_CATEGORIES} from './atlas-filter.enums';
     providedIn: 'root',
 })
 export class AtlasFilterService {
-    public initFilter = (): AtlasFilterType => new AtlasFilterType(LIFE_INDEX_ACCESSORS.QOLI, '2022');
+    private filter: AtlasFilterType = new AtlasFilterType(LIFE_INDEX_ACCESSORS.QOLI, '2022');
+
+    public getFilter() {
+        return this.filter;
+    }
+
+    public setFilter(filter: AtlasFilterType) {
+        this.filter = filter;
+    }
 
     public initFilterForm = (filter: AtlasFilterType): FormGroup => new FormGroup({
         category: new FormControl(filter.category, []),

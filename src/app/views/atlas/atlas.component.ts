@@ -1,9 +1,10 @@
-import {ChangeDetectorRef, Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {GeoJSON, Layer, Map} from 'leaflet';
 
+import {AtlasFilterService} from './sidebar-filter/atlas-filter/atlas-filter.service';
 import {AtlasService} from './services/atlas.service';
-import {LayerEventsService} from './services/layer-events.service';
 import {LayersService} from './services/layers.service';
+import {LocalService} from './services/local.service';
 
 import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
 
@@ -14,10 +15,10 @@ import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
 })
 export class AtlasComponent {
     constructor(
+        private atlasFilterService: AtlasFilterService,
         private atlasService: AtlasService,
-        private changeDetector: ChangeDetectorRef,
-        private eventsService: LayerEventsService,
-        private layersService: LayersService
+        private layersService: LayersService,
+        private localService: LocalService
     ) {}
 
     MAP_OPTIONS = MAP_OPTIONS;
@@ -40,7 +41,15 @@ export class AtlasComponent {
     onMapReady(map: Map) {
         this.map = map;
         this.atlasService.onFilterControlAdd(map);
-        this.layersService.onLayersReady(map, this.layers);
+
+        this.localService.lifeIndex$
+            .subscribe(data => {
+                if (this.layers.length > 1) {
+                    this.layers = [BASE_LAYER];
+                }
+
+                this.layersService.onLayersReady(map, this.layers, data);
+            });
     }
 
     onOpenSidebar(event: Event) {

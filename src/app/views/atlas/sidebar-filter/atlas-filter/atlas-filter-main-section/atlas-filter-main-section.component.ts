@@ -3,6 +3,7 @@ import {FormGroup} from '@angular/forms';
 
 import {AtlasFilterService} from '../atlas-filter.service';
 import {AtlasFilterType} from '../atlas-filter.types';
+
 import {LIFE_INDEX_CATEGORIES, LIFE_INDEX_YEARS} from '../atlas-filter.enums';
 
 @Component({
@@ -14,7 +15,7 @@ export class AtlasFilterMainSectionComponent {
         private atlasFilterService: AtlasFilterService
     ) {}
 
-    @Input() filter: AtlasFilterType = this.atlasFilterService.initFilter();
+    filter: AtlasFilterType = this.atlasFilterService.getFilter();
     @Input() form: FormGroup = this.atlasFilterService.initFilterForm(this.filter);
 
     LIFE_INDEX_CATEGORIES = Object.values(LIFE_INDEX_CATEGORIES);

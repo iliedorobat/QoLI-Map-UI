@@ -3,7 +3,6 @@ import {TranslateService} from '@ngx-translate/core';
 import {NgbActiveOffcanvas, NgbModal, NgbOffcanvas} from '@ng-bootstrap/ng-bootstrap';
 
 import {AtlasFilterService} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.service';
-import {AtlasFilterType} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {LocalService} from './views/atlas/services/local.service';
 import {SidebarComponent} from './views/sidebar/sidebar.component';
 
@@ -14,7 +13,6 @@ import {SidebarComponent} from './views/sidebar/sidebar.component';
 })
 export class AppComponent {
     activeButtonId: string = 'map-button';
-    atlasFilter: AtlasFilterType = this.atlasFilterService.initFilter();
     title: string = 'QoLI Map';
 
     constructor(
@@ -29,14 +27,7 @@ export class AppComponent {
         translate.setDefaultLang('en-US');
         translate.use('en-US');
 
-        localService.getLifeIndex(this.atlasFilter)
-            .subscribe(data => {
-                console.log('AppComponent:', data);
-            });
-        // localService.lifeIndex$
-        //     .subscribe(data => {
-        //         console.log('localService.lifeIndex$:', data);
-        //     });
+        localService.lifeIndexSubscription(this.atlasFilterService.getFilter());
     }
 
     onOpenSidebar(event: Event, buttonId: string) {
@@ -46,7 +37,6 @@ export class AppComponent {
         this.onActiveButtonChanges(buttonId);
 
         const offcanvasRef = this.offcanvasService.open(SidebarComponent);
-        offcanvasRef.componentInstance.filter = this.atlasFilter;
         offcanvasRef.componentInstance.name = 'Filter';
         offcanvasRef.componentInstance.onActiveButtonResets = this.onActiveButtonResets;
         offcanvasRef.hidden.subscribe(value => {
