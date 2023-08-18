@@ -1,8 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import * as _ from 'lodash';
-import {AtlasFilterType} from './atlas-filter.types';
+
 import {AtlasFilterService} from './atlas-filter.service';
+import {AtlasFilterType} from './atlas-filter.types';
 
 @Component({
   selector: 'app-atlas-filter',
@@ -14,11 +15,11 @@ export class AtlasFilterComponent {
         private atlasFilterService: AtlasFilterService
     ) {}
 
-    @Input() filter: AtlasFilterType = new AtlasFilterType();
+    @Input() filter: AtlasFilterType = this.atlasFilterService.initFilter();
     @Input() onActiveButtonResets: Function = _.noop;
     @Input() onFilterApply: Function = _.noop;
 
-    form: FormGroup = this.atlasFilterService.initFilter(this.filter);
+    form: FormGroup = this.atlasFilterService.initFilterForm(this.filter);
 
     onSectionReset(event: Event) {
         event.stopPropagation();
@@ -28,6 +29,7 @@ export class AtlasFilterComponent {
         switch (value) {
             case 'atlas-filter-main-section':
                 this.filter.category = null;
+                this.filter.categoryLabel = null;
                 this.filter.year = null;
                 break;
             default:

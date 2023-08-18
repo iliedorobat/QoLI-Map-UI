@@ -1,13 +1,14 @@
 export enum LIFE_INDEX_CATEGORIES {
-    GLOBAL = 'Global QoLI',
+    QOLI = 'Quality of Life Index',
     EDUCATION = 'Education',
     ENVIRONMENT = 'Environment',
     GBR = 'Government and Basic Rights',
     HEALTH = 'Health',
     SOC_INTERACTIONS = 'Social Interactions',
     LEISURE = 'Leisure',
-    MLC = "Material and Living Conditions",
-    PMA = "Productive or Main Activity",
+    MLC = 'Material and Living Conditions',
+    OVERALL_EXP = 'Overall Experience',
+    PMA = 'Productive or Main Activity',
     SAFETY = 'Safety'
 }
 

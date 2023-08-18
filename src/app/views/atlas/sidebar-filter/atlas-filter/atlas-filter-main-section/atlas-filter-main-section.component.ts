@@ -1,8 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {AtlasFilterType} from '../atlas-filter.types';
 import {FormGroup} from '@angular/forms';
-import {LIFE_INDEX_CATEGORIES, LIFE_INDEX_YEARS} from '../atlas-filter.enums';
+
 import {AtlasFilterService} from '../atlas-filter.service';
+import {AtlasFilterType} from '../atlas-filter.types';
+import {LIFE_INDEX_CATEGORIES, LIFE_INDEX_YEARS} from '../atlas-filter.enums';
 
 @Component({
   selector: 'app-atlas-filter-main-section',
@@ -13,8 +14,8 @@ export class AtlasFilterMainSectionComponent {
         private atlasFilterService: AtlasFilterService
     ) {}
 
-    @Input() filter: AtlasFilterType = new AtlasFilterType();
-    @Input() form: FormGroup = this.atlasFilterService.initFilter(this.filter);
+    @Input() filter: AtlasFilterType = this.atlasFilterService.initFilter();
+    @Input() form: FormGroup = this.atlasFilterService.initFilterForm(this.filter);
 
     LIFE_INDEX_CATEGORIES = Object.values(LIFE_INDEX_CATEGORIES);
     LIFE_INDEX_YEARS = Object.values(LIFE_INDEX_YEARS);
@@ -25,5 +26,11 @@ export class AtlasFilterMainSectionComponent {
 
     get year() {
         return this.form?.get('year');
+    }
+
+    onCategoryLabelChanges(event: Event) {
+        const category = this.atlasFilterService.getCategory(this.filter.categoryLabel);
+        this.filter.category = category;
+        this.form?.controls['category'].setValue(category);
     }
 }

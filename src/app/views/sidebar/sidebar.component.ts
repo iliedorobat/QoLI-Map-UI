@@ -1,7 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {NgbActiveOffcanvas} from '@ng-bootstrap/ng-bootstrap';
-import {AtlasFilterType} from '../atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import * as _ from 'lodash';
+
+import {AtlasFilterService} from '../atlas/sidebar-filter/atlas-filter/atlas-filter.service';
+import {AtlasFilterType} from '../atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,10 +11,11 @@ import * as _ from 'lodash';
 })
 export class SidebarComponent {
     constructor(
-        public activeOffcanvas: NgbActiveOffcanvas
+        public activeOffcanvas: NgbActiveOffcanvas,
+        private atlasFilterService: AtlasFilterService
     ) {}
 
-    @Input() filter: AtlasFilterType = new AtlasFilterType();
+    @Input() filter: AtlasFilterType = this.atlasFilterService.initFilter();
     @Input() onActiveButtonResets: Function = _.noop;
 
     onSidebarClose = () => {

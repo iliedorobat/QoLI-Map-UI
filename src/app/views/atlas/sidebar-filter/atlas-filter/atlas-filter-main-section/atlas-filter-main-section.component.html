@@ -17,12 +17,14 @@
         <div class="col-md-8 mb-3">
             <select
                 class="form-select form-select-sm"
-                id="category"
-                formControlName="category"
-                [(ngModel)]="filter.category"
+                id="categoryLabel"
+                formControlName="categoryLabel"
+                [(ngModel)]="filter.categoryLabel"
+                (change)="onCategoryLabelChanges($event)"
             >
                 <option [ngValue]="null" selected disabled>Dimension Name</option>
                 <option *ngFor="let category of LIFE_INDEX_CATEGORIES" [ngValue]="category">{{ category }}</option>
             </select>
         </div>
+    </div>
 </div>
