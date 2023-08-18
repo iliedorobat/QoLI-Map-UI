@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Geometry} from 'geojson';
 import {GeoJSON, geoJSON, Layer, Map} from 'leaflet';
 import * as _ from 'lodash';
 
 import {GeoFeature} from '../constants/geo.types';
+import {LayerEventsService} from './layer-events.service';
 import * as COUNTRIES from '../../../../../files/geo-location/european-union.json';
 
 const FEATURES = _.get(COUNTRIES, 'features', []) as Array<GeoFeature>;
@@ -12,13 +12,17 @@ const FEATURES = _.get(COUNTRIES, 'features', []) as Array<GeoFeature>;
     providedIn: 'root',
 })
 export class LayersService {
+    constructor(
+        public eventsService: LayerEventsService
+    ) {}
+
     onLayersReady(map: Map, layers: (Layer | GeoJSON)[]) {
         const countriesLayers = FEATURES.map(county => this.getFeatureLayer(map, county));
         layers.push(...countriesLayers);
     }
 
     public getFeatureLayer = (map: Map, geoLand: GeoFeature) => {
-        const geoJsonObject = geoLand.geometry as Geometry;
+        const geoJsonObject = geoLand.geometry;
         // const counter = entitiesSummaries.filter(entity => entity.county === geoLand.properties.name).length;
         const options = {
             style: () => ({
@@ -32,7 +36,7 @@ export class LayersService {
         };
 
         const layer = geoJSON(geoJsonObject, options);
-        // this.eventsService.addLayerEvents(map, layer, geoLand);
+        this.eventsService.addEvents(map, layer, geoLand);
 
         return layer;
     };

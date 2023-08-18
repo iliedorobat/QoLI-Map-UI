@@ -1,8 +1,8 @@
 import {ChangeDetectorRef, Component, EventEmitter, Output} from '@angular/core';
-import {Control, DomUtil, GeoJSON, Layer, Map} from 'leaflet';
+import {GeoJSON, Layer, Map} from 'leaflet';
 
 import {AtlasService} from './services/atlas.service';
-import {EventsService} from './services/events.service';
+import {LayerEventsService} from './services/layer-events.service';
 import {LayersService} from './services/layers.service';
 
 import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
@@ -16,7 +16,7 @@ export class AtlasComponent {
     constructor(
         private atlasService: AtlasService,
         private changeDetector: ChangeDetectorRef,
-        private eventsService: EventsService,
+        private eventsService: LayerEventsService,
         private layersService: LayersService
     ) {}
 
