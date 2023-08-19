@@ -24,8 +24,8 @@ export class LayersService {
     }
 
     public getFeatureLayer = (map: Map, geoLand: GeoFeature, response: LifeIndexResponseType) => {
-        const country = geoLand.id;
-        const score = country ? response[country] : 0;
+        const countryCode = geoLand.id;
+        const score = countryCode ? response[countryCode] : 0;
 
         const geoJsonObject = geoLand.geometry;
         const options = {
@@ -39,7 +39,7 @@ export class LayersService {
         };
 
         const layer = geoJSON(geoJsonObject, options);
-        this.eventsService.addEvents(map, layer, geoLand);
+        this.eventsService.addEvents(map, layer, geoLand, response);
 
         return layer;
     };

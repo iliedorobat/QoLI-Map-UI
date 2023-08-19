@@ -1,20 +1,30 @@
 import {Injectable} from '@angular/core';
-import {GeoJSON, Map} from 'leaflet';
+import {GeoJSON, Map, PointTuple, PopupOptions} from 'leaflet';
 
 import {GeoFeature} from '../constants/geo.types';
+import {LifeIndexResponseType} from '../constants/response.type';
+import {PopupService} from './popup.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LayerEventsService {
-    public addEvents(map: Map, layer: GeoJSON, geoLand: GeoFeature) {
-        this.onBindLayerName(layer, geoLand);
+    constructor(private popupService: PopupService) {}
+
+    public addEvents(map: Map, layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponseType) {
+        this.onBindLayerName(layer, geoLand, response);
         this.onLayerMouseOver(layer);
         this.onLayerMouseOut(layer);
     }
 
-    private onBindLayerName(layer: GeoJSON, geoLand: GeoFeature) {
-        layer.bindPopup(myLayer => geoLand.properties.NAME_ENGL);
+    private onBindLayerName(layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponseType) {
+        const options = {
+            className: 'land-summary',
+            offset: [0, -31] as PointTuple
+        } as PopupOptions;
+
+        const content = this.popupService.createPopupContent(geoLand, response);
+        layer.bindPopup(content, options);
     }
 
     private onLayerMouseOver(layer: GeoJSON) {

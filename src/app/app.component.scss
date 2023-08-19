@@ -1,3 +1,5 @@
+@import 'src/assets/styles/variables.scss';
+
 ::ng-deep {
     html, body {
         height: 100%;
@@ -25,6 +27,30 @@
                 > i {
                     margin-right: 2px;
                     font-size: 14px;
+                }
+            }
+        }
+
+        .leaflet-popup {
+            &.land-summary {
+                .leaflet-popup-content > .content {
+                    display: grid;
+                    gap: $size-small;
+
+                    .header {
+                        font-weight: 700;
+                    }
+
+                    .body {
+                        display: grid;
+                        grid-template-areas: 'column column';
+                        column-gap: $size-small;
+                        row-gap: $size-xsmall;
+                    }
+
+                    .label {
+                        font-weight: 500;
+                    }
                 }
             }
         }
