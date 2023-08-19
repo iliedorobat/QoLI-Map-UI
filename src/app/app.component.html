@@ -4,6 +4,24 @@
         type="button"
         class="btn"
     >Quality of Life Index Map</button>
+    <button
+        id="filter-button"
+        type="button"
+        [ngClass]="{'btn btn-light': true, 'active': activeButtonId === 'filter-button'}"
+        (click)="onOpenSidebar($event, 'filter-button')"
+    >
+        <i class="bi bi-funnel"></i>
+        Filter
+    </button>
+    <button
+        id="map-button"
+        type="button"
+        [ngClass]="{'btn btn-light': true, 'active': activeButtonId === 'map-button'}"
+        (click)="onActiveButtonChanges('map-button')"
+    >
+        <i class="bi bi-pin-map"></i>
+        Map
+    </button>
 </div>
 
 <app-atlas (openSidebar)="onOpenSidebar($event, 'filter-button')"></app-atlas>
