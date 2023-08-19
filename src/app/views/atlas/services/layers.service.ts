@@ -49,12 +49,12 @@ export class LayersService {
 
         switch (true) {
             case score > minValue + diff / 2: return '#002080';
-            case score > minValue + diff / 4: return '#002db3';
-            case score > minValue + diff / 6: return '#0039e6';
-            case score > minValue + diff / 8: return '#4d79ff';
-            case score > minValue + diff / 10: return '#809fff';
+            case score > minValue + diff / 3: return '#0039e6';
+            case score > minValue + diff / 4: return '#809fff';
+            case score > minValue + diff / 6: return '#ffb3b3';
+            case score > minValue + diff / 8: return '#ff6666';
             default:
-                return '#b3c6ff';
+                return '#e60000';
         }
     };
 

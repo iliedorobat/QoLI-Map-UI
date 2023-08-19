@@ -56,7 +56,7 @@ export class PopupService {
             tagName: 'div'
         } as ElementParams);
 
-        const categoryLabelElement = this.createLabelElement('Dimension Name');
+        const categoryLabelElement = this.createLabelElement('Name');
         const categoryElement = this.createValueElement(filter.categoryLabel);
 
         const rankLabelElement = this.createLabelElement('Rank');
