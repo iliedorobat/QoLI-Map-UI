@@ -2,11 +2,13 @@ import {Injectable} from '@angular/core';
 import {GeoJSON, geoJSON, Layer, Map} from 'leaflet';
 import * as _ from 'lodash';
 
+import {DatasetService} from './dataset.service';
 import {GeoFeature} from '../constants/geo.types';
 import {LayerEventsService} from './layer-events.service';
 import {LifeIndexResponseType} from '../constants/response.type';
 
 import * as COUNTRIES from '../../../../../files/geo-location/european-union.json';
+import {SORT_ORDER} from '../../../shared/constants/math.const';
 
 const FEATURES = _.get(COUNTRIES, 'features', []) as Array<GeoFeature>;
 
@@ -15,7 +17,8 @@ const FEATURES = _.get(COUNTRIES, 'features', []) as Array<GeoFeature>;
 })
 export class LayersService {
     constructor(
-        public eventsService: LayerEventsService
+        public eventsService: LayerEventsService,
+        private datasetService: DatasetService,
     ) {}
 
     onLayersReady(map: Map, layers: (Layer | GeoJSON)[], response: LifeIndexResponseType) {
@@ -24,14 +27,13 @@ export class LayersService {
     }
 
     public getFeatureLayer = (map: Map, geoLand: GeoFeature, response: LifeIndexResponseType) => {
-        const countryCode = geoLand.id;
-        const score = countryCode ? response[countryCode] : 0;
-
+        const countryCode = geoLand.id as string;
+        const score = this.datasetService.getScore(geoLand, response);
         const geoJsonObject = geoLand.geometry;
         const options = {
             style: () => ({
-                color: this.getColor(response, score),
-                fillColor: this.getColor(response, score),
+                color: this.getColor(response, score, countryCode),
+                fillColor: this.getColor(response, score, countryCode),
                 fillOpacity: 0.6,
                 opacity: 0.8,
                 weight: 3
@@ -44,20 +46,23 @@ export class LayersService {
         return layer;
     };
 
-    private getColor = (response: LifeIndexResponseType, score: number) => {
-        const {diff, minValue} = this.prepareEdges(response);
+    private getColor = (response: LifeIndexResponseType, score: number, countryCode: string) => {
+        const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
+        const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;
 
         switch (true) {
-            case score > minValue + diff / 2: return '#002080';
-            case score > minValue + diff / 3: return '#0039e6';
-            case score > minValue + diff / 4: return '#809fff';
-            case score > minValue + diff / 6: return '#ffb3b3';
-            case score > minValue + diff / 8: return '#ff6666';
-            default:
-                return '#e60000';
+            case rank <= 3: return '#001146';
+            case rank <= 9: return '#00116e';
+            case rank <= 15: return '#0011aa';
+            case rank <= 18: return '#3753f2';
+            case rank <= 21: return '#809fff';
+            case rank <= 24: return '#fc7272';
+            case rank <= 26: return '#fc4949';
+            default: return '#e60000';
         }
     };
 
+    /** @deprecated: it is no longer used */
     private prepareEdges = (response: LifeIndexResponseType) => {
         const values = Object.values(response);
         const minValue = Math.min(...values);

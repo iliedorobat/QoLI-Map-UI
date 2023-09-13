@@ -45,9 +45,8 @@ export class TooltipService {
     }
 
     private createHeader = (geoLand: GeoFeature, response: LifeIndexResponseType): HTMLElement => {
-        const countryCode = geoLand.id;
         const countryName = geoLand.properties.NAME_ENGL;
-        const score = countryCode ? response[countryCode] : 0 as number;
+        const score = this.datasetService.getScore(geoLand, response);
         const headerElement = this.htmlElementsService.createElement({
             className: 'header',
             tagName: 'div'
