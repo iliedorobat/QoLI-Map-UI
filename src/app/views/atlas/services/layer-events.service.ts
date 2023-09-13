@@ -1,30 +1,41 @@
 import {Injectable} from '@angular/core';
-import {GeoJSON, Map, PointTuple, PopupOptions} from 'leaflet';
+import {GeoJSON, Map} from 'leaflet';
 
 import {GeoFeature} from '../constants/geo.types';
 import {LifeIndexResponseType} from '../constants/response.type';
 import {PopupService} from './popup.service';
+import {TooltipService} from './tooltip.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LayerEventsService {
-    constructor(private popupService: PopupService) {}
+    constructor(
+        private popupService: PopupService,
+        private tooltipService: TooltipService
+    ) {}
 
     public addEvents(map: Map, layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponseType) {
-        this.onBindLayerName(layer, geoLand, response);
+        this.onBindPopup(layer, geoLand, response);
+        this.onBindTooltip(layer, geoLand, response);
         this.onLayerMouseOver(layer);
         this.onLayerMouseOut(layer);
     }
 
-    private onBindLayerName(layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponseType) {
-        const options = {
-            className: 'land-summary',
-            offset: [0, -31] as PointTuple
-        } as PopupOptions;
-
-        const content = this.popupService.createPopupContent(geoLand, response);
+    private onBindPopup(layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponseType) {
+        const options = this.popupService.getOptions();
+        const content = this.popupService.createContent(geoLand, response);
         layer.bindPopup(content, options);
+    }
+
+    private onBindTooltip(layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponseType) {
+        const options = this.tooltipService.getOptions(geoLand);
+        const content = this.tooltipService.createContent(geoLand, response);
+
+        layer.bindTooltip(content, options);
+        layer.addEventListener(EVENT_TYPES.POPUP_CLOSE, () => {
+            layer.bindTooltip(content, options);
+        });
     }
 
     private onLayerMouseOver(layer: GeoJSON) {
@@ -49,5 +60,6 @@ export class LayerEventsService {
 export const EVENT_TYPES = {
     CLICK: 'click',
     MOUSE_OVER: 'mouseover',
-    MOUSE_OUT: 'mouseout'
+    MOUSE_OUT: 'mouseout',
+    POPUP_CLOSE: 'popupclose'
 };

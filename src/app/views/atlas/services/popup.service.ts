@@ -1,17 +1,13 @@
 import {Injectable} from '@angular/core';
+import {PopupOptions} from 'leaflet';
 
 import {AtlasFilterService} from '../sidebar-filter/atlas-filter/atlas-filter.service';
 import {DatasetService} from './dataset.service';
 import {GeoFeature} from '../constants/geo.types';
+import {HTMLElementParams, HtmlElementsService} from './html-elements.service';
 import {LifeIndexResponseType} from '../constants/response.type';
 
 import {SORT_ORDER} from '../../../shared/constants/math.const';
-
-interface ElementParams {
-    className?: string;
-    innerText?: string;
-    tagName: string;
-}
 
 @Injectable({
     providedIn: 'root'
@@ -19,12 +15,13 @@ interface ElementParams {
 export class PopupService {
     constructor(
         private atlasFilterService: AtlasFilterService,
-        private datasetService: DatasetService
+        private datasetService: DatasetService,
+        private htmlElementsService: HtmlElementsService
     ) {}
 
-    public createPopupContent = (geoLand: GeoFeature, response: LifeIndexResponseType) => {
+    public createContent = (geoLand: GeoFeature, response: LifeIndexResponseType) => {
         const content = document.createElement('div');
-        content.className = "content";
+        content.className = 'content';
 
         const header = this.createHeader(geoLand);
         content.appendChild(header);
@@ -35,13 +32,20 @@ export class PopupService {
         return content;
     };
 
-    private createHeader = (geoLand: GeoFeature): HTMLDivElement => {
-        const countryName = geoLand.properties.NAME_ENGL;
-        const header = document.createElement('div');
-        header.className = 'header';
-        header.innerText = countryName;
+    public getOptions = (): PopupOptions => {
+        return {
+            className: 'land-summary'
+        } as PopupOptions;
+    }
 
-        return header;
+    private createHeader = (geoLand: GeoFeature): HTMLElement => {
+        const countryName = geoLand.properties.NAME_ENGL;
+
+        return this.htmlElementsService.createElement({
+            className: 'header',
+            innerText: countryName,
+            tagName: 'div'
+        } as HTMLElementParams);
     }
 
     private createBody = (geoLand: GeoFeature, response: LifeIndexResponseType): HTMLElement => {
@@ -51,22 +55,22 @@ export class PopupService {
         const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
         const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;
 
-        const bodyElement = this.createElement({
+        const bodyElement = this.htmlElementsService.createElement({
             className: 'body',
             tagName: 'div'
-        } as ElementParams);
+        } as HTMLElementParams);
 
-        const categoryLabelElement = this.createLabelElement('Name');
-        const categoryElement = this.createValueElement(filter.categoryLabel);
+        const categoryLabelElement = this.htmlElementsService.createLabelElement('Name');
+        const categoryElement = this.htmlElementsService.createValueElement(filter.categoryLabel);
 
-        const rankLabelElement = this.createLabelElement('Rank');
-        const rankElement = this.createValueElement(`${rank} of ${sortedResponse.length}`);
+        const rankLabelElement = this.htmlElementsService.createLabelElement('Rank');
+        const rankElement = this.htmlElementsService.createValueElement(`${rank} of ${sortedResponse.length}`);
 
-        const scoreLabelElement = this.createLabelElement('Value');
-        const scoreElement = this.createValueElement(score);
+        const scoreLabelElement = this.htmlElementsService.createLabelElement('Value');
+        const scoreElement = this.htmlElementsService.createValueElement(score);
 
-        const yearLabelElement = this.createLabelElement('Year');
-        const yearElement = this.createValueElement(filter.year);
+        const yearLabelElement = this.htmlElementsService.createLabelElement('Year');
+        const yearElement = this.htmlElementsService.createValueElement(filter.year);
 
         bodyElement.appendChild(categoryLabelElement);
         bodyElement.appendChild(categoryElement);
@@ -81,36 +85,5 @@ export class PopupService {
         bodyElement.appendChild(rankElement);
 
         return bodyElement;
-    }
-
-    private createElement = (params: ElementParams): HTMLElement => {
-        const {className, innerText, tagName} = params;
-        const element = document.createElement(tagName);
-
-        if (innerText) {
-            element.innerText = innerText as string;
-        }
-
-        if (className) {
-            element.className = className;
-        }
-
-        return element;
-    }
-
-    private createLabelElement = (label: string): HTMLElement => {
-        return this.createElement({
-            className: 'label',
-            innerText: `${label}:`,
-            tagName: 'div'
-        } as ElementParams);
-    }
-
-    private createValueElement = (value: string | number | null): HTMLElement => {
-        return this.createElement({
-            className: 'value',
-            innerText: value,
-            tagName: 'div'
-        } as ElementParams);
     }
 }

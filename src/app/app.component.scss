@@ -54,5 +54,21 @@
                 }
             }
         }
+
+        .leaflet-tooltip {
+            &.land-score > .content {
+                > .header {
+                    font-weight: 700;
+                }
+
+                > .header,
+                > .body {
+                    display: grid;
+                    grid-template-areas: 'column column';
+                    column-gap: $size-small;
+                    row-gap: $size-xsmall;
+                }
+            }
+        }
     }
 }
