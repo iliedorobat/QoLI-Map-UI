@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {NgbActiveOffcanvas} from '@ng-bootstrap/ng-bootstrap';
-import * as _ from 'lodash';
+import noop from 'lodash-es/noop';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,7 +11,7 @@ export class SidebarComponent {
         public activeOffcanvas: NgbActiveOffcanvas
     ) {}
 
-    @Input() onActiveButtonResets: Function = _.noop;
+    @Input() onActiveButtonResets: Function = noop;
 
     onSidebarClose = () => {
         this.activeOffcanvas.dismiss('Cross click');
