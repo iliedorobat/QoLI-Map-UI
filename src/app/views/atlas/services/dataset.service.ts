@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import isEmpty from 'lodash-es/isEmpty';
 
-import {LifeIndexResponseType} from '../constants/response.types';
+import {LifeIndexResponse} from '../constants/response.types';
 import {GeoFeature} from '../constants/geo.types';
 
 import {SORT_ORDER} from '@/app/shared/constants/math.const';
@@ -27,7 +27,7 @@ export class DatasetService {
         return 0;
     }
 
-    public getScore = (geoLand: GeoFeature, response: LifeIndexResponseType) => {
+    public getScore = (geoLand: GeoFeature, response: LifeIndexResponse) => {
         const countryCode = geoLand.id;
 
         return countryCode && !isEmpty(response)
@@ -35,7 +35,7 @@ export class DatasetService {
             : 0 as number;
     }
 
-    public getSortedResponse = (response: LifeIndexResponseType, sortOrder: SORT_ORDER) => {
+    public getSortedResponse = (response: LifeIndexResponse, sortOrder: SORT_ORDER) => {
         const array = Object.keys(response)
             .map(code => [code, response[code]]);
         const sortMethod = sortOrder === SORT_ORDER.ASC

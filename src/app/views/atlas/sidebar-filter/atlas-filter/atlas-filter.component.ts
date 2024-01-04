@@ -4,7 +4,7 @@ import noop from 'lodash-es/noop';
 import get from 'lodash-es/get';
 
 import {AtlasFilterService} from './atlas-filter.service';
-import {AtlasFilterType} from './atlas-filter.types';
+import {AtlasFilter} from './atlas-filter.types';
 import {LocalService} from '@/app/views/atlas/services/local.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class AtlasFilterComponent {
 
     @Input() onActiveButtonResets: Function = noop;
 
-    protected filter: AtlasFilterType = this.atlasFilterService.getFilter();
+    protected filter: AtlasFilter = this.atlasFilterService.getFilter();
     protected form: FormGroup = this.atlasFilterService.initFilterForm(this.filter);
 
     onFilterApply() {

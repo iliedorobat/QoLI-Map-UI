@@ -5,7 +5,7 @@ import get from 'lodash-es/get';
 import {DatasetService} from './dataset.service';
 import {GeoFeature} from '../constants/geo.types';
 import {LayerEventsService} from './layer-events.service';
-import {LifeIndexResponseType} from '../constants/response.types';
+import {LifeIndexResponse} from '../constants/response.types';
 
 import * as COUNTRIES from '@/../files/geo-location/european-union.json';
 import {SORT_ORDER} from '@/app/shared/constants/math.const';
@@ -21,12 +21,12 @@ export class LayersService {
         private datasetService: DatasetService,
     ) {}
 
-    onLayersReady(map: Map, layers: (Layer | GeoJSON)[], response: LifeIndexResponseType) {
+    onLayersReady(map: Map, layers: (Layer | GeoJSON)[], response: LifeIndexResponse) {
         const countriesLayers = FEATURES.map(county => this.getFeatureLayer(map, county, response));
         layers.push(...countriesLayers);
     }
 
-    public getFeatureLayer = (map: Map, geoLand: GeoFeature, response: LifeIndexResponseType) => {
+    public getFeatureLayer = (map: Map, geoLand: GeoFeature, response: LifeIndexResponse) => {
         const countryCode = geoLand.id as string;
         const score = this.datasetService.getScore(geoLand, response);
         const geoJsonObject = geoLand.geometry;
@@ -46,7 +46,7 @@ export class LayersService {
         return layer;
     };
 
-    private getColor = (response: LifeIndexResponseType, score: number, countryCode: string) => {
+    private getColor = (response: LifeIndexResponse, score: number, countryCode: string) => {
         const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
         const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;
 

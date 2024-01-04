@@ -1,4 +1,4 @@
-export enum LIFE_INDEX_CATEGORIES {
+export enum LIFE_INDEX_LABELS {
     QOLI = 'Quality of Life Index',
     EDUCATION = 'Education',
     ENVIRONMENT = 'Environment',

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {GeoJSON, Map} from 'leaflet';
 
 import {GeoFeature} from '../constants/geo.types';
-import {LifeIndexResponseType} from '../constants/response.types';
+import {LifeIndexResponse} from '../constants/response.types';
 import {PopupService} from './popup.service';
 import {TooltipService} from './tooltip.service';
 
@@ -15,20 +15,20 @@ export class LayerEventsService {
         private tooltipService: TooltipService
     ) {}
 
-    public addEvents(map: Map, layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponseType) {
+    public addEvents(map: Map, layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponse) {
         this.onBindPopup(layer, geoLand, response);
         this.onBindTooltip(layer, geoLand, response);
         this.onLayerMouseOver(layer);
         this.onLayerMouseOut(layer);
     }
 
-    private onBindPopup(layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponseType) {
+    private onBindPopup(layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponse) {
         const options = this.popupService.getOptions();
         const content = this.popupService.createContent(geoLand, response);
         layer.bindPopup(content, options);
     }
 
-    private onBindTooltip(layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponseType) {
+    private onBindTooltip(layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponse) {
         const options = this.tooltipService.getOptions(geoLand);
         const content = this.tooltipService.createContent(geoLand, response);
 

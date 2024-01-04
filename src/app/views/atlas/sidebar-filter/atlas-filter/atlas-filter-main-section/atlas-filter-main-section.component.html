@@ -23,7 +23,7 @@
                 (change)="onCategoryLabelChanges($event)"
             >
                 <option [ngValue]="null" selected disabled>Dimension Name</option>
-                <option *ngFor="let category of LIFE_INDEX_CATEGORIES" [ngValue]="category">{{ category }}</option>
+                <option *ngFor="let categoryLabel of LIFE_INDEX_LABELS" [ngValue]="categoryLabel">{{ categoryLabel }}</option>
             </select>
         </div>
     </div>

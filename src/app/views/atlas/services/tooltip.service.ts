@@ -4,7 +4,7 @@ import {TooltipOptions} from 'leaflet';
 import {DatasetService} from './dataset.service';
 import {GeoFeature} from '../constants/geo.types';
 import {HTMLElementParams, HtmlElementsService} from './html-elements.service';
-import {LifeIndexResponseType} from '../constants/response.types';
+import {LifeIndexResponse} from '../constants/response.types';
 
 import {SORT_ORDER} from '@/app/shared/constants/math.const';
 
@@ -21,7 +21,7 @@ export class TooltipService {
         private htmlElementsService: HtmlElementsService
     ) {}
 
-    public createContent = (geoLand: GeoFeature, response: LifeIndexResponseType) => {
+    public createContent = (geoLand: GeoFeature, response: LifeIndexResponse) => {
         const content = document.createElement('div');
         content.className = 'content';
 
@@ -44,7 +44,7 @@ export class TooltipService {
         } as TooltipOptions;
     }
 
-    private createHeader = (geoLand: GeoFeature, response: LifeIndexResponseType): HTMLElement => {
+    private createHeader = (geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement => {
         const countryName = geoLand.properties.NAME_ENGL;
         const score = this.datasetService.getScore(geoLand, response);
         const headerElement = this.htmlElementsService.createElement({
@@ -61,7 +61,7 @@ export class TooltipService {
         return headerElement;
     }
 
-    private createBody = (geoLand: GeoFeature, response: LifeIndexResponseType): HTMLElement => {
+    private createBody = (geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement => {
         const countryCode = geoLand.id;
         const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
         const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;

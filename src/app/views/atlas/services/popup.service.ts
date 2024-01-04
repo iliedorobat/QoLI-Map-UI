@@ -5,7 +5,7 @@ import {AtlasFilterService} from '@/app/views/atlas/sidebar-filter/atlas-filter/
 import {DatasetService} from './dataset.service';
 import {GeoFeature} from '@/app/views/atlas/constants/geo.types';
 import {HTMLElementParams, HtmlElementsService} from './html-elements.service';
-import {LifeIndexResponseType} from '@/app/views/atlas/constants/response.types';
+import {LifeIndexResponse} from '@/app/views/atlas/constants/response.types';
 
 import {SORT_ORDER} from '@/app/shared/constants/math.const';
 
@@ -19,7 +19,7 @@ export class PopupService {
         private htmlElementsService: HtmlElementsService
     ) {}
 
-    public createContent = (geoLand: GeoFeature, response: LifeIndexResponseType) => {
+    public createContent = (geoLand: GeoFeature, response: LifeIndexResponse) => {
         const content = document.createElement('div');
         content.className = 'content';
 
@@ -48,7 +48,7 @@ export class PopupService {
         } as HTMLElementParams);
     }
 
-    private createBody = (geoLand: GeoFeature, response: LifeIndexResponseType): HTMLElement => {
+    private createBody = (geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement => {
         const countryCode = geoLand.id;
         const score = this.datasetService.getScore(geoLand, response);
         const filter = this.atlasFilterService.getFilter();

@@ -1,8 +1,8 @@
-export interface LifeIndexResponseType {
+export interface LifeIndexResponse {
     [country: string]: number;
 }
 
-export interface LifeIndexMultipleResponseType {
+export interface LifeIndexMultipleResponse {
     [country: string]: {
         [year: string]: number
     };

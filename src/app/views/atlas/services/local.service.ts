@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, from, Observable} from 'rxjs';
 
-import {AtlasFilterType} from '../sidebar-filter/atlas-filter/atlas-filter.types';
-import {LifeIndexMultipleResponseType, LifeIndexResponseType} from '../constants/response.types';
+import {AtlasFilter} from '../sidebar-filter/atlas-filter/atlas-filter.types';
+import {LifeIndexMultipleResponse, LifeIndexResponse} from '../constants/response.types';
 
 import {LIFE_INDEX_ACCESSORS, LIFE_INDEX_JSON_NAMES} from '@/app/shared/constants/app.const';
 
@@ -10,9 +10,9 @@ import {LIFE_INDEX_ACCESSORS, LIFE_INDEX_JSON_NAMES} from '@/app/shared/constant
     providedIn: 'root'
 })
 export class LocalService {
-    private _lifeIndex$: BehaviorSubject<LifeIndexResponseType> = new BehaviorSubject<LifeIndexResponseType>({} as LifeIndexResponseType);
+    private _lifeIndex$: BehaviorSubject<LifeIndexResponse> = new BehaviorSubject<LifeIndexResponse>({} as LifeIndexResponse);
 
-    private prepareLifeIndexResponse(payload: AtlasFilterType, data: LifeIndexMultipleResponseType): LifeIndexResponseType {
+    private prepareLifeIndexResponse(payload: AtlasFilter, data: LifeIndexMultipleResponse): LifeIndexResponse {
         const countries = Object.keys(data);
         const year = payload.year;
 
@@ -22,21 +22,21 @@ export class LocalService {
                 acc[country] = data[country][year];
             }
             return acc;
-        }, {} as LifeIndexResponseType);
+        }, {} as LifeIndexResponse);
     }
 
-    public getLifeIndex(payload: AtlasFilterType): Observable<LifeIndexResponseType> {
+    public getLifeIndex(payload: AtlasFilter): Observable<LifeIndexResponse> {
         const accessor = payload.category || LIFE_INDEX_ACCESSORS.QOLI;
         const fileName = LIFE_INDEX_JSON_NAMES[accessor];
         const promise = import(`@/../files/life-index/countries/${fileName}.json`)
-            .then((data: LifeIndexMultipleResponseType) => this.prepareLifeIndexResponse(payload, data));
+            .then((data: LifeIndexMultipleResponse) => this.prepareLifeIndexResponse(payload, data));
 
         return from(promise);
     }
 
-    public lifeIndexSubscription(payload: AtlasFilterType) {
+    public lifeIndexSubscription(payload: AtlasFilter) {
         this.getLifeIndex(payload)
-            .subscribe((data: LifeIndexResponseType) => {
+            .subscribe((data: LifeIndexResponse) => {
                 this._lifeIndex$.next(data);
             })
     }
