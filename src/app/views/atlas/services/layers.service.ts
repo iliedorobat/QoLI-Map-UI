@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import {DatasetService} from './dataset.service';
 import {GeoFeature} from '../constants/geo.types';
 import {LayerEventsService} from './layer-events.service';
-import {LifeIndexResponseType} from '../constants/response.type';
+import {LifeIndexResponseType} from '../constants/response.types';
 
 import * as COUNTRIES from '../../../../../files/geo-location/european-union.json';
 import {SORT_ORDER} from '../../../shared/constants/math.const';

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, from, Observable} from 'rxjs';
 
 import {AtlasFilterType} from '../sidebar-filter/atlas-filter/atlas-filter.types';
-import {LifeIndexMultipleResponseType, LifeIndexResponseType} from '../constants/response.type';
+import {LifeIndexMultipleResponseType, LifeIndexResponseType} from '../constants/response.types';
 import {LIFE_INDEX_ACCESSORS, LIFE_INDEX_JSON_NAMES} from '../../../shared/constants/app.const';
 
 @Injectable({

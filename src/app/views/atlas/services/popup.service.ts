@@ -5,7 +5,7 @@ import {AtlasFilterService} from '../sidebar-filter/atlas-filter/atlas-filter.se
 import {DatasetService} from './dataset.service';
 import {GeoFeature} from '../constants/geo.types';
 import {HTMLElementParams, HtmlElementsService} from './html-elements.service';
-import {LifeIndexResponseType} from '../constants/response.type';
+import {LifeIndexResponseType} from '../constants/response.types';
 
 import {SORT_ORDER} from '../../../shared/constants/math.const';
 

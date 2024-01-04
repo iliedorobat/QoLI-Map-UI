@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {GeoJSON, Map} from 'leaflet';
 
 import {GeoFeature} from '../constants/geo.types';
-import {LifeIndexResponseType} from '../constants/response.type';
+import {LifeIndexResponseType} from '../constants/response.types';
 import {PopupService} from './popup.service';
 import {TooltipService} from './tooltip.service';
 

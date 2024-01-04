@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as _ from 'lodash';
 
-import {LifeIndexResponseType} from '../constants/response.type';
+import {LifeIndexResponseType} from '../constants/response.types';
 import {GeoFeature} from '../constants/geo.types';
 import {SORT_ORDER} from '../../../shared/constants/math.const';
 
