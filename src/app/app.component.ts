@@ -33,38 +33,38 @@ export class AppComponent {
         localService.lifeIndexSubscription(this.atlasFilterService.getFilter());
     }
 
-    handleMenuItemClick = (event: Event, menuItem: MenuItem) => {
+    onMenuItemClick = (event: Event, menuItem: MenuItem) => {
         const {id} = menuItem;
         if (id === this.MENU_ITEMS_IDS.LOGO) {
             return;
         }
 
         if (id === this.MENU_ITEMS_IDS.FILTER) {
-            this.handleOpenSidebar(event, id);
+            this.onOpenSidebar(event, id);
         } else {
-            this.handleActiveButtonChange(id);
+            this.onActiveButtonChange(id);
         }
     };
 
-    handleOpenSidebar(event: Event, itemId: string) {
+    onOpenSidebar(event: Event, itemId: string) {
         event.preventDefault();
         event.stopPropagation();
 
-        this.handleActiveButtonChange(itemId);
+        this.onActiveButtonChange(itemId);
 
         const offcanvasRef = this.offcanvasService.open(SidebarComponent);
         offcanvasRef.componentInstance.name = 'Filter';
-        offcanvasRef.componentInstance.onActiveButtonResets = this.handleActiveButtonReset;
+        offcanvasRef.componentInstance.onActiveButtonResets = this.onActiveButtonReset;
         offcanvasRef.hidden.subscribe(value => {
-            this.handleActiveButtonReset();
+            this.onActiveButtonReset();
         });
     }
 
-    handleActiveButtonChange = (itemId: string) => {
+    onActiveButtonChange = (itemId: string) => {
         this.activeMenuItemId = itemId;
     };
 
-    handleActiveButtonReset = () => {
+    onActiveButtonReset = () => {
         this.activeMenuItemId = DEFAULT_ACTIVE_MENU_ITEM_ID;
     };
 }

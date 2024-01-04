@@ -8,13 +8,13 @@
             'btn-light': item.id !== MENU_ITEMS_IDS.LOGO,
             'active': activeMenuItemId === item.id
         }"
-        (click)="handleMenuItemClick($event, item)"
+        (click)="onMenuItemClick($event, item)"
     >
         <i *ngIf="item.iconClasses" [ngClass]="item.iconClasses"></i>
         {{ item.label }}
     </button>
 </div>
 
-<app-atlas (openSidebar)="handleOpenSidebar($event, MENU_ITEMS_IDS.FILTER)"></app-atlas>
+<app-atlas (openSidebar)="onOpenSidebar($event, MENU_ITEMS_IDS.FILTER)"></app-atlas>
 
 <router-outlet></router-outlet>
