@@ -9,9 +9,9 @@ import {LocalService} from './services/local.service';
 import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
 
 @Component({
-  selector: 'app-atlas',
-  templateUrl: './atlas.component.html',
-  styleUrls: ['./atlas.component.scss']
+    selector: 'app-atlas',
+    templateUrl: './atlas.component.html',
+    styleUrls: ['./atlas.component.scss']
 })
 export class AtlasComponent {
     constructor(
@@ -21,10 +21,10 @@ export class AtlasComponent {
         private localService: LocalService
     ) {}
 
-    MAP_OPTIONS = MAP_OPTIONS;
     private map: Map | undefined;
-    layers: (Layer | GeoJSON)[] = [BASE_LAYER];
-    layersControl = {
+    protected readonly MAP_OPTIONS = MAP_OPTIONS;
+    protected layers: (Layer | GeoJSON)[] = [BASE_LAYER];
+    protected readonly layersControl = {
         baseLayers: {
             [LAYERS.OPEN_STREET_MAP.BASE.name]: LAYERS.OPEN_STREET_MAP.BASE.layer,
             [LAYERS.OPEN_STREET_MAP.CYCLE.name]: LAYERS.OPEN_STREET_MAP.CYCLE.layer,
@@ -55,9 +55,4 @@ export class AtlasComponent {
     onOpenSidebar(event: Event) {
         this.openSidebar.emit(event);
     }
-
-    // ngOnDestroy(): void {
-    //   this.destroying$.next();
-    //   this.destroying$.complete();
-    // }
 }
