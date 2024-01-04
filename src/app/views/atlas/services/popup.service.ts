@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {PopupOptions} from 'leaflet';
 
-import {AtlasFilterService} from '../sidebar-filter/atlas-filter/atlas-filter.service';
+import {AtlasFilterService} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.service';
 import {DatasetService} from './dataset.service';
-import {GeoFeature} from '../constants/geo.types';
+import {GeoFeature} from '@/app/views/atlas/constants/geo.types';
 import {HTMLElementParams, HtmlElementsService} from './html-elements.service';
-import {LifeIndexResponseType} from '../constants/response.types';
+import {LifeIndexResponseType} from '@/app/views/atlas/constants/response.types';
 
-import {SORT_ORDER} from '../../../shared/constants/math.const';
+import {SORT_ORDER} from '@/app/shared/constants/math.const';
 
 @Injectable({
     providedIn: 'root'

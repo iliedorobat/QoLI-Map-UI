@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import * as _ from 'lodash';
+import isEmpty from 'lodash-es/isEmpty';
 
 import {LifeIndexResponseType} from '../constants/response.types';
 import {GeoFeature} from '../constants/geo.types';
-import {SORT_ORDER} from '../../../shared/constants/math.const';
+
+import {SORT_ORDER} from '@/app/shared/constants/math.const';
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +30,7 @@ export class DatasetService {
     public getScore = (geoLand: GeoFeature, response: LifeIndexResponseType) => {
         const countryCode = geoLand.id;
 
-        return countryCode && !_.isEmpty(response)
+        return countryCode && !isEmpty(response)
             ? response[countryCode]
             : 0 as number;
     }

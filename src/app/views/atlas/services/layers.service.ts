@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
 import {GeoJSON, geoJSON, Layer, Map} from 'leaflet';
-import * as _ from 'lodash';
+import get from 'lodash-es/get';
 
 import {DatasetService} from './dataset.service';
 import {GeoFeature} from '../constants/geo.types';
 import {LayerEventsService} from './layer-events.service';
 import {LifeIndexResponseType} from '../constants/response.types';
 
-import * as COUNTRIES from '../../../../../files/geo-location/european-union.json';
-import {SORT_ORDER} from '../../../shared/constants/math.const';
+import * as COUNTRIES from '@/../files/geo-location/european-union.json';
+import {SORT_ORDER} from '@/app/shared/constants/math.const';
 
-const FEATURES = _.get(COUNTRIES, 'features', []) as Array<GeoFeature>;
+const FEATURES = get(COUNTRIES, 'features', []) as Array<GeoFeature>;
 
 @Injectable({
     providedIn: 'root',
@@ -61,18 +61,4 @@ export class LayersService {
             default: return '#e60000';
         }
     };
-
-    /** @deprecated: it is no longer used */
-    private prepareEdges = (response: LifeIndexResponseType) => {
-        const values = Object.values(response);
-        const minValue = Math.min(...values);
-        const maxValue = Math.max(...values);
-        const diff = maxValue - minValue;
-
-        return {
-            diff,
-            minValue,
-            maxValue
-        }
-    }
 }

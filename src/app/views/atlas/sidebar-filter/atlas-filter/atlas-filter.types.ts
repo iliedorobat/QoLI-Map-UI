@@ -1,4 +1,4 @@
-import {LIFE_INDEX_ACCESSORS} from '../../../../shared/constants/app.const';
+import {LIFE_INDEX_ACCESSORS} from '@/app/shared/constants/app.const';
 import {LIFE_INDEX_CATEGORIES} from './atlas-filter.enums';
 
 export class AtlasFilterType {

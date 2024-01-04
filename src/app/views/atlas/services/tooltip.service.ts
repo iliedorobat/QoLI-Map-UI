@@ -6,7 +6,7 @@ import {GeoFeature} from '../constants/geo.types';
 import {HTMLElementParams, HtmlElementsService} from './html-elements.service';
 import {LifeIndexResponseType} from '../constants/response.types';
 
-import {SORT_ORDER} from '../../../shared/constants/math.const';
+import {SORT_ORDER} from '@/app/shared/constants/math.const';
 
 const BOTTOM_LIST = ['LU'];
 const LEFT_LIST = ['BE', 'SI'];
