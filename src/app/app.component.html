@@ -10,7 +10,7 @@
         }"
         (click)="handleMenuItemClick($event, item)"
     >
-        <i *ngIf="item.iconClasses" class="bi bi-funnel"></i>
+        <i *ngIf="item.iconClasses" [ngClass]="item.iconClasses"></i>
         {{ item.label }}
     </button>
 </div>
