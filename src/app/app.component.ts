@@ -1,10 +1,13 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {NgbActiveOffcanvas, NgbModal, NgbOffcanvas} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbOffcanvas} from '@ng-bootstrap/ng-bootstrap';
 
 import {AtlasFilterService} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.service';
 import {LocalService} from './views/atlas/services/local.service';
+import {MenuItem} from '@/app/app.types';
 import {SidebarComponent} from './views/sidebar/sidebar.component';
+
+import {DEFAULT_ACTIVE_MENU_ITEM_ID, MENU_ITEMS, MENU_ITEMS_IDS} from './app.const';
 
 @Component({
     selector: 'app-root',
@@ -12,11 +15,11 @@ import {SidebarComponent} from './views/sidebar/sidebar.component';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    activeButtonId: string = 'map-button';
-    title: string = 'QoLI Map';
+    protected readonly MENU_ITEMS: Array<MenuItem> = MENU_ITEMS;
+    protected readonly MENU_ITEMS_IDS = MENU_ITEMS_IDS;
+    protected activeMenuItemId: string = DEFAULT_ACTIVE_MENU_ITEM_ID;
 
     constructor(
-        public activeOffcanvas: NgbActiveOffcanvas,
         private atlasFilterService: AtlasFilterService,
         private localService: LocalService,
         private modalService: NgbModal,
@@ -30,25 +33,38 @@ export class AppComponent {
         localService.lifeIndexSubscription(this.atlasFilterService.getFilter());
     }
 
-    onOpenSidebar(event: Event, buttonId: string) {
+    handleMenuItemClick = (event: Event, menuItem: MenuItem) => {
+        const {id} = menuItem;
+        if (id === this.MENU_ITEMS_IDS.LOGO) {
+            return;
+        }
+
+        if (id === this.MENU_ITEMS_IDS.FILTER) {
+            this.handleOpenSidebar(event, id);
+        } else {
+            this.handleActiveButtonChange(id);
+        }
+    };
+
+    handleOpenSidebar(event: Event, itemId: string) {
         event.preventDefault();
         event.stopPropagation();
 
-        this.onActiveButtonChanges(buttonId);
+        this.handleActiveButtonChange(itemId);
 
         const offcanvasRef = this.offcanvasService.open(SidebarComponent);
         offcanvasRef.componentInstance.name = 'Filter';
-        offcanvasRef.componentInstance.onActiveButtonResets = this.onActiveButtonResets;
+        offcanvasRef.componentInstance.onActiveButtonResets = this.handleActiveButtonReset;
         offcanvasRef.hidden.subscribe(value => {
-            this.onActiveButtonResets();
+            this.handleActiveButtonReset();
         });
     }
 
-    onActiveButtonChanges = (buttonId: string) => {
-        this.activeButtonId = buttonId;
+    handleActiveButtonChange = (itemId: string) => {
+        this.activeMenuItemId = itemId;
     };
 
-    onActiveButtonResets = () => {
-        this.activeButtonId = 'map-button';
+    handleActiveButtonReset = () => {
+        this.activeMenuItemId = DEFAULT_ACTIVE_MENU_ITEM_ID;
     };
 }
