@@ -12,17 +12,19 @@ export class AtlasFilterService {
     // TODO: use an env constant instead of year 2021 / 2022
     private filter: AtlasFilter = new AtlasFilterConstructor(LIFE_INDEX_CATEGORIES.QOLI, 2021);
 
-    public getFilter() {
+    public getFilter(): AtlasFilter {
         return this.filter;
     }
 
-    public setFilter(filter: AtlasFilter) {
+    public setFilter(filter: AtlasFilter): void {
         this.filter = filter;
     }
 
-    public initFilterForm = (filter: AtlasFilter): FormGroup => new FormGroup({
-        category: new FormControl(filter.category, []),
-        categoryLabel: new FormControl(filter.categoryLabel, []),
-        year: new FormControl(filter.year, [])
-    });
+    public getInitFilterForm(filter: AtlasFilter): FormGroup {
+        return new FormGroup({
+            category: new FormControl(filter.category, []),
+            categoryLabel: new FormControl(filter.categoryLabel, []),
+            year: new FormControl(filter.year, [])
+        });
+    }
 }
