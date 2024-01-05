@@ -3,7 +3,6 @@ import {GeoJSON, Layer, Map} from 'leaflet';
 
 import {AtlasFilterService} from './sidebar-filter/atlas-filter/atlas-filter.service';
 import {AtlasService} from './services/atlas.service';
-import {LayersService} from './services/layers.service';
 import {LocalService} from './services/local.service';
 
 import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
@@ -17,7 +16,6 @@ export class AtlasComponent implements OnInit {
     constructor(
         private atlasFilterService: AtlasFilterService,
         private atlasService: AtlasService,
-        private layersService: LayersService,
         private localService: LocalService
     ) {}
 
@@ -43,7 +41,7 @@ export class AtlasComponent implements OnInit {
             .subscribe(data => {
                 if (this.map) {
                     const baseLayers = [BASE_LAYER];
-                    this.layers = this.layersService.prepareLayers(this.map, baseLayers, data);
+                    this.layers = this.atlasService.prepareLayers(this.map, baseLayers, data);
                 }
             });
     }
