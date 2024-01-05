@@ -34,14 +34,14 @@ export class LocalService {
         return from(promise);
     }
 
-    public lifeIndexSubscription(payload: AtlasFilter) {
+    public lifeIndexSubscription(payload: AtlasFilter): void {
         this.getLifeIndex(payload)
             .subscribe((data: LifeIndexResponse) => {
                 this._lifeIndex$.next(data);
             })
     }
 
-    get lifeIndex$() {
+    get lifeIndex$(): Observable<LifeIndexResponse> {
         return this._lifeIndex$.asObservable();
     }
 }

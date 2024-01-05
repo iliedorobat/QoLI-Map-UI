@@ -10,7 +10,7 @@ export interface HTMLElementParams {
     providedIn: 'root'
 })
 export class HtmlElementsService {
-    public createElement = (params: HTMLElementParams): HTMLElement => {
+    public createElement(params: HTMLElementParams): HTMLElement {
         const {className, innerText, tagName} = params;
         const element = document.createElement(tagName);
 
@@ -25,7 +25,7 @@ export class HtmlElementsService {
         return element;
     }
 
-    public createLabelElement = (label: string): HTMLElement => {
+    public createLabelElement(label: string): HTMLElement {
         return this.createElement({
             className: 'label',
             innerText: `${label}:`,
@@ -33,7 +33,7 @@ export class HtmlElementsService {
         } as HTMLElementParams);
     }
 
-    public createValueElement = (value: string | number | null): HTMLElement => {
+    public createValueElement(value: string | number | null): HTMLElement {
         return this.createElement({
             className: 'value',
             innerText: value,

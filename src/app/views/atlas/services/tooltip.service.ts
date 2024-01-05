@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {TooltipOptions} from 'leaflet';
+import {Direction, TooltipOptions} from 'leaflet';
 
 import {DatasetService} from './dataset.service';
 import {GeoFeature} from '../constants/geo.types';
@@ -21,7 +21,7 @@ export class TooltipService {
         private htmlElementsService: HtmlElementsService
     ) {}
 
-    public createContent = (geoLand: GeoFeature, response: LifeIndexResponse) => {
+    public createContent(geoLand: GeoFeature, response: LifeIndexResponse) {
         const content = document.createElement('div');
         content.className = 'content';
 
@@ -34,7 +34,7 @@ export class TooltipService {
         return content;
     }
 
-    public getOptions = (geoLand: GeoFeature): TooltipOptions => {
+    public getOptions(geoLand: GeoFeature): TooltipOptions {
         const countryCode = geoLand.id as string;
         return {
             className: 'land-score',
@@ -44,7 +44,7 @@ export class TooltipService {
         } as TooltipOptions;
     }
 
-    private createHeader = (geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement => {
+    private createHeader(geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement {
         const countryName = geoLand.properties.NAME_ENGL;
         const score = this.datasetService.getScore(geoLand, response);
         const headerElement = this.htmlElementsService.createElement({
@@ -61,7 +61,7 @@ export class TooltipService {
         return headerElement;
     }
 
-    private createBody = (geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement => {
+    private createBody(geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement {
         const countryCode = geoLand.id;
         const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
         const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;
@@ -80,7 +80,7 @@ export class TooltipService {
         return bodyElement;
     }
 
-    private getOffset = (countryCode: string) => {
+    private getOffset(countryCode: string): Array<number> {
         switch (countryCode) {
             case 'BE':
                 return [-10, -10];
@@ -129,7 +129,7 @@ export class TooltipService {
         }
     }
 
-    private getDirection = (countryCode: string) => {
+    private getDirection(countryCode: string): Direction {
         if (LEFT_LIST.includes(countryCode)) {
             return 'left';
         } else if (RIGHT_LIST.includes(countryCode)) {

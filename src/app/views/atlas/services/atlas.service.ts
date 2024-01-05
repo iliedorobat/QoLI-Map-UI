@@ -20,7 +20,7 @@ export class AtlasService {
         private datasetService: DatasetService,
     ) {}
 
-    onFilterControlAdd = (map: Map): void => {
+    public onFilterControlAdd(map: Map): void {
         const CustomControl = Control.extend({
             onAdd(map: Map) {
                 return DomUtil.get('filter-controller');
@@ -31,15 +31,15 @@ export class AtlasService {
             position: 'topleft'
         });
         map.addControl(custom);
-    };
+    }
 
-    prepareLayers = (map: Map, baseLayers: Array<Layer | GeoJSON>, response: LifeIndexResponse): Array<Layer | GeoJSON> => {
+    public prepareLayers(map: Map, baseLayers: Array<Layer | GeoJSON>, response: LifeIndexResponse): Array<Layer | GeoJSON> {
         const countriesLayers = FEATURES.map(county => this.getFeatureLayer(map, county, response));
 
         return [...baseLayers, ...countriesLayers];
-    };
+    }
 
-    private getFeatureLayer = (map: Map, geoLand: GeoFeature, response: LifeIndexResponse): GeoJSON => {
+    private getFeatureLayer(map: Map, geoLand: GeoFeature, response: LifeIndexResponse): GeoJSON {
         const countryCode = geoLand.id as string;
         const score = this.datasetService.getScore(geoLand, response);
         const geoJsonObject = geoLand.geometry;
@@ -57,9 +57,9 @@ export class AtlasService {
         this.eventsService.addEvents(map, layer, geoLand, response);
 
         return layer;
-    };
+    }
 
-    private getColor = (response: LifeIndexResponse, score: number, countryCode: string): string => {
+    private getColor(response: LifeIndexResponse, score: number, countryCode: string): string {
         const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
         const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;
 
@@ -73,7 +73,7 @@ export class AtlasService {
             case rank <= 26: return '#fc4949';
             default: return '#e60000';
         }
-    };
+    }
 }
 
 export const MARKERS_STATUS = {

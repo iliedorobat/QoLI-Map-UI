@@ -19,7 +19,7 @@ export class PopupService {
         private htmlElementsService: HtmlElementsService
     ) {}
 
-    public createContent = (geoLand: GeoFeature, response: LifeIndexResponse) => {
+    public createContent(geoLand: GeoFeature, response: LifeIndexResponse) {
         const content = document.createElement('div');
         content.className = 'content';
 
@@ -30,15 +30,15 @@ export class PopupService {
         content.appendChild(body);
 
         return content;
-    };
+    }
 
-    public getOptions = (): PopupOptions => {
+    public getOptions(): PopupOptions {
         return {
             className: 'land-summary'
         } as PopupOptions;
     }
 
-    private createHeader = (geoLand: GeoFeature): HTMLElement => {
+    private createHeader(geoLand: GeoFeature): HTMLElement {
         const countryName = geoLand.properties.NAME_ENGL;
 
         return this.htmlElementsService.createElement({
@@ -48,7 +48,7 @@ export class PopupService {
         } as HTMLElementParams);
     }
 
-    private createBody = (geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement => {
+    private createBody(geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement {
         const countryCode = geoLand.id;
         const score = this.datasetService.getScore(geoLand, response);
         const filter = this.atlasFilterService.getFilter();

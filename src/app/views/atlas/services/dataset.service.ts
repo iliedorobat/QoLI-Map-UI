@@ -6,11 +6,13 @@ import {GeoFeature} from '../constants/geo.types';
 
 import {SORT_ORDER} from '@/app/shared/constants/math.const';
 
+export type DatasetEntry = Array<number | string>;
+
 @Injectable({
     providedIn: 'root'
 })
 export class DatasetService {
-    private sortByAsc = (a: Array<string|number>, b: Array<string|number>) => {
+    private sortByAsc(a: Array<string | number>, b: Array<string | number>): number {
         if (a[1] < b[1]) {
             return -1;
         } else if (a[1] > b[1]) {
@@ -18,7 +20,8 @@ export class DatasetService {
         }
         return 0;
     }
-    private sortByDesc = (a: Array<string|number>, b: Array<string|number>) => {
+
+    private sortByDesc(a: Array<string | number>, b: Array<string | number>): number {
         if (a[1] > b[1]) {
             return -1;
         } else if (a[1] < b[1]) {
@@ -27,7 +30,7 @@ export class DatasetService {
         return 0;
     }
 
-    public getScore = (geoLand: GeoFeature, response: LifeIndexResponse) => {
+    public getScore(geoLand: GeoFeature, response: LifeIndexResponse): number {
         const countryCode = geoLand.id;
 
         return countryCode && !isEmpty(response)
@@ -35,7 +38,7 @@ export class DatasetService {
             : 0 as number;
     }
 
-    public getSortedResponse = (response: LifeIndexResponse, sortOrder: SORT_ORDER) => {
+    public getSortedResponse(response: LifeIndexResponse, sortOrder: SORT_ORDER): Array<DatasetEntry> {
         const array = Object.keys(response)
             .map(code => [code, response[code]]);
         const sortMethod = sortOrder === SORT_ORDER.ASC
