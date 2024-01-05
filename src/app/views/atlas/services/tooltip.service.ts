@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Direction, TooltipOptions} from 'leaflet';
+import {Direction, PointTuple, TooltipOptions} from 'leaflet';
 
 import {DatasetService} from './dataset.service';
 import {GeoFeature} from '../constants/geo.types';
@@ -80,7 +80,7 @@ export class TooltipService {
         return bodyElement;
     }
 
-    private getOffset(countryCode: string): Array<number> {
+    private getOffset(countryCode: string): PointTuple {
         switch (countryCode) {
             case 'BE':
                 return [-10, -10];
@@ -99,7 +99,7 @@ export class TooltipService {
             case 'ES':
                 return [-150, -40];
             case 'FI':
-                return [-30, 180];
+                return [-30, 200];
             case 'FR':
                 return [-1200, -1700];
             case 'HR':

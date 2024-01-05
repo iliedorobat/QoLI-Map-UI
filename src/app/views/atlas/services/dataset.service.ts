@@ -12,7 +12,7 @@ export type DatasetEntry = Array<number | string>;
     providedIn: 'root'
 })
 export class DatasetService {
-    private sortByAsc(a: Array<string | number>, b: Array<string | number>): number {
+    private sortByAsc(a: DatasetEntry, b: DatasetEntry): number {
         if (a[1] < b[1]) {
             return -1;
         } else if (a[1] > b[1]) {
@@ -21,7 +21,7 @@ export class DatasetService {
         return 0;
     }
 
-    private sortByDesc(a: Array<string | number>, b: Array<string | number>): number {
+    private sortByDesc(a: DatasetEntry, b: DatasetEntry): number {
         if (a[1] > b[1]) {
             return -1;
         } else if (a[1] < b[1]) {
