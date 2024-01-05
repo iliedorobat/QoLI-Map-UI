@@ -1,7 +1,7 @@
-import {LIFE_INDEX_ACCESSORS, LIFE_INDEX_LABELS} from '@/app/shared/constants/app.const';
+import {LIFE_INDEX_CATEGORIES, LIFE_INDEX_LABELS} from '@/app/shared/constants/app.const';
 
 export type AtlasFilter = {
-    category: LIFE_INDEX_ACCESSORS | null;
+    category: LIFE_INDEX_CATEGORIES | null;
     categoryLabel: LIFE_INDEX_LABELS | null;
     year: number | null;
     isDisabled: Function;
@@ -9,11 +9,11 @@ export type AtlasFilter = {
 };
 
 export class AtlasFilterConstructor {
-    public category: LIFE_INDEX_ACCESSORS | null = null;
+    public category: LIFE_INDEX_CATEGORIES | null = null;
     public categoryLabel: LIFE_INDEX_LABELS | null = null;
     public year: number | null = null;
 
-    constructor(category: LIFE_INDEX_ACCESSORS, year: number) {
+    constructor(category: LIFE_INDEX_CATEGORIES, year: number) {
         this.category = category;
         this.categoryLabel = LIFE_INDEX_LABELS[category];
         this.year = year;

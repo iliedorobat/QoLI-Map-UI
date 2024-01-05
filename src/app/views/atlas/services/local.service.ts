@@ -4,7 +4,7 @@ import {BehaviorSubject, from, Observable} from 'rxjs';
 import {AtlasFilter} from '../sidebar-filter/atlas-filter/atlas-filter.types';
 import {LifeIndexMultipleResponse, LifeIndexResponse} from '../constants/response.types';
 
-import {LIFE_INDEX_ACCESSORS, LIFE_INDEX_JSON_NAMES} from '@/app/shared/constants/app.const';
+import {LIFE_INDEX_CATEGORIES, LIFE_INDEX_JSON_NAMES} from '@/app/shared/constants/app.const';
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +26,7 @@ export class LocalService {
     }
 
     public getLifeIndex(payload: AtlasFilter): Observable<LifeIndexResponse> {
-        const accessor = payload.category || LIFE_INDEX_ACCESSORS.QOLI;
+        const accessor = payload.category || LIFE_INDEX_CATEGORIES.QOLI;
         const fileName = LIFE_INDEX_JSON_NAMES[accessor];
         const promise = import(`@/../files/life-index/countries/${fileName}.json`)
             .then((data: LifeIndexMultipleResponse) => this.prepareLifeIndexResponse(payload, data));
