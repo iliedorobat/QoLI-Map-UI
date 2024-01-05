@@ -3,7 +3,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 
 import {AtlasFilter, AtlasFilterConstructor} from './atlas-filter.types';
 
-import {LIFE_INDEX_CATEGORIES, LIFE_INDEX_LABELS} from '@/app/shared/constants/app.const';
+import {LIFE_INDEX_CATEGORIES} from '@/app/shared/constants/app.const';
 
 @Injectable({
     providedIn: 'root',
@@ -25,11 +25,4 @@ export class AtlasFilterService {
         categoryLabel: new FormControl(filter.categoryLabel, []),
         year: new FormControl(filter.year, [])
     });
-
-    public getCategory = (categoryLabel: LIFE_INDEX_LABELS | null): LIFE_INDEX_CATEGORIES => {
-        const index = categoryLabel
-            ? Object.values(LIFE_INDEX_LABELS).indexOf(categoryLabel)
-            : -1;
-        return Object.keys(LIFE_INDEX_LABELS)[index] as LIFE_INDEX_CATEGORIES;
-    }
 }

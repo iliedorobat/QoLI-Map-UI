@@ -15,6 +15,18 @@ const LIFE_INDEX_START = 2004;
 
 const LIFE_INDEX_END = 2022;
 
+const LIFE_INDEX_INTERVAL = (
+    () => {
+        const values = [];
+
+        for (let year = LIFE_INDEX_START; year <= LIFE_INDEX_END; year++) {
+            values.push(year);
+        }
+
+        return values;
+    }
+)();
+
 enum LIFE_INDEX_CATEGORIES {
     QOLI = 'QOLI',
     EDUCATION = 'EDUCATION',
@@ -62,6 +74,7 @@ export {
     ICONS,
     LIFE_INDEX_CATEGORIES,
     LIFE_INDEX_END,
+    LIFE_INDEX_INTERVAL,
     LIFE_INDEX_LABELS,
     LIFE_INDEX_JSON_NAMES,
     LIFE_INDEX_START

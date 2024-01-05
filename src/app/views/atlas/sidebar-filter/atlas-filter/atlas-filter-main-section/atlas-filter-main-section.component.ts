@@ -4,11 +4,15 @@ import {FormGroup} from '@angular/forms';
 import {AtlasFilterService} from '../atlas-filter.service';
 import {AtlasFilter} from '../atlas-filter.types';
 
-import {LIFE_INDEX_END, LIFE_INDEX_LABELS, LIFE_INDEX_START} from '@/app/shared/constants/app.const';
+import {
+    LIFE_INDEX_CATEGORIES,
+    LIFE_INDEX_INTERVAL,
+    LIFE_INDEX_LABELS
+} from '@/app/shared/constants/app.const';
 
 @Component({
-  selector: 'app-atlas-filter-main-section',
-  templateUrl: './atlas-filter-main-section.component.html'
+    selector: 'app-atlas-filter-main-section',
+    templateUrl: './atlas-filter-main-section.component.html'
 })
 export class AtlasFilterMainSectionComponent {
     constructor(
@@ -16,7 +20,7 @@ export class AtlasFilterMainSectionComponent {
     ) {}
 
     protected readonly LIFE_INDEX_LABELS = Object.values(LIFE_INDEX_LABELS);
-    protected readonly LIFE_INDEX_INTERVAL = getLifeIndexInterval(LIFE_INDEX_START, LIFE_INDEX_END);
+    protected readonly LIFE_INDEX_INTERVAL = LIFE_INDEX_INTERVAL;
 
     protected filter: AtlasFilter = this.atlasFilterService.getFilter();
     @Input() form: FormGroup = this.atlasFilterService.initFilterForm(this.filter);
@@ -30,18 +34,16 @@ export class AtlasFilterMainSectionComponent {
     }
 
     onCategoryLabelChanges(event: Event) {
-        const category = this.atlasFilterService.getCategory(this.filter.categoryLabel);
-        this.filter.category = category;
-        this.form?.controls['category'].setValue(category);
+        const target = event.target as HTMLSelectElement;
+        // Exclude the first option whose value is null
+        const selectedIndex = target.selectedIndex - 1;
+        this.filter.category = Object.values(LIFE_INDEX_CATEGORIES)[selectedIndex] as LIFE_INDEX_CATEGORIES;
+    }
+
+    onYearChanges(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        // Exclude the first option whose value is null
+        const selectedIndex = target.selectedIndex - 1;
+        this.filter.year = this.LIFE_INDEX_INTERVAL[selectedIndex];
     }
 }
-
-function getLifeIndexInterval(start: number, end: number) {
-    const values = [];
-
-    for (let year = start; year <= end; year++) {
-        values.push(year);
-    }
-
-    return values;
-};

@@ -5,7 +5,7 @@
                 class="form-select form-select-sm"
                 id="year"
                 formControlName="year"
-                [(ngModel)]="filter.year"
+                (change)="onYearChanges($event)"
             >
                 <option [ngValue]="null" selected disabled>Analyzed Year</option>
                 <option *ngFor="let year of LIFE_INDEX_INTERVAL" [ngValue]="year">{{ year }}</option>
@@ -19,7 +19,6 @@
                 class="form-select form-select-sm"
                 id="categoryLabel"
                 formControlName="categoryLabel"
-                [(ngModel)]="filter.categoryLabel"
                 (change)="onCategoryLabelChanges($event)"
             >
                 <option [ngValue]="null" selected disabled>Dimension Name</option>
