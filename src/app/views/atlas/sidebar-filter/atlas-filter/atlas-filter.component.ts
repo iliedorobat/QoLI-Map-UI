@@ -21,14 +21,14 @@ export class AtlasFilterComponent {
     @Input() onActiveButtonResets: Function = noop;
 
     protected filter: AtlasFilter = this.atlasFilterService.getFilter();
-    protected form: FormGroup = this.atlasFilterService.initFilterForm(this.filter);
+    protected form: FormGroup = this.atlasFilterService.getInitFilterForm(this.filter);
 
-    onFilterApply() {
+    onFilterApply(): void {
         this.atlasFilterService.setFilter(this.filter);
         this.localService.lifeIndexSubscription(this.filter);
     }
 
-    onSectionReset(event: Event) {
+    onSectionReset(event: Event): void {
         event.stopPropagation();
         const target = event.target as HTMLElement;
         const value = get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
@@ -46,11 +46,11 @@ export class AtlasFilterComponent {
         this.atlasFilterService.setFilter(this.filter);
     }
 
-    onReset() {
+    onReset(): void {
         this.form.reset();
     }
 
-    onSubmit() {
+    onSubmit(): void {
         this.onFilterApply();
     }
 }

@@ -23,7 +23,7 @@ export class AtlasFilterMainSectionComponent {
     protected readonly LIFE_INDEX_INTERVAL = LIFE_INDEX_INTERVAL;
 
     protected filter: AtlasFilter = this.atlasFilterService.getFilter();
-    @Input() form: FormGroup = this.atlasFilterService.initFilterForm(this.filter);
+    @Input() form: FormGroup = this.atlasFilterService.getInitFilterForm(this.filter);
 
     get category() {
         return this.form?.get('category');
@@ -33,14 +33,14 @@ export class AtlasFilterMainSectionComponent {
         return this.form?.get('year');
     }
 
-    onCategoryLabelChanges(event: Event) {
+    onCategoryLabelChanges(event: Event): void {
         const target = event.target as HTMLSelectElement;
         // Exclude the first option whose value is null
         const selectedIndex = target.selectedIndex - 1;
         this.filter.category = Object.values(LIFE_INDEX_CATEGORIES)[selectedIndex] as LIFE_INDEX_CATEGORIES;
     }
 
-    onYearChanges(event: Event) {
+    onYearChanges(event: Event): void {
         const target = event.target as HTMLSelectElement;
         // Exclude the first option whose value is null
         const selectedIndex = target.selectedIndex - 1;

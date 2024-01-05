@@ -13,8 +13,8 @@ export class SidebarComponent {
 
     @Input() onActiveButtonResets: Function = noop;
 
-    onSidebarClose = () => {
+    onSidebarClose(): void {
         this.activeOffcanvas.dismiss('Cross click');
         this.onActiveButtonResets();
-    };
+    }
 }

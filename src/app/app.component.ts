@@ -33,7 +33,7 @@ export class AppComponent {
         localService.lifeIndexSubscription(this.atlasFilterService.getFilter());
     }
 
-    onMenuItemClick = (event: Event, menuItem: MenuItem) => {
+    onMenuItemClick(event: Event, menuItem: MenuItem): void {
         const {id} = menuItem;
         if (id === this.MENU_ITEMS_IDS.LOGO) {
             return;
@@ -44,9 +44,9 @@ export class AppComponent {
         } else {
             this.onActiveButtonChange(id);
         }
-    };
+    }
 
-    onOpenSidebar(event: Event, itemId: string) {
+    onOpenSidebar(event: Event, itemId: string): void {
         event.preventDefault();
         event.stopPropagation();
 
@@ -60,11 +60,11 @@ export class AppComponent {
         });
     }
 
-    onActiveButtonChange = (itemId: string) => {
+    onActiveButtonChange(itemId: string): void {
         this.activeMenuItemId = itemId;
-    };
+    }
 
-    onActiveButtonReset = () => {
+    onActiveButtonReset(): void {
         this.activeMenuItemId = DEFAULT_ACTIVE_MENU_ITEM_ID;
-    };
+    }
 }

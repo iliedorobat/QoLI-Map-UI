@@ -46,12 +46,12 @@ export class AtlasComponent implements OnInit {
             });
     }
 
-    onMapReady(map: Map) {
+    onMapReady(map: Map): void {
         this.map = map;
         this.atlasService.onFilterControlAdd(map);
     }
 
-    onOpenSidebar(event: Event) {
+    onOpenSidebar(event: Event): void {
         this.openSidebar.emit(event);
     }
 }
