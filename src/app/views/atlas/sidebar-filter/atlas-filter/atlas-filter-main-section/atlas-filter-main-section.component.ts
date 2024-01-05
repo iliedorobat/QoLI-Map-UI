@@ -4,11 +4,7 @@ import {FormGroup} from '@angular/forms';
 import {AtlasFilterService} from '../atlas-filter.service';
 import {AtlasFilter} from '../atlas-filter.types';
 
-import {
-    LIFE_INDEX_CATEGORIES,
-    AVAILABLE_INTERVAL,
-    LIFE_INDEX_LABELS
-} from '@/app/shared/constants/app.const';
+import {AVAILABLE_INTERVAL, LIFE_INDEX_LABELS} from '@/app/shared/constants/app.const';
 
 @Component({
     selector: 'app-atlas-filter-main-section',
@@ -22,7 +18,7 @@ export class AtlasFilterMainSectionComponent {
     protected readonly LIFE_INDEX_LABELS = Object.values(LIFE_INDEX_LABELS);
     protected readonly AVAILABLE_INTERVAL = AVAILABLE_INTERVAL;
 
-    protected filter: AtlasFilter = this.atlasFilterService.getFilter();
+    protected filter: AtlasFilter = this.atlasFilterService.getTransitoryFilter();
     @Input() form: FormGroup = this.atlasFilterService.getNewFilterForm(this.filter);
 
     get category() {
@@ -37,13 +33,13 @@ export class AtlasFilterMainSectionComponent {
         const target = event.target as HTMLSelectElement;
         // Exclude the first option whose value is null
         const selectedIndex = target.selectedIndex - 1;
-        this.filter.primary.category = Object.values(LIFE_INDEX_CATEGORIES)[selectedIndex] as LIFE_INDEX_CATEGORIES;
+        this.filter.primary.onCategoryChanges(selectedIndex);
     }
 
     onYearChanges(event: Event): void {
         const target = event.target as HTMLSelectElement;
         // Exclude the first option whose value is null
         const selectedIndex = target.selectedIndex - 1;
-        this.filter.primary.year = this.AVAILABLE_INTERVAL[selectedIndex];
+        this.filter.primary.onYearChanges(selectedIndex);
     }
 }

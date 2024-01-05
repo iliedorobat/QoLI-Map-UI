@@ -1,4 +1,11 @@
-import {DEFAULT_YEAR, LIFE_INDEX_CATEGORIES, LIFE_INDEX_LABELS} from '@/app/shared/constants/app.const';
+import isNil from 'lodash-es/isNil';
+
+import {
+    AVAILABLE_INTERVAL,
+    DEFAULT_YEAR,
+    LIFE_INDEX_CATEGORIES,
+    LIFE_INDEX_LABELS
+} from '@/app/shared/constants/app.const';
 
 export interface PrimaryAtlasFilter {
     category: LIFE_INDEX_CATEGORIES;
@@ -6,6 +13,9 @@ export interface PrimaryAtlasFilter {
     year: number;
     isDisabled: Function;
     isEmpty: Function;
+    onCategoryChanges: Function;
+    onYearChanges: Function;
+    reset: Function;
 }
 
 export class PrimaryAtlasFilterConstructor implements PrimaryAtlasFilter {
@@ -19,11 +29,31 @@ export class PrimaryAtlasFilterConstructor implements PrimaryAtlasFilter {
         this.year = year ?? DEFAULT_YEAR;
     }
 
-    public isDisabled() {
-        return this.category === null || this.year === null;
+    public isDisabled(): boolean {
+        return isNil(this.category) || isNil(this.year);
     }
 
-    public isEmpty() {
-        return this.category === null && this.year === null;
+    public isEmpty(): boolean {
+        return isNil(this.category) && isNil(this.year);
+    }
+
+    public onCategoryChanges(index: number): void {
+        this.category = Object.values(LIFE_INDEX_CATEGORIES)[index] as LIFE_INDEX_CATEGORIES;
+        this.categoryLabel = LIFE_INDEX_LABELS[this.category];
+    }
+
+    public onYearChanges(index: number): void {
+        this.year = AVAILABLE_INTERVAL[index];
+    }
+
+    public reset(primary?: PrimaryAtlasFilter): void {
+        const {
+            category = LIFE_INDEX_CATEGORIES.QOLI,
+            year = DEFAULT_YEAR
+        } = primary || {};
+
+        this.category = category;
+        this.categoryLabel = LIFE_INDEX_LABELS[category];
+        this.year = year;
     }
 }

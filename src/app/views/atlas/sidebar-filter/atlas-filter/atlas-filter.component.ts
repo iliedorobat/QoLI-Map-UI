@@ -20,37 +20,36 @@ export class AtlasFilterComponent {
 
     @Input() onActiveButtonResets: Function = noop;
 
-    protected filter: AtlasFilter = this.atlasFilterService.getFilter();
-    protected prevFilter: AtlasFilter = structuredClone(this.filter) as AtlasFilter;
-    protected form: FormGroup = this.atlasFilterService.getNewFilterForm(this.filter);
+    protected filter: AtlasFilter = this.atlasFilterService.getInitialTransitoryFilter();
+    protected form: FormGroup = this.atlasFilterService.getInitialFilterForm();
 
     onFilterApply(): void {
-        this.atlasFilterService.setFilter(this.filter);
+        this.atlasFilterService.setMemoizedFilter(this.filter);
         this.localService.lifeIndexSubscription(this.filter);
     }
 
     onSectionReset(event: Event): void {
         event.stopPropagation();
-        // TODO: fix the reset button
-        // const target = event.target as HTMLElement;
-        // const value = get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
+        const target = event.target as HTMLElement;
+        const value = get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
+        const memoizedFilter = this.atlasFilterService.getMemoizedFilter();
 
-        // switch (value) {
-        //     case 'atlas-filter-main-section':
-        //         this.filter.category = this.prevFilter.category;
-        //         this.filter.categoryLabel = this.prevFilter.categoryLabel;
-        //         this.filter.year = this.prevFilter.year;
-        //         break;
-        //     default:
-        //         break;
-        // }
+        switch (value) {
+            case 'atlas-filter-main-section':
+                this.filter.primary.reset(memoizedFilter.primary);
+                break;
+            default:
+                break;
+        }
 
-        this.atlasFilterService.setFilter(this.prevFilter);
-        this.form = this.atlasFilterService.getNewFilterForm(this.prevFilter);
+        // TODO:
+        this.form = this.atlasFilterService.getNewFilterForm(this.filter);
     }
 
     onReset(): void {
-        this.form.reset();
+        const memoizedFilter = this.atlasFilterService.getMemoizedFilter();
+        this.filter.reset(memoizedFilter);
+        this.form = this.atlasFilterService.getInitialFilterForm();
     }
 
     onSubmit(): void {

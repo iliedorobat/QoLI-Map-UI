@@ -4,6 +4,7 @@ export interface AtlasFilter {
     primary: PrimaryAtlasFilter;
     isDisabled: Function;
     isEmpty: Function;
+    reset: Function;
 }
 
 export class AtlasFilterConstructor implements AtlasFilter {
@@ -13,11 +14,15 @@ export class AtlasFilterConstructor implements AtlasFilter {
         this.primary = primary ?? new PrimaryAtlasFilterConstructor();
     }
 
-    public isDisabled() {
+    public isDisabled(): boolean {
         return this.primary.isDisabled();
     }
 
-    public isEmpty() {
+    public isEmpty(): boolean {
         return this.primary.isEmpty();
+    }
+
+    public reset(memoizedFilter?: AtlasFilter): void {
+        this.primary.reset(memoizedFilter?.primary);
     }
 }

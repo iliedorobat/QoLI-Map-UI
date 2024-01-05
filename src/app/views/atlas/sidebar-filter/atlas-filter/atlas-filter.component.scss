@@ -62,8 +62,7 @@
                 display: flex;
                 gap: 16px;
 
-                > button[type='submit'],
-                > button[type='reset'] {
+                > button[type='submit'] {
                     width: 50%;
                 }
             }
