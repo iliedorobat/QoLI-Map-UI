@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, from, Observable} from 'rxjs';
 
 import {AtlasFilter} from '../sidebar-filter/atlas-filter/atlas-filter.types';
-import {LifeIndexMultipleResponse, LifeIndexResponse} from '../constants/response.types';
+import {LifeIndexMultipleResponses, LifeIndexResponse} from '../constants/response.types';
 
 import {LIFE_INDEX_CATEGORIES, LIFE_INDEX_JSON_NAMES} from '@/app/shared/constants/app.const';
 
@@ -12,7 +12,7 @@ import {LIFE_INDEX_CATEGORIES, LIFE_INDEX_JSON_NAMES} from '@/app/shared/constan
 export class LocalService {
     private _lifeIndex$: BehaviorSubject<LifeIndexResponse> = new BehaviorSubject<LifeIndexResponse>({} as LifeIndexResponse);
 
-    private prepareLifeIndexResponse(payload: AtlasFilter, data: LifeIndexMultipleResponse): LifeIndexResponse {
+    private prepareLifeIndexResponse(payload: AtlasFilter, data: LifeIndexMultipleResponses): LifeIndexResponse {
         const countries = Object.keys(data);
         const year = payload.year;
 
@@ -29,7 +29,7 @@ export class LocalService {
         const accessor = payload.category || LIFE_INDEX_CATEGORIES.QOLI;
         const fileName = LIFE_INDEX_JSON_NAMES[accessor];
         const promise = import(`@/../files/life-index/countries/${fileName}.json`)
-            .then((data: LifeIndexMultipleResponse) => this.prepareLifeIndexResponse(payload, data));
+            .then((data: LifeIndexMultipleResponses) => this.prepareLifeIndexResponse(payload, data));
 
         return from(promise);
     }
