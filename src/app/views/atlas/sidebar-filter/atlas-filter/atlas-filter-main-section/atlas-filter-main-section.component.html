@@ -8,7 +8,7 @@
                 [(ngModel)]="filter.year"
             >
                 <option [ngValue]="null" selected disabled>Analyzed Year</option>
-                <option *ngFor="let year of LIFE_INDEX_YEARS" [ngValue]="year">{{ year }}</option>
+                <option *ngFor="let year of LIFE_INDEX_INTERVAL" [ngValue]="year">{{ year }}</option>
             </select>
         </div>
     </div>

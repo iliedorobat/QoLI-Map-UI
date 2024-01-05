@@ -4,7 +4,7 @@ import {FormGroup} from '@angular/forms';
 import {AtlasFilterService} from '../atlas-filter.service';
 import {AtlasFilter} from '../atlas-filter.types';
 
-import {LIFE_INDEX_LABELS, LIFE_INDEX_YEARS} from '../atlas-filter.enums';
+import {LIFE_INDEX_END, LIFE_INDEX_LABELS, LIFE_INDEX_START} from '@/app/shared/constants/app.const';
 
 @Component({
   selector: 'app-atlas-filter-main-section',
@@ -16,7 +16,7 @@ export class AtlasFilterMainSectionComponent {
     ) {}
 
     protected readonly LIFE_INDEX_LABELS = Object.values(LIFE_INDEX_LABELS);
-    protected readonly LIFE_INDEX_YEARS = Object.values(LIFE_INDEX_YEARS);
+    protected readonly LIFE_INDEX_INTERVAL = getLifeIndexInterval(LIFE_INDEX_START, LIFE_INDEX_END);
 
     protected filter: AtlasFilter = this.atlasFilterService.getFilter();
     @Input() form: FormGroup = this.atlasFilterService.initFilterForm(this.filter);
@@ -35,3 +35,13 @@ export class AtlasFilterMainSectionComponent {
         this.form?.controls['category'].setValue(category);
     }
 }
+
+function getLifeIndexInterval(start: number, end: number) {
+    const values = [];
+
+    for (let year = start; year <= end; year++) {
+        values.push(year);
+    }
+
+    return values;
+};

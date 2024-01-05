@@ -3,15 +3,14 @@ import {FormControl, FormGroup} from '@angular/forms';
 
 import {AtlasFilter, AtlasFilterConstructor} from './atlas-filter.types';
 
-import {LIFE_INDEX_ACCESSORS} from '@/app/shared/constants/app.const';
-import {LIFE_INDEX_LABELS} from './atlas-filter.enums';
+import {LIFE_INDEX_ACCESSORS, LIFE_INDEX_LABELS} from '@/app/shared/constants/app.const';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AtlasFilterService {
     // TODO: use an env constant instead of year 2021 / 2022
-    private filter: AtlasFilter = new AtlasFilterConstructor(LIFE_INDEX_ACCESSORS.QOLI, '2021');
+    private filter: AtlasFilter = new AtlasFilterConstructor(LIFE_INDEX_ACCESSORS.QOLI, 2021);
 
     public getFilter() {
         return this.filter;

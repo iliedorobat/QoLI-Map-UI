@@ -11,6 +11,10 @@ const ICONS = {
     STANDARD: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png'
 };
 
+const LIFE_INDEX_START = 2004;
+
+const LIFE_INDEX_END = 2022;
+
 enum LIFE_INDEX_ACCESSORS {
     QOLI = 'QOLI',
     EDUCATION = 'EDUCATION',
@@ -23,6 +27,20 @@ enum LIFE_INDEX_ACCESSORS {
     OVERALL_EXP = 'OVERALL_EXP',
     PMA = 'PMA',
     SAFETY = 'SAFETY'
+}
+
+enum LIFE_INDEX_LABELS {
+    QOLI = 'Quality of Life Index',
+    EDUCATION = 'Education',
+    ENVIRONMENT = 'Environment',
+    GBR = 'Government and Basic Rights',
+    HEALTH = 'Health',
+    SOC_INTERACTIONS = 'Social Interactions',
+    LEISURE = 'Leisure',
+    MLC = 'Material and Living Conditions',
+    OVERALL_EXP = 'Overall Experience',
+    PMA = 'Productive or Main Activity',
+    SAFETY = 'Safety'
 }
 
 enum LIFE_INDEX_JSON_NAMES {
@@ -43,5 +61,8 @@ export {
     COPYRIGHT,
     ICONS,
     LIFE_INDEX_ACCESSORS,
-    LIFE_INDEX_JSON_NAMES
+    LIFE_INDEX_END,
+    LIFE_INDEX_JSON_NAMES,
+    LIFE_INDEX_LABELS,
+    LIFE_INDEX_START
 };

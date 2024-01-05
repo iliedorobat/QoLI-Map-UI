@@ -18,7 +18,7 @@ export class LocalService {
 
         return countries.reduce((acc, country) => {
             // Remove the 'default' key added by the 'import' statement
-            if (typeof year === 'string' && country !== 'default') {
+            if (typeof year === 'number' && country !== 'default') {
                 acc[country] = data[country][year];
             }
             return acc;
