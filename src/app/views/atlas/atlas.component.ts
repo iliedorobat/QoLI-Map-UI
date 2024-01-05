@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {GeoJSON, Layer, Map} from 'leaflet';
 
 import {AtlasFilterService} from './sidebar-filter/atlas-filter/atlas-filter.service';
@@ -13,7 +13,7 @@ import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
     templateUrl: './atlas.component.html',
     styleUrls: ['./atlas.component.scss']
 })
-export class AtlasComponent {
+export class AtlasComponent implements OnInit {
     constructor(
         private atlasFilterService: AtlasFilterService,
         private atlasService: AtlasService,
@@ -23,7 +23,7 @@ export class AtlasComponent {
 
     private map: Map | undefined;
     protected readonly MAP_OPTIONS = MAP_OPTIONS;
-    protected layers: (Layer | GeoJSON)[] = [BASE_LAYER];
+    protected layers: Array<Layer | GeoJSON> = [BASE_LAYER];
     protected readonly layersControl = {
         baseLayers: {
             [LAYERS.OPEN_STREET_MAP.BASE.name]: LAYERS.OPEN_STREET_MAP.BASE.layer,
@@ -38,18 +38,19 @@ export class AtlasComponent {
 
     @Output() openSidebar = new EventEmitter();
 
+    ngOnInit(): void {
+        this.localService.lifeIndex$
+            .subscribe(data => {
+                if (this.map) {
+                    const baseLayers = [BASE_LAYER];
+                    this.layers = this.layersService.prepareLayers(this.map, baseLayers, data);
+                }
+            });
+    }
+
     onMapReady(map: Map) {
         this.map = map;
         this.atlasService.onFilterControlAdd(map);
-
-        this.localService.lifeIndex$
-            .subscribe(data => {
-                if (this.layers.length > 1) {
-                    this.layers = [BASE_LAYER];
-                }
-
-                this.layersService.onLayersReady(map, this.layers, data);
-            });
     }
 
     onOpenSidebar(event: Event) {

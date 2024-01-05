@@ -21,12 +21,13 @@ export class LayersService {
         private datasetService: DatasetService,
     ) {}
 
-    onLayersReady(map: Map, layers: (Layer | GeoJSON)[], response: LifeIndexResponse) {
+    public prepareLayers(map: Map, baseLayers: Array<Layer | GeoJSON>, response: LifeIndexResponse): Array<Layer | GeoJSON> {
         const countriesLayers = FEATURES.map(county => this.getFeatureLayer(map, county, response));
-        layers.push(...countriesLayers);
+
+        return [...baseLayers, ...countriesLayers];
     }
 
-    public getFeatureLayer = (map: Map, geoLand: GeoFeature, response: LifeIndexResponse) => {
+    public getFeatureLayer = (map: Map, geoLand: GeoFeature, response: LifeIndexResponse): GeoJSON => {
         const countryCode = geoLand.id as string;
         const score = this.datasetService.getScore(geoLand, response);
         const geoJsonObject = geoLand.geometry;
@@ -46,7 +47,7 @@ export class LayersService {
         return layer;
     };
 
-    private getColor = (response: LifeIndexResponse, score: number, countryCode: string) => {
+    private getColor = (response: LifeIndexResponse, score: number, countryCode: string): string => {
         const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
         const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;
 
