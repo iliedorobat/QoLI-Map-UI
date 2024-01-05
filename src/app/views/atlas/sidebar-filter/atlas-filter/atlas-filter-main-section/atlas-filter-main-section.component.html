@@ -8,7 +8,7 @@
                 (change)="onYearChanges($event)"
             >
                 <option [ngValue]="null" selected disabled>Analyzed Year</option>
-                <option *ngFor="let year of LIFE_INDEX_INTERVAL" [ngValue]="year">{{ year }}</option>
+                <option *ngFor="let year of AVAILABLE_INTERVAL" [ngValue]="year">{{ year }}</option>
             </select>
         </div>
     </div>

@@ -11,15 +11,17 @@ const ICONS = {
     STANDARD: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png'
 };
 
-const LIFE_INDEX_START = 2004;
+const DEFAULT_YEAR = 2021;
 
-const LIFE_INDEX_END = 2022;
+const MIN_YEAR = 2004;
 
-const LIFE_INDEX_INTERVAL = (
+const MAX_YEAR = 2022;
+
+const AVAILABLE_INTERVAL = (
     () => {
         const values = [];
 
-        for (let year = LIFE_INDEX_START; year <= LIFE_INDEX_END; year++) {
+        for (let year = MIN_YEAR; year <= MAX_YEAR; year++) {
             values.push(year);
         }
 
@@ -70,12 +72,13 @@ enum LIFE_INDEX_JSON_NAMES {
 }
 
 export {
+    AVAILABLE_INTERVAL,
     COPYRIGHT,
+    DEFAULT_YEAR,
     ICONS,
     LIFE_INDEX_CATEGORIES,
-    LIFE_INDEX_END,
-    LIFE_INDEX_INTERVAL,
     LIFE_INDEX_LABELS,
     LIFE_INDEX_JSON_NAMES,
-    LIFE_INDEX_START
+    MAX_YEAR,
+    MIN_YEAR
 };

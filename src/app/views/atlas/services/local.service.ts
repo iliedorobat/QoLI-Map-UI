@@ -14,7 +14,7 @@ export class LocalService {
 
     private prepareLifeIndexResponse(payload: AtlasFilter, data: LifeIndexMultipleResponses): LifeIndexResponse {
         const countries = Object.keys(data);
-        const year = payload.year;
+        const year = payload.primary.year;
 
         return countries.reduce((acc, country) => {
             // Remove the 'default' key added by the 'import' statement
@@ -26,7 +26,7 @@ export class LocalService {
     }
 
     public getLifeIndex(payload: AtlasFilter): Observable<LifeIndexResponse> {
-        const accessor = payload.category || LIFE_INDEX_CATEGORIES.QOLI;
+        const accessor = payload.primary.category || LIFE_INDEX_CATEGORIES.QOLI;
         const fileName = LIFE_INDEX_JSON_NAMES[accessor];
         const promise = import(`@/../files/life-index/countries/${fileName}.json`)
             .then((data: LifeIndexMultipleResponses) => this.prepareLifeIndexResponse(payload, data));

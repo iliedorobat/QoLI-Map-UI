@@ -61,7 +61,7 @@ export class PopupService {
         } as HTMLElementParams);
 
         const categoryLabelElement = this.htmlElementsService.createLabelElement('Name');
-        const categoryElement = this.htmlElementsService.createValueElement(filter.categoryLabel);
+        const categoryElement = this.htmlElementsService.createValueElement(filter.primary.categoryLabel);
 
         const rankLabelElement = this.htmlElementsService.createLabelElement('Rank');
         const rankElement = this.htmlElementsService.createValueElement(`${rank} of ${sortedResponse.length}`);
@@ -70,7 +70,7 @@ export class PopupService {
         const scoreElement = this.htmlElementsService.createValueElement(score);
 
         const yearLabelElement = this.htmlElementsService.createLabelElement('Year');
-        const yearElement = this.htmlElementsService.createValueElement(filter.year);
+        const yearElement = this.htmlElementsService.createValueElement(filter.primary.year);
 
         bodyElement.appendChild(categoryLabelElement);
         bodyElement.appendChild(categoryElement);

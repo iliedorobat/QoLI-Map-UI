@@ -21,7 +21,8 @@ export class AtlasFilterComponent {
     @Input() onActiveButtonResets: Function = noop;
 
     protected filter: AtlasFilter = this.atlasFilterService.getFilter();
-    protected form: FormGroup = this.atlasFilterService.getInitFilterForm(this.filter);
+    protected prevFilter: AtlasFilter = structuredClone(this.filter) as AtlasFilter;
+    protected form: FormGroup = this.atlasFilterService.getNewFilterForm(this.filter);
 
     onFilterApply(): void {
         this.atlasFilterService.setFilter(this.filter);
@@ -30,20 +31,22 @@ export class AtlasFilterComponent {
 
     onSectionReset(event: Event): void {
         event.stopPropagation();
-        const target = event.target as HTMLElement;
-        const value = get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
+        // TODO: fix the reset button
+        // const target = event.target as HTMLElement;
+        // const value = get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
 
-        switch (value) {
-            case 'atlas-filter-main-section':
-                this.filter.category = null;
-                this.filter.categoryLabel = null;
-                this.filter.year = null;
-                break;
-            default:
-                break;
-        }
+        // switch (value) {
+        //     case 'atlas-filter-main-section':
+        //         this.filter.category = this.prevFilter.category;
+        //         this.filter.categoryLabel = this.prevFilter.categoryLabel;
+        //         this.filter.year = this.prevFilter.year;
+        //         break;
+        //     default:
+        //         break;
+        // }
 
-        this.atlasFilterService.setFilter(this.filter);
+        this.atlasFilterService.setFilter(this.prevFilter);
+        this.form = this.atlasFilterService.getNewFilterForm(this.prevFilter);
     }
 
     onReset(): void {
