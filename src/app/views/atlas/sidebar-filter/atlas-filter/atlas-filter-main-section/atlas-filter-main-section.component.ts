@@ -19,7 +19,7 @@ export class AtlasFilterMainSectionComponent {
     protected readonly AVAILABLE_INTERVAL = AVAILABLE_INTERVAL;
 
     protected filter: AtlasFilter = this.atlasFilterService.getTransitoryFilter();
-    @Input() form: FormGroup = this.atlasFilterService.getNewFilterForm(this.filter);
+    @Input() form: FormGroup = this.atlasFilterService.createFilterForm(this.filter);
 
     get category() {
         return this.form?.get('category');

@@ -20,8 +20,8 @@ export class AtlasFilterComponent {
 
     @Input() onActiveButtonResets: Function = noop;
 
-    protected filter: AtlasFilter = this.atlasFilterService.getInitialTransitoryFilter();
-    protected form: FormGroup = this.atlasFilterService.getInitialFilterForm();
+    protected filter: AtlasFilter = this.atlasFilterService.getTransitoryFilter(true);
+    protected form: FormGroup = this.atlasFilterService.createFilterForm(this.filter);
 
     onFilterApply(): void {
         this.atlasFilterService.setMemoizedFilter(this.filter);
@@ -43,13 +43,12 @@ export class AtlasFilterComponent {
         }
 
         // TODO:
-        this.form = this.atlasFilterService.getNewFilterForm(this.filter);
+        this.form = this.atlasFilterService.createFilterForm(this.filter);
     }
 
     onReset(): void {
-        const memoizedFilter = this.atlasFilterService.getMemoizedFilter();
-        this.filter.reset(memoizedFilter);
-        this.form = this.atlasFilterService.getInitialFilterForm();
+        this.atlasFilterService.resetFilter(this.filter);
+        this.atlasFilterService.resetFilterForm(this.form);
     }
 
     onSubmit(): void {
