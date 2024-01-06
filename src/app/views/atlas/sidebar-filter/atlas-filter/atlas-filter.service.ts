@@ -1,23 +1,31 @@
 import {Injectable} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 
-import {AtlasFilter, AtlasFilterConstructor} from './atlas-filter.types';
-import {PrimaryAtlasFilterConstructor} from './atlas-filter-main-section/atlas-filter-main-section.types';
+import {IAtlasFilter, AtlasFilter} from './atlas-filter.types';
+import {PrimaryAtlasFilter} from './atlas-filter-main-section/atlas-filter-main-section.types';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AtlasFilterService {
     // Store data after the filter is applied
-    private memoizedFilter: AtlasFilter = new AtlasFilterConstructor();
+    private memoizedFilter: IAtlasFilter = new AtlasFilter();
     // Store temporary data before the filter is applied
-    private transitoryFilter: AtlasFilter = new AtlasFilterConstructor();
+    private transitoryFilter: IAtlasFilter = new AtlasFilter();
 
-    public getMemoizedFilter(): AtlasFilter {
+    public createFilterForm(filter: IAtlasFilter): FormGroup {
+        return new FormGroup({
+            category: new FormControl(filter.primary.category, []),
+            categoryLabel: new FormControl(filter.primary.categoryLabel, []),
+            year: new FormControl(filter.primary.year, [])
+        });
+    }
+
+    public getMemoizedFilter(): IAtlasFilter {
         return this.memoizedFilter;
     }
 
-    public getTransitoryFilter(reset?: boolean): AtlasFilter {
+    public getTransitoryFilter(reset?: boolean): IAtlasFilter {
         if (reset) {
             // Reset the transitoryFilter when the user open the filter bar (AtlasFilterComponent is mounted)
             this.resetFilter(this.transitoryFilter);
@@ -26,20 +34,12 @@ export class AtlasFilterService {
         return this.transitoryFilter;
     }
 
-    public setMemoizedFilter(filter: AtlasFilter): void {
-        const primary = new PrimaryAtlasFilterConstructor(filter.primary.category, filter.primary.year);
-        this.memoizedFilter = new AtlasFilterConstructor(primary);
+    public memoizeFilter(filter: IAtlasFilter): void {
+        const primary = new PrimaryAtlasFilter(filter.primary.category, filter.primary.year);
+        this.memoizedFilter = new AtlasFilter(primary);
     }
 
-    public createFilterForm(filter: AtlasFilter): FormGroup {
-        return new FormGroup({
-            category: new FormControl(filter.primary.category, []),
-            categoryLabel: new FormControl(filter.primary.categoryLabel, []),
-            year: new FormControl(filter.primary.year, [])
-        });
-    }
-
-    public resetFilter(filter: AtlasFilter): void {
+    public resetFilter(filter: IAtlasFilter): void {
         filter.reset(this.memoizedFilter);
     }
 

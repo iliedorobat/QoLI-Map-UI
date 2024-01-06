@@ -4,7 +4,7 @@ import noop from 'lodash-es/noop';
 import get from 'lodash-es/get';
 
 import {AtlasFilterService} from './atlas-filter.service';
-import {AtlasFilter} from './atlas-filter.types';
+import {IAtlasFilter} from './atlas-filter.types';
 import {LocalService} from '@/app/views/atlas/services/local.service';
 
 @Component({
@@ -20,11 +20,11 @@ export class AtlasFilterComponent {
 
     @Input() onActiveButtonResets: Function = noop;
 
-    protected filter: AtlasFilter = this.atlasFilterService.getTransitoryFilter(true);
+    protected filter: IAtlasFilter = this.atlasFilterService.getTransitoryFilter(true);
     protected form: FormGroup = this.atlasFilterService.createFilterForm(this.filter);
 
     onFilterApply(): void {
-        this.atlasFilterService.setMemoizedFilter(this.filter);
+        this.atlasFilterService.memoizeFilter(this.filter);
         this.localService.lifeIndexSubscription(this.filter);
     }
 
@@ -37,13 +37,12 @@ export class AtlasFilterComponent {
         switch (value) {
             case 'atlas-filter-main-section':
                 this.filter.primary.reset(memoizedFilter.primary);
+                // TODO: reset section
+                this.atlasFilterService.resetFilterForm(this.form);
                 break;
             default:
                 break;
         }
-
-        // TODO:
-        this.form = this.atlasFilterService.createFilterForm(this.filter);
     }
 
     onReset(): void {

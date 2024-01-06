@@ -1,6 +1,6 @@
 import {Feature, Geometry} from 'geojson';
 
-export interface GeoFeatureProperties {
+export type GeoFeatureProperties = {
     CAPT: string;
     CC_STAT: string;
     CNTR_ID: string;
@@ -13,7 +13,7 @@ export interface GeoFeatureProperties {
     NAME_FREN: string;
     NAME_GERM: string;
     SVRG_UN: string;
-}
+};
 
 export interface GeoFeature extends Feature<Geometry, GeoFeatureProperties> {}
 

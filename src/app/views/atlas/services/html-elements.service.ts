@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 
-export interface HTMLElementParams {
+export type HTMLElementParams = {
     className?: string;
     innerText?: string;
     tagName: string;
-}
+};
 
 @Injectable({
     providedIn: 'root'

@@ -1,17 +1,17 @@
-import {PrimaryAtlasFilter, PrimaryAtlasFilterConstructor} from './atlas-filter-main-section/atlas-filter-main-section.types';
+import {IPrimaryAtlasFilter, PrimaryAtlasFilter} from './atlas-filter-main-section/atlas-filter-main-section.types';
 
-export interface AtlasFilter {
-    primary: PrimaryAtlasFilter;
+export interface IAtlasFilter {
+    primary: IPrimaryAtlasFilter;
     isDisabled: Function;
     isEmpty: Function;
     reset: Function;
 }
 
-export class AtlasFilterConstructor implements AtlasFilter {
-    public primary: PrimaryAtlasFilter;
+export class AtlasFilter implements IAtlasFilter {
+    public primary: IPrimaryAtlasFilter;
 
-    constructor(primary?: PrimaryAtlasFilter) {
-        this.primary = primary ?? new PrimaryAtlasFilterConstructor();
+    constructor(primary?: IPrimaryAtlasFilter) {
+        this.primary = primary ?? new PrimaryAtlasFilter();
     }
 
     public isDisabled(): boolean {
@@ -22,7 +22,7 @@ export class AtlasFilterConstructor implements AtlasFilter {
         return this.primary.isEmpty();
     }
 
-    public reset(memoizedFilter?: AtlasFilter): void {
+    public reset(memoizedFilter?: IAtlasFilter): void {
         this.primary.reset(memoizedFilter?.primary);
     }
 }

@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
 import {AtlasFilterService} from '../atlas-filter.service';
-import {AtlasFilter} from '../atlas-filter.types';
+import {IAtlasFilter} from '../atlas-filter.types';
 
 import {AVAILABLE_INTERVAL, LIFE_INDEX_LABELS} from '@/app/shared/constants/app.const';
 
@@ -18,7 +18,7 @@ export class AtlasFilterMainSectionComponent {
     protected readonly LIFE_INDEX_LABELS = Object.values(LIFE_INDEX_LABELS);
     protected readonly AVAILABLE_INTERVAL = AVAILABLE_INTERVAL;
 
-    protected filter: AtlasFilter = this.atlasFilterService.getTransitoryFilter();
+    protected filter: IAtlasFilter = this.atlasFilterService.getTransitoryFilter();
     @Input() form: FormGroup = this.atlasFilterService.createFilterForm(this.filter);
 
     get category() {

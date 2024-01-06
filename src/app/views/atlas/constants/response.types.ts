@@ -1,9 +1,9 @@
-export interface LifeIndexResponse {
+export type LifeIndexResponse = {
     [country: string]: number;
-}
+};
 
-export interface LifeIndexMultipleResponses {
+export type LifeIndexMultipleResponses = {
     [country: string]: {
         [year: string]: number;
     };
-}
+};

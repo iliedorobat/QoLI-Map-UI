@@ -7,7 +7,7 @@ import {
     LIFE_INDEX_LABELS
 } from '@/app/shared/constants/app.const';
 
-export interface PrimaryAtlasFilter {
+export interface IPrimaryAtlasFilter {
     category: LIFE_INDEX_CATEGORIES;
     categoryLabel: LIFE_INDEX_LABELS;
     year: number;
@@ -18,7 +18,7 @@ export interface PrimaryAtlasFilter {
     reset: Function;
 }
 
-export class PrimaryAtlasFilterConstructor implements PrimaryAtlasFilter {
+export class PrimaryAtlasFilter implements IPrimaryAtlasFilter {
     public category;
     public categoryLabel;
     public year;
@@ -46,7 +46,7 @@ export class PrimaryAtlasFilterConstructor implements PrimaryAtlasFilter {
         this.year = AVAILABLE_INTERVAL[index];
     }
 
-    public reset(primary?: PrimaryAtlasFilter): void {
+    public reset(primary?: IPrimaryAtlasFilter): void {
         const {
             category = LIFE_INDEX_CATEGORIES.QOLI,
             year = DEFAULT_YEAR
