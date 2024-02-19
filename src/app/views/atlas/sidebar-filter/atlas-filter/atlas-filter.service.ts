@@ -3,18 +3,21 @@ import {FormControl, FormGroup} from '@angular/forms';
 
 import {IAtlasFilter, AtlasFilter} from './atlas-filter.types';
 import {PrimaryAtlasFilter} from './atlas-filter-main-section/atlas-filter-main-section.types';
-import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
 
 @Injectable({
     providedIn: 'root',
 })
+/** @deprecated in favour of QoliFilterService
+ * TODO: revisit: remove
+ * */
 export class AtlasFilterService {
     // Store data after the filter is applied
     private memoizedFilter: IAtlasFilter = new AtlasFilter();
     // Store temporary data before the filter is applied
     private transitoryFilter: IAtlasFilter = new AtlasFilter();
 
-    public initializeFilterForm(qoliFilter: IQoLI) {
+    public initializeFilterForm(filter: IAtlasFilter) {
+        const qoliFilter = filter.primary.category;
         const controls: {[key: string]: FormControl} = {};
 
         for (const dimension of qoliFilter.aggregators) {
@@ -28,16 +31,6 @@ export class AtlasFilterService {
         }
 
         return new FormGroup(controls);
-    }
-
-    /** @deprecated in favour of initializeFilterForm
-     * TODO: replace with initializeFilterForm */
-    public createFilterForm(filter: IAtlasFilter): FormGroup {
-        return new FormGroup({
-            category: new FormControl(filter.primary.category, []),
-            categoryLabel: new FormControl(filter.primary.categoryLabel, []),
-            year: new FormControl(filter.primary.year, [])
-        });
     }
 
     public getMemoizedFilter(): IAtlasFilter {
@@ -63,8 +56,21 @@ export class AtlasFilterService {
     }
 
     public resetFilterForm(form: FormGroup): void {
-        form.controls['category'].setValue(this.memoizedFilter.primary.category);
-        form.controls['categoryLabel'].setValue(this.memoizedFilter.primary.categoryLabel);
-        form.controls['year'].setValue(this.memoizedFilter.primary.year);
+        // TODO:
+        const qoliFilename = this.memoizedFilter.primary.category.filename;
+        const dimensions = this.memoizedFilter.primary.category.aggregators;
+
+        for (const dimension of dimensions) {
+            const dimensionName = dimension.filename;
+            form.controls[dimensionName].setValue(dimension.checked);
+
+            const indicators = dimension.aggregators;
+            for (const indicator of indicators) {
+                form.controls[`${dimensionName}:${indicator.filename}`].setValue(indicator.checked);
+            }
+        }
+
+        // TODO:
+        // form.controls['year'].setValue(this.memoizedFilter.primary.year);
     }
 }

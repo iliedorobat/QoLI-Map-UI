@@ -1,7 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {GeoJSON, Layer, Map} from 'leaflet';
 
-import {AtlasFilterService} from './sidebar-filter/atlas-filter/atlas-filter.service';
 import {AtlasService} from './services/atlas.service';
 import {LocalService} from './services/local.service';
 
@@ -14,7 +13,6 @@ import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
 })
 export class AtlasComponent implements OnInit {
     constructor(
-        private atlasFilterService: AtlasFilterService,
         private atlasService: AtlasService,
         private localService: LocalService
     ) {}

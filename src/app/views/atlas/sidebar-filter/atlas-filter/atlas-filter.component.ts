@@ -3,9 +3,9 @@ import {FormGroup} from '@angular/forms';
 import noop from 'lodash-es/noop';
 import get from 'lodash-es/get';
 
-import {AtlasFilterService} from './atlas-filter.service';
-import {IAtlasFilter} from './atlas-filter.types';
+import {QoliFilterService} from '@/app/views/atlas/sidebar-filter/atlas-filter/qoli-filter.service';
 import {LocalService} from '@/app/views/atlas/services/local.service';
+import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
 
 @Component({
     selector: 'app-atlas-filter',
@@ -14,17 +14,17 @@ import {LocalService} from '@/app/views/atlas/services/local.service';
 })
 export class AtlasFilterComponent {
     constructor(
-        private atlasFilterService: AtlasFilterService,
+        private qoliFilterService: QoliFilterService,
         private localService: LocalService
     ) {}
 
     @Input() onActiveButtonResets: Function = noop;
 
-    protected filter: IAtlasFilter = this.atlasFilterService.getTransitoryFilter(true);
-    protected form: FormGroup = this.atlasFilterService.createFilterForm(this.filter);
+    protected filter: IQoLI = this.qoliFilterService.getTransitoryFilter(true);
+    protected form: FormGroup = this.qoliFilterService.initializeFilterForm(this.filter);
 
     onFilterApply(): void {
-        this.atlasFilterService.memoizeFilter(this.filter);
+        this.qoliFilterService.memoizeFilter(this.filter);
         this.localService.lifeIndexSubscription(this.filter);
     }
 
@@ -32,22 +32,24 @@ export class AtlasFilterComponent {
         event.stopPropagation();
         const target = event.target as HTMLElement;
         const value = get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
-        const memoizedFilter = this.atlasFilterService.getMemoizedFilter();
+        const memoizedFilter = this.qoliFilterService.getMemoizedFilter();
 
-        switch (value) {
-            case 'atlas-filter-main-section':
-                this.filter.primary.reset(memoizedFilter.primary);
-                // TODO: reset section
-                this.atlasFilterService.resetFilterForm(this.form);
-                break;
-            default:
-                break;
-        }
+        // FIXME: revisit
+        // switch (value) {
+        //     case 'atlas-filter-main-section':
+        //         this.filter.primary.reset(memoizedFilter.primary);
+        //         // TODO: reset section
+        //         this.atlasFilterService.resetFilterForm(this.form);
+        //         break;
+        //     default:
+        //         break;
+        // }
     }
 
     onReset(): void {
-        this.atlasFilterService.resetFilter(this.filter);
-        this.atlasFilterService.resetFilterForm(this.form);
+        // TODO: revisit: this.qoliFilterService.resetFilter(this.filter);
+        this.qoliFilterService.resetFilter();
+        this.qoliFilterService.resetFilterForm(this.form);
     }
 
     onSubmit(): void {

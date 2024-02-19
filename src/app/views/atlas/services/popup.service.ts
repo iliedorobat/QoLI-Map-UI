@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {PopupOptions} from 'leaflet';
 
-import {AtlasFilterService} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.service';
+import {QoliFilterService} from '@/app/views/atlas/sidebar-filter/atlas-filter/qoli-filter.service';
 import {DatasetService} from './dataset.service';
 import {GeoFeature} from '@/app/views/atlas/constants/geo.types';
 import {HTMLElementParams, HtmlElementsService} from './html-elements.service';
@@ -14,7 +14,7 @@ import {SORT_ORDER} from '@/app/shared/constants/math.const';
 })
 export class PopupService {
     constructor(
-        private atlasFilterService: AtlasFilterService,
+        private qoliFilterService: QoliFilterService,
         private datasetService: DatasetService,
         private htmlElementsService: HtmlElementsService
     ) {}
@@ -51,7 +51,7 @@ export class PopupService {
     private createBody(geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement {
         const countryCode = geoLand.id;
         const score = this.datasetService.getScore(geoLand, response);
-        const filter = this.atlasFilterService.getMemoizedFilter();
+        const filter = this.qoliFilterService.getMemoizedFilter();
         const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
         const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;
 
@@ -61,7 +61,7 @@ export class PopupService {
         } as HTMLElementParams);
 
         const categoryLabelElement = this.htmlElementsService.createLabelElement('Name');
-        const categoryElement = this.htmlElementsService.createValueElement(filter.primary.categoryLabel);
+        const categoryElement = this.htmlElementsService.createValueElement(filter.label);
 
         const rankLabelElement = this.htmlElementsService.createLabelElement('Rank');
         const rankElement = this.htmlElementsService.createValueElement(`${rank} of ${sortedResponse.length}`);
@@ -70,7 +70,8 @@ export class PopupService {
         const scoreElement = this.htmlElementsService.createValueElement(score);
 
         const yearLabelElement = this.htmlElementsService.createLabelElement('Year');
-        const yearElement = this.htmlElementsService.createValueElement(filter.primary.year);
+        // FIXME: revisit
+        const yearElement = this.htmlElementsService.createValueElement('FIXME: revisit');
 
         bodyElement.appendChild(categoryLabelElement);
         bodyElement.appendChild(categoryElement);

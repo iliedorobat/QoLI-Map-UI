@@ -43,6 +43,9 @@ enum LIFE_INDEX_CATEGORIES {
     SAFETY = 'SAFETY'
 }
 
+/** @deprecated
+ * TODO: revisit: remove
+ * */
 enum LIFE_INDEX_LABELS {
     QOLI = 'Quality of Life Index',
     EDUCATION = 'Education',
@@ -57,6 +60,9 @@ enum LIFE_INDEX_LABELS {
     SAFETY = 'Safety'
 }
 
+/** @deprecated
+ * TODO: revisit: remove
+ * */
 enum LIFE_INDEX_JSON_NAMES {
     QOLI = 'QoLI',
     EDUCATION = 'Education',

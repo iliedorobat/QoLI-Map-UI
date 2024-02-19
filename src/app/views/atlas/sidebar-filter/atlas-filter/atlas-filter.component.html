@@ -28,7 +28,8 @@
         </ngb-accordion>
 
         <div class="form-footer">
-            <button class="btn btn-md btn-success" type="submit" (click)="onSubmit()" [disabled]="filter.isDisabled()">
+<!--            FIXME: revisit: [disabled]="filter.isDisabled()"-->
+            <button class="btn btn-md btn-success" type="submit" (click)="onSubmit()" [disabled]="false">
                 Apply Filter
             </button>
             <button class="btn btn-md btn-secondary" type="submit" (click)="onReset()">
