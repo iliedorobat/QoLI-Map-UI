@@ -25,7 +25,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppComponent,
         AtlasComponent,
         AtlasFilterComponent,
-        AtlasFilterMainSectionComponent,
         SidebarComponent
     ],
     imports: [
@@ -42,7 +41,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         BrowserModule,
         LeafletModule,
         NgbModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AtlasFilterMainSectionComponent
     ],
     providers: [
         AtlasService,

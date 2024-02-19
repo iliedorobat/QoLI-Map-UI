@@ -1,5 +1,7 @@
 @import 'src/assets/styles/variables.scss';
 
+$offCanvasZIndex: 1045;
+
 ::ng-deep {
     html, body {
         height: 100%;
@@ -29,6 +31,10 @@
                     font-size: 14px;
                 }
             }
+        }
+
+        .cdk-overlay-container {
+            z-index: $offCanvasZIndex + 1;
         }
 
         .leaflet-popup {

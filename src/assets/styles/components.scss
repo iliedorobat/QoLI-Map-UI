@@ -6,3 +6,10 @@
         color: $indigo;
     }
 }
+
+// Configuration of the list of MUI checkboxes
+.cdk-overlay-pane {
+    .checkbox-items {
+        list-style: none;
+    }
+}
