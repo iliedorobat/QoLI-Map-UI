@@ -5,8 +5,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 
+import {IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
+import {IQoLIDimension, IQoLIIndicator} from '@/app/views/atlas/constants/qoli.types';
 import {QoliFilterService} from '@/app/views/atlas/sidebar-filter/atlas-filter/qoli-filter.service';
-import {IQoLI, IQoLIDimension, IQoLIIndicator} from '@/app/views/atlas/constants/qoli.types';
 
 @Component({
     selector: 'app-atlas-filter-main-section',
@@ -20,8 +21,8 @@ export class AtlasFilterMainSectionComponent {
         private qoliFilterService: QoliFilterService
     ) {}
 
-    protected qoliFilter: IQoLI = this.qoliFilterService.getTransitoryFilter();
-    @Input() form = this.qoliFilterService.initializeFilterForm(this.qoliFilter);
+    @Input() filter: IAtlasFilter = this.qoliFilterService.getTransitoryFilter();
+    @Input() form = this.qoliFilterService.initializeFilterForm(this.filter);
 
     onDimensionChanges(dimension: IQoLIDimension): void {
         const dimKey = dimension.filename;

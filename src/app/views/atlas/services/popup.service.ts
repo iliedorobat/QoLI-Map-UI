@@ -61,7 +61,8 @@ export class PopupService {
         } as HTMLElementParams);
 
         const categoryLabelElement = this.htmlElementsService.createLabelElement('Name');
-        const categoryElement = this.htmlElementsService.createValueElement(filter.label);
+        // FIXME: revisit
+        const categoryElement = this.htmlElementsService.createValueElement(filter.primaryFilter.qoliOptions.label);
 
         const rankLabelElement = this.htmlElementsService.createLabelElement('Rank');
         const rankElement = this.htmlElementsService.createValueElement(`${rank} of ${sortedResponse.length}`);

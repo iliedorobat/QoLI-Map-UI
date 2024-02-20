@@ -3,9 +3,9 @@ import {FormGroup} from '@angular/forms';
 import noop from 'lodash-es/noop';
 import get from 'lodash-es/get';
 
-import {QoliFilterService} from '@/app/views/atlas/sidebar-filter/atlas-filter/qoli-filter.service';
+import {IAtlasFilter} from './atlas-filter.types';
 import {LocalService} from '@/app/views/atlas/services/local.service';
-import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
+import {QoliFilterService} from './qoli-filter.service';
 
 @Component({
     selector: 'app-atlas-filter',
@@ -20,7 +20,7 @@ export class AtlasFilterComponent {
 
     @Input() onActiveButtonResets: Function = noop;
 
-    protected filter: IQoLI = this.qoliFilterService.getTransitoryFilter(true);
+    protected filter: IAtlasFilter = this.qoliFilterService.getTransitoryFilter(true);
     protected form: FormGroup = this.qoliFilterService.initializeFilterForm(this.filter);
 
     onFilterApply(): void {
@@ -34,22 +34,17 @@ export class AtlasFilterComponent {
         const value = get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
         const memoizedFilter = this.qoliFilterService.getMemoizedFilter();
 
-        // FIXME: revisit
-        // switch (value) {
-        //     case 'atlas-filter-main-section':
-        //         this.filter.primary.reset(memoizedFilter.primary);
-        //         // TODO: reset section
-        //         this.atlasFilterService.resetFilterForm(this.form);
-        //         break;
-        //     default:
-        //         break;
-        // }
+        switch (value) {
+            case 'atlas-filter-main-section':
+                this.filter.primaryFilter.reset(this.form, memoizedFilter.primaryFilter.qoliOptions)
+                break;
+            default:
+                break;
+        }
     }
 
     onReset(): void {
-        // TODO: revisit: this.qoliFilterService.resetFilter(this.filter);
-        this.qoliFilterService.resetFilter();
-        this.qoliFilterService.resetFilterForm(this.form);
+        this.qoliFilterService.reset(this.form);
     }
 
     onSubmit(): void {

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, from, Observable} from 'rxjs';
 
-import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
+import {IAtlasFilter} from '../sidebar-filter/atlas-filter/atlas-filter.types';
 import {LifeIndexMultipleResponses, LifeIndexResponse} from '../constants/response.types';
 
 @Injectable({
@@ -10,9 +10,9 @@ import {LifeIndexMultipleResponses, LifeIndexResponse} from '../constants/respon
 export class LocalService {
     private _lifeIndex$: BehaviorSubject<LifeIndexResponse> = new BehaviorSubject<LifeIndexResponse>({} as LifeIndexResponse);
 
-    private prepareLifeIndexResponse(payload: IQoLI, data: LifeIndexMultipleResponses): LifeIndexResponse {
+    private prepareLifeIndexResponse(filter: IAtlasFilter, data: LifeIndexMultipleResponses): LifeIndexResponse {
         const countries = Object.keys(data);
-        const year = '2022'; // FIXME: revisit
+        const year = filter.primaryFilter.year;
 
         return countries.reduce((acc, country) => {
             // Remove the 'default' key added by the 'import' statement
@@ -23,17 +23,17 @@ export class LocalService {
         }, {} as LifeIndexResponse);
     }
 
-    public getLifeIndex(payload: IQoLI): Observable<LifeIndexResponse> {
+    public getLifeIndex(filter: IAtlasFilter): Observable<LifeIndexResponse> {
         // FIXME: revisit
         const fileName = 'QoLI';
         const promise = import(`@/../files/life-index/countries/${fileName}.json`)
-            .then((data: LifeIndexMultipleResponses) => this.prepareLifeIndexResponse(payload, data));
+            .then((data: LifeIndexMultipleResponses) => this.prepareLifeIndexResponse(filter, data));
 
         return from(promise);
     }
 
-    public lifeIndexSubscription(payload: IQoLI): void {
-        this.getLifeIndex(payload)
+    public lifeIndexSubscription(filter: IAtlasFilter): void {
+        this.getLifeIndex(filter)
             .subscribe((data: LifeIndexResponse) => {
                 this._lifeIndex$.next(data);
             })

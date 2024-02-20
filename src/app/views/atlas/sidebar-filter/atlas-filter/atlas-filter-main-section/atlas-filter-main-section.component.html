@@ -18,8 +18,8 @@
     <mat-label>Quality of Life Index</mat-label>
     <mat-select>
         <mat-option>-- None --</mat-option>
-        <mat-optgroup [label]="qoliFilter.label">
-            <mat-optgroup *ngFor="let dimension of qoliFilter.aggregators">
+        <mat-optgroup [label]="filter.primaryFilter.qoliOptions.label">
+            <mat-optgroup *ngFor="let dimension of filter.primaryFilter.qoliOptions.aggregators">
                 <mat-checkbox
                     [formControlName]="dimension.filename"
                     [checked]="dimension.checked"
