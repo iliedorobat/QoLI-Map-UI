@@ -2,8 +2,9 @@ import {FormGroup} from '@angular/forms';
 import cloneDeep from 'lodash-es/cloneDeep';
 
 import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
-import {DEFAULT_YEAR} from '@/app/shared/constants/app.const';
+import {IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 
+import {DEFAULT_YEAR} from '@/app/shared/constants/app.const';
 import {config} from './temp.const';
 
 export interface IAtlasBaseFilter {
@@ -11,9 +12,9 @@ export interface IAtlasBaseFilter {
     year: number;
     isDisabled(): boolean;
     isEmpty(): boolean;
-    reset(form: FormGroup, qoliOptions: IQoLI): void;
-    resetFilter(qoliOptions?: IQoLI): void;
-    resetFilterForm(form: FormGroup, qoliOptions: IQoLI): void;
+    reset(form: FormGroup, memoizedFilter: IAtlasFilter): void;
+    resetFilter(memoizedFilter?: IAtlasFilter): void;
+    resetFilterForm(form: FormGroup, memoizedFilter: IAtlasFilter): void;
 }
 
 export class AtlasBaseFilter implements IAtlasBaseFilter {
@@ -35,18 +36,19 @@ export class AtlasBaseFilter implements IAtlasBaseFilter {
         return false;
     }
 
-    reset(form: FormGroup, qoliOptions: IQoLI): void {
-        this.resetFilterForm(form, qoliOptions);
-        this.resetFilter(qoliOptions);
+    reset(form: FormGroup, memoizedFilter: IAtlasFilter): void {
+        this.resetFilterForm(form, memoizedFilter);
+        this.resetFilter(memoizedFilter);
     }
 
-    resetFilter(qoliOptions?: IQoLI): void {
-        this.qoliOptions = cloneDeep(qoliOptions) ?? cloneDeep(config) as IQoLI;
-        this.year = DEFAULT_YEAR;
+    resetFilter(memoizedFilter?: IAtlasFilter): void {
+        const qoliOptions = memoizedFilter?.baseFilter.qoliOptions ?? config;
+        this.qoliOptions = cloneDeep(qoliOptions) as IQoLI;
+        this.year = memoizedFilter?.baseFilter.year ?? DEFAULT_YEAR;
     }
 
-    resetFilterForm(form: FormGroup, qoliOptions: IQoLI): void {
-        const dimensions = qoliOptions.aggregators;
+    resetFilterForm(form: FormGroup, memoizedFilter: IAtlasFilter): void {
+        const dimensions = memoizedFilter.baseFilter.qoliOptions.aggregators;
 
         for (const dimension of dimensions) {
             const dimensionName = dimension.filename;

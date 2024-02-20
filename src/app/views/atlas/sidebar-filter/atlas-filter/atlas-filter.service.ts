@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import cloneDeep from 'lodash-es/cloneDeep';
 
+import {AtlasBaseFilter} from './atlas-filter-main-section/atlas-filter-main-section.component.types';
 import {AtlasFilter, IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 // TODO: revisit: create an API to get config data
 import {config} from './atlas-filter-main-section/temp.const';
 import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
-import {AtlasBaseFilter} from './atlas-filter-main-section/atlas-filter-main-section.component.types';
 
 import {DEFAULT_YEAR} from '@/app/shared/constants/app.const';
 
@@ -34,6 +34,7 @@ export class AtlasFilterService {
 
     public initializeFilterForm(filter: IAtlasFilter) {
         const controls: {[key: string]: FormControl} = {};
+        controls['year'] = new FormControl(filter.baseFilter.year);
 
         for (const dimension of filter.baseFilter.qoliOptions.aggregators) {
             const dimKey = dimension.filename;
@@ -54,7 +55,7 @@ export class AtlasFilterService {
 
     public getTransitoryFilter(reset?: boolean): IAtlasFilter {
         if (reset) {
-            this.transitoryFilter.resetFilter(this.memoizedFilter.baseFilter.qoliOptions);
+            this.transitoryFilter.resetFilter(this.memoizedFilter);
         }
 
         return this.transitoryFilter;
@@ -65,6 +66,6 @@ export class AtlasFilterService {
     }
 
     public reset(form: FormGroup): void {
-        this.transitoryFilter.reset(form, this.memoizedFilter.baseFilter.qoliOptions);
+        this.transitoryFilter.reset(form, this.memoizedFilter);
     }
 }

@@ -1,15 +1,14 @@
 import {FormGroup} from '@angular/forms';
 
 import {IAtlasBaseFilter} from './atlas-filter-main-section/atlas-filter-main-section.component.types';
-import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
 
 export interface IAtlasFilter {
     baseFilter: IAtlasBaseFilter;
     isDisabled(): boolean;
     isEmpty(): boolean;
-    reset(form: FormGroup, qoliOptions: IQoLI): void;
-    resetFilter(qoliOptions?: IQoLI): void;
-    resetFilterForm(form: FormGroup, qoliOptions: IQoLI): void;
+    reset(form: FormGroup, memoizedFilter: IAtlasFilter): void;
+    resetFilter(memoizedFilter?: IAtlasFilter): void;
+    resetFilterForm(form: FormGroup, memoizedFilter: IAtlasFilter): void;
 }
 
 export class AtlasFilter implements IAtlasFilter {
@@ -27,15 +26,15 @@ export class AtlasFilter implements IAtlasFilter {
         return this.baseFilter.isEmpty();
     }
 
-    reset(form: FormGroup, qoliOptions: IQoLI): void {
-        this.baseFilter.reset(form, qoliOptions);
+    reset(form: FormGroup, memoizedFilter: IAtlasFilter): void {
+        this.baseFilter.reset(form, memoizedFilter);
     }
 
-    resetFilter(qoliOptions?: IQoLI): void {
-        this.baseFilter.resetFilter(qoliOptions);
+    resetFilter(memoizedFilter?: IAtlasFilter): void {
+        this.baseFilter.resetFilter(memoizedFilter);
     }
 
-    resetFilterForm(form: FormGroup, qoliOptions: IQoLI): void {
-        this.baseFilter.resetFilterForm(form, qoliOptions);
+    resetFilterForm(form: FormGroup, memoizedFilter: IAtlasFilter): void {
+        this.baseFilter.resetFilterForm(form, memoizedFilter);
     }
 }

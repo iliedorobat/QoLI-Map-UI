@@ -71,8 +71,7 @@ export class PopupService {
         const scoreElement = this.htmlElementsService.createValueElement(score);
 
         const yearLabelElement = this.htmlElementsService.createLabelElement('Year');
-        // FIXME: revisit
-        const yearElement = this.htmlElementsService.createValueElement('FIXME: revisit');
+        const yearElement = this.htmlElementsService.createValueElement(filter.baseFilter.year);
 
         bodyElement.appendChild(categoryLabelElement);
         bodyElement.appendChild(categoryElement);

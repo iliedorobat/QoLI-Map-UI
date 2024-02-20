@@ -36,7 +36,7 @@ export class AtlasFilterComponent {
 
         switch (value) {
             case 'atlas-filter-main-section':
-                this.filter.baseFilter.reset(this.form, memoizedFilter.baseFilter.qoliOptions)
+                this.filter.baseFilter.reset(this.form, memoizedFilter)
                 break;
             default:
                 break;

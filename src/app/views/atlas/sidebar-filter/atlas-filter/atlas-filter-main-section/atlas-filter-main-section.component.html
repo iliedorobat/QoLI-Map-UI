@@ -1,19 +1,17 @@
-<!-- TODO: revisit -->
-<!--<div [formGroup]="form">-->
-<!--    <div class="row">-->
-<!--        <div class="col-md-8 mb-3">-->
-<!--            <select-->
-<!--                class="form-select form-select-sm"-->
-<!--                id="year"-->
-<!--                formControlName="year"-->
-<!--                (change)="onYearChanges($event)"-->
-<!--            >-->
-<!--                <option [ngValue]="null" selected disabled>Analyzed Year</option>-->
-<!--                <option *ngFor="let year of AVAILABLE_INTERVAL" [ngValue]="year">{{ year }}</option>-->
-<!--            </select>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+<mat-form-field [formGroup]="form">
+    <mat-label>Year of analysis</mat-label>
+    <mat-select
+        formControlName="year"
+        (selectionChange)="onYearChanges($event)"
+        [(value)]="filter.baseFilter.year"
+    >
+        <mat-option>-- None --</mat-option>
+        <mat-option
+            *ngFor="let year of AVAILABLE_INTERVAL"
+            [value]="year"
+        >{{ year }}</mat-option>
+    </mat-select>
+</mat-form-field>
 
 <mat-form-field [formGroup]="form">
     <mat-label>Quality of Life Index</mat-label>
@@ -26,14 +24,14 @@
                     [checked]="dimension.checked"
                     [indeterminate]="someChecked(dimension)"
                     (change)="onDimensionChanges(dimension)"
-                >{{dimension.label}}</mat-checkbox>
+                >{{ dimension.label }}</mat-checkbox>
                 <ul class="checkbox-items">
                     <li *ngFor="let indicator of dimension.aggregators">
                         <mat-checkbox
                             [formControlName]="dimension.filename + ':' + indicator.filename"
                             [checked]="indicator.checked"
                             (change)="onIndicatorChanges(dimension, indicator)"
-                        >{{indicator.label}}</mat-checkbox>
+                        >{{ indicator.label }}</mat-checkbox>
                     </li>
                 </ul>
             </mat-optgroup>

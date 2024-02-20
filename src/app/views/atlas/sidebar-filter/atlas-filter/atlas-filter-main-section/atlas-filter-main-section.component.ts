@@ -3,11 +3,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
+import {MatSelectChange, MatSelectModule} from '@angular/material/select';
 
 import {AtlasFilterService} from '../atlas-filter.service';
 import {IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {IQoLIDimension, IQoLIIndicator} from '@/app/views/atlas/constants/qoli.types';
+
+import {AVAILABLE_INTERVAL} from '@/app/shared/constants/app.const';
 
 @Component({
     selector: 'app-atlas-filter-main-section',
@@ -20,6 +22,8 @@ export class AtlasFilterMainSectionComponent {
     constructor(
         private atlasFilterService: AtlasFilterService
     ) {}
+
+    protected readonly AVAILABLE_INTERVAL = AVAILABLE_INTERVAL;
 
     @Input() filter: IAtlasFilter = this.atlasFilterService.getTransitoryFilter();
     @Input() form = this.atlasFilterService.initializeFilterForm(this.filter);
@@ -56,5 +60,9 @@ export class AtlasFilterMainSectionComponent {
         }
 
         return dimension.aggregators.some(indicator => indicator.checked);
+    }
+
+    onYearChanges(event: MatSelectChange): void {
+        this.form.get('year')?.setValue(event.value);
     }
 }

@@ -11,17 +11,16 @@ const ICONS = {
     STANDARD: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png'
 };
 
-const DEFAULT_YEAR = 2021;
 
 const MIN_YEAR = 2004;
-
 const MAX_YEAR = 2022;
+const DEFAULT_YEAR = MAX_YEAR;
 
 const AVAILABLE_INTERVAL = (
     () => {
         const values = [];
 
-        for (let year = MIN_YEAR; year <= MAX_YEAR; year++) {
+        for (let year = MAX_YEAR; year >= MIN_YEAR; year--) {
             values.push(year);
         }
 
