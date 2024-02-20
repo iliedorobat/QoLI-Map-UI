@@ -29,62 +29,11 @@ const AVAILABLE_INTERVAL = (
     }
 )();
 
-enum LIFE_INDEX_CATEGORIES {
-    QOLI = 'QOLI',
-    EDUCATION = 'EDUCATION',
-    ENVIRONMENT = 'ENVIRONMENT',
-    GBR = 'GBR',
-    HEALTH = 'HEALTH',
-    SOC_INTERACTIONS = 'SOC_INTERACTIONS',
-    LEISURE = 'LEISURE',
-    MLC = 'MLC',
-    OVERALL_EXP = 'OVERALL_EXP',
-    PMA = 'PMA',
-    SAFETY = 'SAFETY'
-}
-
-/** @deprecated
- * TODO: revisit: remove
- * */
-enum LIFE_INDEX_LABELS {
-    QOLI = 'Quality of Life Index',
-    EDUCATION = 'Education',
-    ENVIRONMENT = 'Environment',
-    GBR = 'Government and Basic Rights',
-    HEALTH = 'Health',
-    SOC_INTERACTIONS = 'Social Interactions',
-    LEISURE = 'Leisure',
-    MLC = 'Material and Living Conditions',
-    OVERALL_EXP = 'Overall Experience',
-    PMA = 'Productive or Main Activity',
-    SAFETY = 'Safety'
-}
-
-/** @deprecated
- * TODO: revisit: remove
- * */
-enum LIFE_INDEX_JSON_NAMES {
-    QOLI = 'QoLI',
-    EDUCATION = 'Education',
-    ENVIRONMENT = 'Environment',
-    GBR = 'GBR',
-    HEALTH = 'Health',
-    SOC_INTERACTIONS = 'Interactions',
-    LEISURE = 'Leisure',
-    MLC = 'MLC',
-    OVERALL_EXP = 'Overall Exp',
-    PMA = 'PMA',
-    SAFETY = 'Safety'
-}
-
 export {
     AVAILABLE_INTERVAL,
     COPYRIGHT,
     DEFAULT_YEAR,
     ICONS,
-    LIFE_INDEX_CATEGORIES,
-    LIFE_INDEX_LABELS,
-    LIFE_INDEX_JSON_NAMES,
     MAX_YEAR,
     MIN_YEAR
 };
