@@ -7,7 +7,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AtlasComponent} from './views/atlas/atlas.component';
 import {AtlasFilterComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.component';
-import {QoliFilterService} from './views/atlas/sidebar-filter/atlas-filter/qoli-filter.service';
+import {AtlasFilterService} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.service';
 import {AtlasFilterMainSectionComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/atlas-filter-main-section.component';
 import {AtlasService} from './views/atlas/services/atlas.service';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
@@ -46,8 +46,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         AtlasFilterMainSectionComponent
     ],
     providers: [
+        AtlasFilterService,
         AtlasService,
-        QoliFilterService,
         NgbActiveOffcanvas
     ],
     bootstrap: [AppComponent]

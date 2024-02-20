@@ -12,7 +12,7 @@ export class LocalService {
 
     private prepareLifeIndexResponse(filter: IAtlasFilter, data: LifeIndexMultipleResponses): LifeIndexResponse {
         const countries = Object.keys(data);
-        const year = filter.primaryFilter.year;
+        const year = filter.baseFilter.year;
 
         return countries.reduce((acc, country) => {
             // Remove the 'default' key added by the 'import' statement

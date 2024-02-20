@@ -6,15 +6,14 @@ import {AtlasFilter, IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-
 // TODO: revisit: create an API to get config data
 import {config} from './atlas-filter-main-section/temp.const';
 import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
-import {PrimaryAtlasFilter} from './atlas-filter-main-section/atlas-filter-main-section.component.types';
+import {AtlasBaseFilter} from './atlas-filter-main-section/atlas-filter-main-section.component.types';
 
 import {DEFAULT_YEAR} from '@/app/shared/constants/app.const';
 
 @Injectable({
     providedIn: 'root',
 })
-// TODO: revisit: rename it to AtlasFilterService
-export class QoliFilterService {
+export class AtlasFilterService {
     // Store data after the filter is applied
     private memoizedFilter: IAtlasFilter;
     // Store temporary data before the filter is applied
@@ -26,17 +25,17 @@ export class QoliFilterService {
     }
 
     private createNewFilter(filter?: IAtlasFilter) {
-        const qoliOptions = cloneDeep(filter?.primaryFilter.qoliOptions) ?? cloneDeep(config) as IQoLI;
-        const year = filter?.primaryFilter.year || DEFAULT_YEAR;
+        const qoliOptions = cloneDeep(filter?.baseFilter.qoliOptions) ?? cloneDeep(config) as IQoLI;
+        const year = filter?.baseFilter.year || DEFAULT_YEAR;
 
-        const primaryAtlasFilter = new PrimaryAtlasFilter(qoliOptions, year);
+        const primaryAtlasFilter = new AtlasBaseFilter(qoliOptions, year);
         return new AtlasFilter(primaryAtlasFilter);
     }
 
     public initializeFilterForm(filter: IAtlasFilter) {
         const controls: {[key: string]: FormControl} = {};
 
-        for (const dimension of filter.primaryFilter.qoliOptions.aggregators) {
+        for (const dimension of filter.baseFilter.qoliOptions.aggregators) {
             const dimKey = dimension.filename;
             controls[dimKey] = new FormControl(dimension.checked);
 
@@ -55,7 +54,7 @@ export class QoliFilterService {
 
     public getTransitoryFilter(reset?: boolean): IAtlasFilter {
         if (reset) {
-            this.transitoryFilter.resetFilter(this.memoizedFilter.primaryFilter.qoliOptions);
+            this.transitoryFilter.resetFilter(this.memoizedFilter.baseFilter.qoliOptions);
         }
 
         return this.transitoryFilter;
@@ -66,6 +65,6 @@ export class QoliFilterService {
     }
 
     public reset(form: FormGroup): void {
-        this.transitoryFilter.reset(form, this.memoizedFilter.primaryFilter.qoliOptions);
+        this.transitoryFilter.reset(form, this.memoizedFilter.baseFilter.qoliOptions);
     }
 }

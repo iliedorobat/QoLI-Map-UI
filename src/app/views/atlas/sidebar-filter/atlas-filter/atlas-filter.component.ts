@@ -3,9 +3,9 @@ import {FormGroup} from '@angular/forms';
 import noop from 'lodash-es/noop';
 import get from 'lodash-es/get';
 
+import {AtlasFilterService} from './atlas-filter.service';
 import {IAtlasFilter} from './atlas-filter.types';
 import {LocalService} from '@/app/views/atlas/services/local.service';
-import {QoliFilterService} from './qoli-filter.service';
 
 @Component({
     selector: 'app-atlas-filter',
@@ -14,17 +14,17 @@ import {QoliFilterService} from './qoli-filter.service';
 })
 export class AtlasFilterComponent {
     constructor(
-        private qoliFilterService: QoliFilterService,
+        private atlasFilterService: AtlasFilterService,
         private localService: LocalService
     ) {}
 
     @Input() onActiveButtonResets: Function = noop;
 
-    protected filter: IAtlasFilter = this.qoliFilterService.getTransitoryFilter(true);
-    protected form: FormGroup = this.qoliFilterService.initializeFilterForm(this.filter);
+    protected filter: IAtlasFilter = this.atlasFilterService.getTransitoryFilter(true);
+    protected form: FormGroup = this.atlasFilterService.initializeFilterForm(this.filter);
 
     onFilterApply(): void {
-        this.qoliFilterService.memoizeFilter(this.filter);
+        this.atlasFilterService.memoizeFilter(this.filter);
         this.localService.lifeIndexSubscription(this.filter);
     }
 
@@ -32,11 +32,11 @@ export class AtlasFilterComponent {
         event.stopPropagation();
         const target = event.target as HTMLElement;
         const value = get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
-        const memoizedFilter = this.qoliFilterService.getMemoizedFilter();
+        const memoizedFilter = this.atlasFilterService.getMemoizedFilter();
 
         switch (value) {
             case 'atlas-filter-main-section':
-                this.filter.primaryFilter.reset(this.form, memoizedFilter.primaryFilter.qoliOptions)
+                this.filter.baseFilter.reset(this.form, memoizedFilter.baseFilter.qoliOptions)
                 break;
             default:
                 break;
@@ -44,7 +44,7 @@ export class AtlasFilterComponent {
     }
 
     onReset(): void {
-        this.qoliFilterService.reset(this.form);
+        this.atlasFilterService.reset(this.form);
     }
 
     onSubmit(): void {

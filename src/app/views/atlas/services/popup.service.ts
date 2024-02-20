@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {PopupOptions} from 'leaflet';
 
-import {QoliFilterService} from '@/app/views/atlas/sidebar-filter/atlas-filter/qoli-filter.service';
+import {AtlasFilterService} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.service';
 import {DatasetService} from './dataset.service';
 import {GeoFeature} from '@/app/views/atlas/constants/geo.types';
 import {HTMLElementParams, HtmlElementsService} from './html-elements.service';
@@ -14,7 +14,7 @@ import {SORT_ORDER} from '@/app/shared/constants/math.const';
 })
 export class PopupService {
     constructor(
-        private qoliFilterService: QoliFilterService,
+        private atlasFilterService: AtlasFilterService,
         private datasetService: DatasetService,
         private htmlElementsService: HtmlElementsService
     ) {}
@@ -51,7 +51,7 @@ export class PopupService {
     private createBody(geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement {
         const countryCode = geoLand.id;
         const score = this.datasetService.getScore(geoLand, response);
-        const filter = this.qoliFilterService.getMemoizedFilter();
+        const filter = this.atlasFilterService.getMemoizedFilter();
         const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
         const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;
 
@@ -62,7 +62,7 @@ export class PopupService {
 
         const categoryLabelElement = this.htmlElementsService.createLabelElement('Name');
         // FIXME: revisit
-        const categoryElement = this.htmlElementsService.createValueElement(filter.primaryFilter.qoliOptions.label);
+        const categoryElement = this.htmlElementsService.createValueElement(filter.baseFilter.qoliOptions.label);
 
         const rankLabelElement = this.htmlElementsService.createLabelElement('Rank');
         const rankElement = this.htmlElementsService.createValueElement(`${rank} of ${sortedResponse.length}`);

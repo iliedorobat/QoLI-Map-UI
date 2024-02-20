@@ -1,19 +1,22 @@
 import {FormGroup} from '@angular/forms';
 import cloneDeep from 'lodash-es/cloneDeep';
 
-import {IAtlasFilterMethods} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
 import {DEFAULT_YEAR} from '@/app/shared/constants/app.const';
 
 import {config} from './temp.const';
 
-export interface IPrimaryAtlasFilter extends IAtlasFilterMethods {
+export interface IAtlasBaseFilter {
     qoliOptions: IQoLI;
     year: number;
+    isDisabled(): boolean;
+    isEmpty(): boolean;
+    reset(form: FormGroup, qoliOptions: IQoLI): void;
+    resetFilter(qoliOptions?: IQoLI): void;
+    resetFilterForm(form: FormGroup, qoliOptions: IQoLI): void;
 }
 
-// TODO: revisit: rename it to AtlasBaseFilter
-export class PrimaryAtlasFilter implements IPrimaryAtlasFilter {
+export class AtlasBaseFilter implements IAtlasBaseFilter {
     public qoliOptions: IQoLI;
     public year: number;
 
