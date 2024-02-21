@@ -1,3 +1,4 @@
+// FIXME: revisit: remove the config
 import * as config from './qoli.config.json';
 
 export interface IQoLI {
