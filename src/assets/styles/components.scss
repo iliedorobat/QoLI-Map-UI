@@ -7,9 +7,39 @@
     }
 }
 
-// Configuration of the list of MUI checkboxes
+// Configuring the list of MUI checkboxes
 .cdk-overlay-pane {
-    .checkbox-items {
-        list-style: none;
+    .qoli-features-group {
+        .qoli-dimension,
+        .qoli-indicators {
+            padding: 0;
+
+            > mat-pseudo-checkbox {
+                display: none;
+            }
+
+            > span.mdc-list-item__primary-text {
+                width: 100%;
+
+                > mat-checkbox {
+                    width: 100%;
+
+                    > div.mdc-form-field {
+                        width: 100%;
+
+                        > label {
+                            width: 100%;
+                            padding: 14px 0;
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                }
+            }
+        }
+
+        .qoli-indicators {
+            margin-left: 24px;
+        }
     }
 }

@@ -5,7 +5,6 @@
         (selectionChange)="onYearChanges($event)"
         [(value)]="filter.baseFilter.year"
     >
-        <mat-option>-- None --</mat-option>
         <mat-option
             *ngFor="let year of AVAILABLE_INTERVAL"
             [value]="year"
@@ -13,28 +12,37 @@
     </mat-select>
 </mat-form-field>
 
+<!-- TODO: revisit: radio buttons: 1) multiple selection; 2) simple selection -->
+<!-- TODO: revisit: https://material.angular.io/components/tree/overview -->
 <mat-form-field [formGroup]="form">
     <mat-label>Quality of Life Index</mat-label>
-    <mat-select>
-        <mat-option>-- None --</mat-option>
-        <mat-optgroup [label]="filter.baseFilter.qoliOptions.label">
-            <mat-optgroup *ngFor="let dimension of filter.baseFilter.qoliOptions.aggregators">
+
+    <mat-select class="test-outer" multiple (selectionChange)="onFeaturesChanges($event)" [value]="selectedFeatures">
+        <mat-select-trigger>
+            {{ selectedFeatures.length }} selected features
+        </mat-select-trigger>
+
+        <div class="qoli-features-group" *ngFor="let dimension of filter.baseFilter.qoliOptions.aggregators">
+            <mat-option class="qoli-dimension" [value]="dimension.filename">
                 <mat-checkbox
                     [formControlName]="dimension.filename"
                     [checked]="dimension.checked"
                     [indeterminate]="someChecked(dimension)"
                     (change)="onDimensionChanges(dimension)"
                 >{{ dimension.label }}</mat-checkbox>
-                <ul class="checkbox-items">
-                    <li *ngFor="let indicator of dimension.aggregators">
-                        <mat-checkbox
-                            [formControlName]="dimension.filename + ':' + indicator.filename"
-                            [checked]="indicator.checked"
-                            (change)="onIndicatorChanges(dimension, indicator)"
-                        >{{ indicator.label }}</mat-checkbox>
-                    </li>
-                </ul>
-            </mat-optgroup>
-        </mat-optgroup>
+            </mat-option>
+
+            <mat-option
+                class="qoli-indicators"
+                *ngFor="let indicator of dimension.aggregators"
+                [value]="dimension.filename + ':' + indicator.filename"
+            >
+                <mat-checkbox
+                    [formControlName]="dimension.filename + ':' + indicator.filename"
+                    [checked]="indicator.checked"
+                    (change)="onIndicatorChanges(dimension, indicator)"
+                >{{ indicator.label }}</mat-checkbox>
+            </mat-option>
+        </div>
     </mat-select>
 </mat-form-field>
