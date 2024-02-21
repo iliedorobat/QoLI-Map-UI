@@ -200,6 +200,7 @@ export const config = {
         {
             "checked": true,
             "filename": "interactions",
+            "label": "Social Interactions",
             "aggregators": [
                 {
                     "checked": true,
@@ -369,7 +370,8 @@ export const config = {
                 },
                 {
                     "checked": true,
-                    "filename": "materialDeprivationRatio"
+                    "filename": "materialDeprivationRatio",
+                    "label": "Material Deprivation Ratio"
                 },
                 {
                     "checked": true,
