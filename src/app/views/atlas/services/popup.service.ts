@@ -20,14 +20,19 @@ export class PopupService {
     ) {}
 
     public createContent(geoLand: GeoFeature, response: LifeIndexResponse) {
+        const score = this.datasetService.getScore(geoLand, response);
+
         const content = document.createElement('div');
         content.className = 'content';
 
         const header = this.createHeader(geoLand);
         content.appendChild(header);
 
-        const body = this.createBody(geoLand, response);
-        content.appendChild(body);
+        // Avoid adding the body if the country have been filtered out
+        if (score > this.datasetService.EXCLUDED_COUNTRY_SCORE) {
+            const body = this.createBody(geoLand, response);
+            content.appendChild(body);
+        }
 
         return content;
     }
@@ -60,10 +65,6 @@ export class PopupService {
             tagName: 'div'
         } as HTMLElementParams);
 
-        const categoryLabelElement = this.htmlElementsService.createLabelElement('Name');
-        // FIXME: revisit
-        const categoryElement = this.htmlElementsService.createValueElement(filter.baseFilter.qoliOptions.label);
-
         const rankLabelElement = this.htmlElementsService.createLabelElement('Rank');
         const rankElement = this.htmlElementsService.createValueElement(`${rank} of ${sortedResponse.length}`);
 
@@ -73,20 +74,14 @@ export class PopupService {
         const yearLabelElement = this.htmlElementsService.createLabelElement('Year');
         const yearElement = this.htmlElementsService.createValueElement(filter.baseFilter.year);
 
-        bodyElement.appendChild(categoryLabelElement);
-        bodyElement.appendChild(categoryElement);
-
         bodyElement.appendChild(yearLabelElement);
         bodyElement.appendChild(yearElement);
 
-        // Avoid displaying "score" and "label" if the country have been filtered out
-        if (score > this.datasetService.EXCLUDED_COUNTRY_SCORE) {
-            bodyElement.appendChild(scoreLabelElement);
-            bodyElement.appendChild(scoreElement);
+        bodyElement.appendChild(scoreLabelElement);
+        bodyElement.appendChild(scoreElement);
 
-            bodyElement.appendChild(rankLabelElement);
-            bodyElement.appendChild(rankElement);
-        }
+        bodyElement.appendChild(rankLabelElement);
+        bodyElement.appendChild(rankElement);
 
         return bodyElement;
     }

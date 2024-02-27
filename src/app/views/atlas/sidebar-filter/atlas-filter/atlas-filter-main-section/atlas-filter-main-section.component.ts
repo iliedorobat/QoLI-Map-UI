@@ -44,6 +44,9 @@ export class AtlasFilterMainSectionComponent implements OnInit {
             indicator.checked = value;
         }
 
+        const unchecked = this.filter.baseFilter.qoliOptions.aggregators.some(dim => !dim.checked);
+        this.filter.baseFilter.qoliOptions.checked = !unchecked;
+
         this.updateSelectedFeatures();
     };
 
@@ -52,11 +55,12 @@ export class AtlasFilterMainSectionComponent implements OnInit {
         const indKey = `${dimKey}:${indicator.filename}`;
         indicator.checked = this.form.get(indKey)?.value;
 
-        const unchecked = dimension.aggregators.every(indicator => !indicator.checked);
+        const unchecked = dimension.aggregators.some(indicator => !indicator.checked);
 
-        if (unchecked) {
-            this.form.get(dimension.filename)?.setValue(false);
-        }
+        this.form.get(dimension.filename)?.setValue(!unchecked);
+        dimension.checked = !unchecked;
+
+        this.filter.baseFilter.qoliOptions.checked = !unchecked;
 
         this.updateSelectedFeatures();
     }

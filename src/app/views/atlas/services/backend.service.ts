@@ -31,14 +31,34 @@ export class BackendService {
     }
 
     private getLifeIndex(filter: IAtlasFilter): Observable<LifeIndexResponse> {
-        // TODO: revisit: build the "aggr" based on the applied filter
-        const aggrs = 'aggr=education&aggr=environment&aggr=governance&aggr=health&aggr=interactions&aggr=leisure&aggr=mainActivity&aggr=livingConditions&aggr=overallExperience&aggr=safety';
+        const aggrs = this.extractAggregators(filter).map(aggr => `aggr=${aggr}`).join('&');
+        // TODO: revisit: build the "countryCodes" param based on the selected countries
+        // TODO: revisit: add country selector
+        const countryCodes = undefined;
+        const year = `year=${filter.baseFilter.year}`;
+        const search = [aggrs, year, countryCodes].filter(item => !!item).join('&');
 
-        const promise = fetch(`${MAIN_URL}/stats?${aggrs}&countryCode=AT&year=${filter.baseFilter.year}`)
+        const promise = fetch(`${MAIN_URL}/stats?${search}`)
             .then(response => response.json())
             .then((data: any) => this.prepareLifeIndexResponse(filter, data.scores));
 
         return from(promise);
+    }
+
+    private extractAggregators(filter: IAtlasFilter): string[] {
+        return filter.baseFilter.qoliOptions.aggregators.reduce((acc, dimension) => {
+            const arr = [...acc];
+
+            if (dimension.checked) {
+                arr.push(dimension.filename);
+            } else {
+                dimension.aggregators.forEach(indicator => {
+                    indicator.checked && arr.push(`${dimension.filename}:${indicator.filename}`);
+                });
+            }
+
+            return arr;
+        }, [] as string[]);
     }
 
     public datasetConfigSubscription(): void {
