@@ -79,11 +79,14 @@ export class PopupService {
         bodyElement.appendChild(yearLabelElement);
         bodyElement.appendChild(yearElement);
 
-        bodyElement.appendChild(scoreLabelElement);
-        bodyElement.appendChild(scoreElement);
+        // Avoid displaying "score" and "label" if the country have been filtered out
+        if (score > this.datasetService.EXCLUDED_COUNTRY_SCORE) {
+            bodyElement.appendChild(scoreLabelElement);
+            bodyElement.appendChild(scoreElement);
 
-        bodyElement.appendChild(rankLabelElement);
-        bodyElement.appendChild(rankElement);
+            bodyElement.appendChild(rankLabelElement);
+            bodyElement.appendChild(rankElement);
+        }
 
         return bodyElement;
     }

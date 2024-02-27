@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {GeoJSON, Layer, Map} from 'leaflet';
 
 import {AtlasService} from './services/atlas.service';
-import {LocalService} from './services/local.service';
+import {BackendService} from './services/backend.service';
 
 import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
 
@@ -14,7 +14,7 @@ import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
 export class AtlasComponent implements OnInit {
     constructor(
         private atlasService: AtlasService,
-        private localService: LocalService
+        private backendService: BackendService
     ) {}
 
     private map: Map | undefined;
@@ -35,7 +35,7 @@ export class AtlasComponent implements OnInit {
     @Output() openSidebar = new EventEmitter();
 
     ngOnInit(): void {
-        this.localService.lifeIndex$
+        this.backendService.lifeIndex$
             .subscribe(data => {
                 if (this.map) {
                     const baseLayers = [BASE_LAYER];

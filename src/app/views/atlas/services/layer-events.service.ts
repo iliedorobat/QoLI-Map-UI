@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {GeoJSON, Map} from 'leaflet';
 
+import {DatasetService} from '../services/dataset.service';
 import {GeoFeature} from '../constants/geo.types';
 import {LifeIndexResponse} from '../constants/response.types';
 import {PopupService} from './popup.service';
@@ -11,6 +12,7 @@ import {TooltipService} from './tooltip.service';
 })
 export class LayerEventsService {
     constructor(
+        private datasetService: DatasetService,
         private popupService: PopupService,
         private tooltipService: TooltipService
     ) {}
@@ -29,6 +31,13 @@ export class LayerEventsService {
     }
 
     private onBindTooltip(layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponse) {
+        const score = this.datasetService.getScore(geoLand, response);
+
+        // Avoid displaying the tooltip if the country have been filtered out
+        if (score === this.datasetService.EXCLUDED_COUNTRY_SCORE) {
+            return;
+        }
+
         const options = this.tooltipService.getOptions(geoLand);
         const content = this.tooltipService.createContent(geoLand, response);
 

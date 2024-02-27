@@ -7,6 +7,10 @@ import {LifeIndexMultipleResponses, LifeIndexResponse} from '../constants/respon
 @Injectable({
     providedIn: 'root'
 })
+/**
+ * @deprecated in favour of BackendService
+ * TODO: revisit: remove the local service
+ */
 export class LocalService {
     private _lifeIndex$: BehaviorSubject<LifeIndexResponse> = new BehaviorSubject<LifeIndexResponse>({} as LifeIndexResponse);
 

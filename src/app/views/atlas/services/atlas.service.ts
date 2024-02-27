@@ -62,8 +62,10 @@ export class AtlasService {
     private getColor(response: LifeIndexResponse, score: number, countryCode: string): string {
         const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
         const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;
+        const isExcluded = score === this.datasetService.EXCLUDED_COUNTRY_SCORE;
 
         switch (true) {
+            case isExcluded: return '#838996';
             case rank <= 3: return '#001146';
             case rank <= 9: return '#00116e';
             case rank <= 15: return '#0011aa';
