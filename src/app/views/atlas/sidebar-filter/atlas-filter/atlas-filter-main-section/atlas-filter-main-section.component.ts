@@ -5,7 +5,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectChange, MatSelectModule} from '@angular/material/select';
 
-import {AtlasFilterService} from '../atlas-filter.service';
+import {AtlasFilterService, EU28_MEMBER_CODES, EU28_MEMBERS} from '../atlas-filter.service';
 import {IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {IQoLIDimension, IQoLIIndicator} from '@/app/views/atlas/constants/qoli.types';
 
@@ -24,12 +24,15 @@ export class AtlasFilterMainSectionComponent implements OnInit {
     ) {}
 
     protected readonly AVAILABLE_INTERVAL = AVAILABLE_INTERVAL;
+    protected readonly EU28_MEMBER_CODES = EU28_MEMBER_CODES;
+    protected selectedCountries: string[] = [];
     protected selectedFeatures: string[] = [];
 
     @Input() filter: IAtlasFilter = this.atlasFilterService.getTransitoryFilter();
     @Input() form = this.atlasFilterService.initializeFilterForm(this.filter);
 
     ngOnInit(): void {
+        this.selectedCountries = [...this.filter.baseFilter.countries];
         this.selectedFeatures = this.getSelectedFeatures();
     }
 
@@ -65,6 +68,11 @@ export class AtlasFilterMainSectionComponent implements OnInit {
         this.updateSelectedFeatures();
     }
 
+    onCountriesChanges(event: MatSelectChange): void {
+        this.selectedCountries = [...event.value];
+        this.filter.baseFilter.countries = [...event.value];
+    }
+
     onFeaturesChanges(event: MatSelectChange): void {
         // Do nothing
     }
@@ -73,7 +81,7 @@ export class AtlasFilterMainSectionComponent implements OnInit {
         this.form.get('year')?.setValue(event.value);
     }
 
-    someChecked(dimension: IQoLIDimension): boolean {
+    someIndicatorsChecked(dimension: IQoLIDimension): boolean {
         const checked = dimension.aggregators.every(indicator => indicator.checked);
         const unchecked = dimension.aggregators.every(indicator => !indicator.checked);
 
@@ -82,6 +90,10 @@ export class AtlasFilterMainSectionComponent implements OnInit {
         }
 
         return dimension.aggregators.some(indicator => indicator.checked);
+    }
+
+    getCountryName(countryCode: any): string {
+        return EU28_MEMBERS[countryCode as keyof typeof EU28_MEMBERS];
     }
 
     getSelectedFeatures(): string[] {

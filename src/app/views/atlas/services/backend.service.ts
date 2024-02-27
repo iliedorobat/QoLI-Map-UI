@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, from, Observable} from 'rxjs';
-import {LifeIndexMultipleResponses, LifeIndexResponse} from '@/app/views/atlas/constants/response.types';
-import {IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
+
+import {LifeIndexMultipleResponses, LifeIndexResponse} from '../constants/response.types';
+import {IAtlasFilter} from '../sidebar-filter/atlas-filter/atlas-filter.types';
 
 const MAIN_URL = 'http://localhost:3070';
 
 @Injectable({
     providedIn: 'root'
 })
-// TODO: use backend APIs to get data
 export class BackendService {
     private _datasetConfig$: BehaviorSubject<any> = new BehaviorSubject<any>({} as any);
     private _lifeIndex$: BehaviorSubject<LifeIndexResponse> = new BehaviorSubject<LifeIndexResponse>({} as LifeIndexResponse);
@@ -31,12 +31,10 @@ export class BackendService {
     }
 
     private getLifeIndex(filter: IAtlasFilter): Observable<LifeIndexResponse> {
-        const aggrs = this.extractAggregators(filter).map(aggr => `aggr=${aggr}`).join('&');
-        // TODO: revisit: build the "countryCodes" param based on the selected countries
-        // TODO: revisit: add country selector
-        const countryCodes = undefined;
+        const aggrs = this.extractAggregators(filter).map(aggr => `aggr=${aggr}`);
+        const countryCodes = filter.baseFilter.countries.map(code => `countryCode=${code}`);
         const year = `year=${filter.baseFilter.year}`;
-        const search = [aggrs, year, countryCodes].filter(item => !!item).join('&');
+        const search = [...aggrs, year, ...countryCodes].filter(item => !!item).join('&');
 
         const promise = fetch(`${MAIN_URL}/stats?${search}`)
             .then(response => response.json())

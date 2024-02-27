@@ -8,6 +8,7 @@ import {DEFAULT_YEAR} from '@/app/shared/constants/app.const';
 import {config} from './temp.const';
 
 export interface IAtlasBaseFilter {
+    countries: string[];
     qoliOptions: IQoLI;
     year: number;
     isDisabled(): boolean;
@@ -18,10 +19,12 @@ export interface IAtlasBaseFilter {
 }
 
 export class AtlasBaseFilter implements IAtlasBaseFilter {
+    public countries: string[];
     public qoliOptions: IQoLI;
     public year: number;
 
-    constructor(qoliOptions: IQoLI, year?: number) {
+    constructor(countries: string[], qoliOptions: IQoLI, year?: number) {
+        this.countries = countries;
         this.qoliOptions = qoliOptions;
         this.year = year ?? DEFAULT_YEAR;
     }

@@ -12,12 +12,26 @@
     </mat-select>
 </mat-form-field>
 
+<mat-form-field [formGroup]="form">
+    <mat-label>Countries</mat-label>
+
+    <mat-select formControlName="countries" multiple (selectionChange)="onCountriesChanges($event)" [value]="selectedCountries">
+        <mat-select-trigger>
+            {{ selectedCountries.length }} selected countries
+        </mat-select-trigger>
+
+        <mat-option *ngFor="let countryCode of EU28_MEMBER_CODES" [value]="countryCode">
+            <div>{{ getCountryName(countryCode) }}</div>
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
 <!-- TODO: revisit: radio buttons: 1) multiple selection; 2) simple selection -->
 <!-- TODO: revisit: https://material.angular.io/components/tree/overview -->
 <mat-form-field [formGroup]="form">
     <mat-label>Quality of Life Index</mat-label>
 
-    <mat-select class="test-outer" multiple (selectionChange)="onFeaturesChanges($event)" [value]="selectedFeatures">
+    <mat-select multiple (selectionChange)="onFeaturesChanges($event)" [value]="selectedFeatures">
         <mat-select-trigger>
             {{ selectedFeatures.length }} selected features
         </mat-select-trigger>
@@ -27,7 +41,7 @@
                 <mat-checkbox
                     [formControlName]="dimension.filename"
                     [checked]="dimension.checked"
-                    [indeterminate]="someChecked(dimension)"
+                    [indeterminate]="someIndicatorsChecked(dimension)"
                     (change)="onDimensionChanges(dimension)"
                 >{{ dimension.label }}</mat-checkbox>
             </mat-option>
