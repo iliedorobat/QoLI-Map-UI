@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import noop from 'lodash-es/noop';
 import get from 'lodash-es/get';
@@ -13,7 +13,7 @@ import {IAtlasFilter} from './atlas-filter.types';
     templateUrl: './atlas-filter.component.html',
     styleUrls: ['./atlas-filter.component.scss']
 })
-export class AtlasFilterComponent {
+export class AtlasFilterComponent implements AfterViewInit {
     constructor(
         private atlasFilterService: AtlasFilterService,
         private backendService: BackendService
@@ -24,6 +24,16 @@ export class AtlasFilterComponent {
 
     protected filter: IAtlasFilter = this.atlasFilterService.getFilter();
     protected form: FormGroup = this.atlasFilterService.initializeFilterForm(this.filter);
+    protected headerLabel = 'Results: 0 countries';
+
+    ngAfterViewInit(): void {
+        // ERROR Error: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked.
+        // https://blog.angular-university.io/angular-debugging/
+        setTimeout(() => {
+            const counter = this.child?.getSelectedCountries()?.length || 0;
+            this.headerLabel = `Results: ${counter} countries`
+        }, 0);
+    }
 
     onFilterApply(): void {
         this.atlasFilterService.saveFilter(this.form);
