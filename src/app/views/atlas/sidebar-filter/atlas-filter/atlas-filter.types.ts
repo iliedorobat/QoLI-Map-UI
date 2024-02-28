@@ -6,9 +6,7 @@ export interface IAtlasFilter {
     baseFilter: IAtlasBaseFilter;
     isDisabled(): boolean;
     isEmpty(): boolean;
-    reset(form: FormGroup, memoizedFilter: IAtlasFilter): void;
-    resetFilter(memoizedFilter?: IAtlasFilter): void;
-    resetFilterForm(form: FormGroup, memoizedFilter: IAtlasFilter): void;
+    resetFilterForm(form: FormGroup, filter: IAtlasFilter): void;
 }
 
 export class AtlasFilter implements IAtlasFilter {
@@ -26,15 +24,7 @@ export class AtlasFilter implements IAtlasFilter {
         return this.baseFilter.isEmpty();
     }
 
-    reset(form: FormGroup, memoizedFilter: IAtlasFilter): void {
-        this.baseFilter.reset(form, memoizedFilter);
-    }
-
-    resetFilter(memoizedFilter?: IAtlasFilter): void {
-        this.baseFilter.resetFilter(memoizedFilter);
-    }
-
-    resetFilterForm(form: FormGroup, memoizedFilter: IAtlasFilter): void {
-        this.baseFilter.resetFilterForm(form, memoizedFilter);
+    resetFilterForm(form: FormGroup, filter: IAtlasFilter): void {
+        this.baseFilter.resetFilterForm(form, filter);
     }
 }

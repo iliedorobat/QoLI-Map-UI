@@ -1,11 +1,9 @@
 import {FormGroup} from '@angular/forms';
-import cloneDeep from 'lodash-es/cloneDeep';
 
 import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
 import {IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 
 import {DEFAULT_YEAR} from '@/app/shared/constants/app.const';
-import {config} from './temp.const';
 
 export interface IAtlasBaseFilter {
     countries: string[];
@@ -13,9 +11,7 @@ export interface IAtlasBaseFilter {
     year: number;
     isDisabled(): boolean;
     isEmpty(): boolean;
-    reset(form: FormGroup, memoizedFilter: IAtlasFilter): void;
-    resetFilter(memoizedFilter?: IAtlasFilter): void;
-    resetFilterForm(form: FormGroup, memoizedFilter: IAtlasFilter): void;
+    resetFilterForm(form: FormGroup, filter: IAtlasFilter): void;
 }
 
 export class AtlasBaseFilter implements IAtlasBaseFilter {
@@ -39,21 +35,10 @@ export class AtlasBaseFilter implements IAtlasBaseFilter {
         return false;
     }
 
-    reset(form: FormGroup, memoizedFilter: IAtlasFilter): void {
-        this.resetFilterForm(form, memoizedFilter);
-        this.resetFilter(memoizedFilter);
-    }
+    resetFilterForm(form: FormGroup, filter: IAtlasFilter): void {
+        const {countries, qoliOptions, year} = filter.baseFilter;
 
-    resetFilter(memoizedFilter?: IAtlasFilter): void {
-        const qoliOptions = memoizedFilter?.baseFilter.qoliOptions ?? config;
-        this.qoliOptions = cloneDeep(qoliOptions) as IQoLI;
-        this.year = memoizedFilter?.baseFilter.year ?? DEFAULT_YEAR;
-    }
-
-    resetFilterForm(form: FormGroup, memoizedFilter: IAtlasFilter): void {
-        const dimensions = memoizedFilter.baseFilter.qoliOptions.aggregators;
-
-        for (const dimension of dimensions) {
+        for (const dimension of qoliOptions.aggregators) {
             const dimensionName = dimension.filename;
             form.controls[dimensionName].setValue(dimension.checked);
 
@@ -62,5 +47,8 @@ export class AtlasBaseFilter implements IAtlasBaseFilter {
                 form.controls[`${dimensionName}:${indicator.filename}`].setValue(indicator.checked);
             }
         }
+
+        form.controls['year'].setValue(year);
+        form.controls['countries'].setValue([...countries]);
     }
 }

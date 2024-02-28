@@ -30,7 +30,7 @@ export class AppComponent {
         translate.setDefaultLang('en-US');
         translate.use('en-US');
 
-        backendService.lifeIndexSubscription(this.atlasFilterService.getTransitoryFilter());
+        backendService.lifeIndexSubscription(this.atlasFilterService.getFilter());
     }
 
     onMenuItemClick(event: Event, menuItem: MenuItem): void {

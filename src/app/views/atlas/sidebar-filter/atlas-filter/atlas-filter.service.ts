@@ -50,23 +50,40 @@ export const EU28_MEMBER_CODES = Object.keys(EU28_MEMBERS);
     providedIn: 'root',
 })
 export class AtlasFilterService {
-    // Store data after the filter is applied
-    private memoizedFilter: IAtlasFilter;
-    // Store temporary data before the filter is applied
-    private transitoryFilter: IAtlasFilter;
+    private filter: IAtlasFilter;
 
     constructor() {
-        this.memoizedFilter = this.createNewFilter();
-        this.transitoryFilter = this.createNewFilter();
+        this.filter = this.createNewFilter();
     }
 
-    private createNewFilter(filter?: IAtlasFilter) {
-        const countries = filter?.baseFilter.countries || EU28_MEMBER_CODES;
-        const qoliOptions = cloneDeep(filter?.baseFilter.qoliOptions) ?? cloneDeep(config) as IQoLI;
-        const year = filter?.baseFilter.year || DEFAULT_YEAR;
+    private createNewFilter() {
+        const countries = [...EU28_MEMBER_CODES];
+        const qoliOptions = cloneDeep(config) as IQoLI;
 
-        const primaryAtlasFilter = new AtlasBaseFilter(countries, qoliOptions, year);
+        const primaryAtlasFilter = new AtlasBaseFilter(countries, qoliOptions, DEFAULT_YEAR);
         return new AtlasFilter(primaryAtlasFilter);
+    }
+
+    public getFilter(): IAtlasFilter {
+        return this.filter;
+    }
+
+    public saveFilter(form: FormGroup): void {
+        this.filter.baseFilter.countries = form.value['countries'];
+        this.filter.baseFilter.year = form.value['year'];
+
+        const qoliOptions: IQoLI = this.filter.baseFilter.qoliOptions;
+        qoliOptions.checked = qoliOptions.aggregators.every(aggr => form.value[aggr.filename]);
+
+        for (const dimension of qoliOptions.aggregators) {
+            const dimKey = dimension.filename;
+            dimension.checked = form.value[dimKey];
+
+            for (const indicator of dimension.aggregators) {
+                const indKey = `${dimKey}:${indicator.filename}`;
+                indicator.checked = form.value[indKey];
+            }
+        }
     }
 
     public initializeFilterForm(filter: IAtlasFilter) {
@@ -87,23 +104,7 @@ export class AtlasFilterService {
         return new FormGroup(controls);
     }
 
-    public getMemoizedFilter(): IAtlasFilter {
-        return this.memoizedFilter;
-    }
-
-    public getTransitoryFilter(reset?: boolean): IAtlasFilter {
-        if (reset) {
-            this.transitoryFilter.resetFilter(this.memoizedFilter);
-        }
-
-        return this.transitoryFilter;
-    }
-
-    public memoizeFilter(filter: IAtlasFilter): void {
-        this.memoizedFilter = this.createNewFilter(filter);
-    }
-
-    public reset(form: FormGroup): void {
-        this.transitoryFilter.reset(form, this.memoizedFilter);
+    public resetFilterForm(form: FormGroup): void {
+        this.filter.resetFilterForm(form, this.filter);
     }
 }

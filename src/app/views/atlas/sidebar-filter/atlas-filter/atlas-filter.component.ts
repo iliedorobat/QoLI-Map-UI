@@ -1,8 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import noop from 'lodash-es/noop';
 import get from 'lodash-es/get';
 
+import {AtlasFilterMainSectionComponent} from '../atlas-filter/atlas-filter-main-section/atlas-filter-main-section.component';
 import {AtlasFilterService} from './atlas-filter.service';
 import {BackendService} from '@/app/views/atlas/services/backend.service';
 import {IAtlasFilter} from './atlas-filter.types';
@@ -18,13 +19,14 @@ export class AtlasFilterComponent {
         private backendService: BackendService
     ) {}
 
+    @ViewChild(AtlasFilterMainSectionComponent) child: AtlasFilterMainSectionComponent | undefined;
     @Input() onActiveButtonResets: Function = noop;
 
-    protected filter: IAtlasFilter = this.atlasFilterService.getTransitoryFilter(true);
+    protected filter: IAtlasFilter = this.atlasFilterService.getFilter();
     protected form: FormGroup = this.atlasFilterService.initializeFilterForm(this.filter);
 
     onFilterApply(): void {
-        this.atlasFilterService.memoizeFilter(this.filter);
+        this.atlasFilterService.saveFilter(this.form);
         this.backendService.lifeIndexSubscription(this.filter);
     }
 
@@ -32,11 +34,12 @@ export class AtlasFilterComponent {
         event.stopPropagation();
         const target = event.target as HTMLElement;
         const value = get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
-        const memoizedFilter = this.atlasFilterService.getMemoizedFilter();
 
         switch (value) {
             case 'atlas-filter-main-section':
-                this.filter.baseFilter.reset(this.form, memoizedFilter)
+                // FIXME:
+                this.filter.baseFilter.resetFilterForm(this.form, this.filter);
+                this.child?.resetSelectedItems();
                 break;
             default:
                 break;
@@ -44,7 +47,8 @@ export class AtlasFilterComponent {
     }
 
     onReset(): void {
-        this.atlasFilterService.reset(this.form);
+        this.atlasFilterService.resetFilterForm(this.form);
+        this.child?.resetSelectedItems();
     }
 
     onSubmit(): void {

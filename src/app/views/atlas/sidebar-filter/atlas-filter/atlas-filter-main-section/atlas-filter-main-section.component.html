@@ -1,14 +1,9 @@
 <mat-form-field [formGroup]="form">
     <mat-label>Year of analysis</mat-label>
-    <mat-select
-        formControlName="year"
-        (selectionChange)="onYearChanges($event)"
-        [(value)]="filter.baseFilter.year"
-    >
-        <mat-option
-            *ngFor="let year of AVAILABLE_INTERVAL"
-            [value]="year"
-        >{{ year }}</mat-option>
+    <mat-select formControlName="year">
+        <mat-option *ngFor="let year of AVAILABLE_INTERVAL" [value]="year">
+            {{ year }}
+        </mat-option>
     </mat-select>
 </mat-form-field>
 
@@ -31,18 +26,19 @@
 <mat-form-field [formGroup]="form">
     <mat-label>Quality of Life Index</mat-label>
 
-    <mat-select multiple (selectionChange)="onFeaturesChanges($event)" [value]="selectedFeatures">
+    <mat-select multiple (selectionChange)="onFeatureChanges()" [value]="selectedIndicators">
         <mat-select-trigger>
-            {{ selectedFeatures.length }} selected features
+            {{ selectedIndicators.length }} selected indicators
         </mat-select-trigger>
 
         <div class="qoli-features-group" *ngFor="let dimension of filter.baseFilter.qoliOptions.aggregators">
             <mat-option class="qoli-dimension" [value]="dimension.filename">
                 <mat-checkbox
-                    [formControlName]="dimension.filename"
+                    (change)="onDimensionChanges($event)"
                     [checked]="dimension.checked"
-                    [indeterminate]="someIndicatorsChecked(dimension)"
-                    (change)="onDimensionChanges(dimension)"
+                    [formControlName]="dimension.filename"
+                    [indeterminate]="someIndicatorsChecked(dimension.filename)"
+                    [name]="dimension.filename"
                 >{{ dimension.label }}</mat-checkbox>
             </mat-option>
 
@@ -52,9 +48,10 @@
                 [value]="dimension.filename + ':' + indicator.filename"
             >
                 <mat-checkbox
-                    [formControlName]="dimension.filename + ':' + indicator.filename"
+                    (change)="onIndicatorChanges($event)"
                     [checked]="indicator.checked"
-                    (change)="onIndicatorChanges(dimension, indicator)"
+                    [formControlName]="dimension.filename + ':' + indicator.filename"
+                    [name]="dimension.filename + ':' + indicator.filename"
                 >{{ indicator.label }}</mat-checkbox>
             </mat-option>
         </div>

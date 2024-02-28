@@ -56,7 +56,7 @@ export class PopupService {
     private createBody(geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement {
         const countryCode = geoLand.id;
         const score = this.datasetService.getScore(geoLand, response);
-        const filter = this.atlasFilterService.getMemoizedFilter();
+        const filter = this.atlasFilterService.getFilter();
         const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
         const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;
 
