@@ -1,13 +1,6 @@
 <div class="global-filter">
-<!--    TODO: -->
-<!--    &lt;!&ndash;    was-validated &ndash;&gt;-->
-<!--    <button [ngClass]="{'btn btn-counter': true, disabled: !counterClickable}" (click)="openCHOsModal()">-->
-<!--        Results: {{ totalCHOs$ | async | number }} CHOs-->
-<!--    </button>-->
-
-<!--    TODO: remove: -->
     <button [ngClass]="{'btn btn-counter': true, disabled: true}">
-        Results: 28 countries
+        Results: {{ child?.getSelectedCountries()?.length }} countries
     </button>
 
     <form class="needs-validation" [formGroup]="form">
@@ -28,8 +21,7 @@
         </ngb-accordion>
 
         <div class="form-footer">
-<!--            FIXME: revisit: [disabled]="filter.isDisabled()"-->
-            <button class="btn btn-md btn-success" type="submit" (click)="onSubmit()" [disabled]="false">
+            <button class="btn btn-md btn-success" type="submit" (click)="onSubmit()">
                 Apply Filter
             </button>
             <button class="btn btn-md btn-secondary" type="submit" (click)="onReset()">

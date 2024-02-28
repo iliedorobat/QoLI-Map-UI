@@ -130,6 +130,10 @@ export class AtlasFilterMainSectionComponent implements OnInit {
         return EU28_MEMBERS[countryCode as keyof typeof EU28_MEMBERS];
     }
 
+    getSelectedCountries(): string[] {
+        return this.selectedCountries;
+    }
+
     resetSelectedItems(): void {
         this.resetSelectedCountries();
         this.resetSelectedIndicators();
