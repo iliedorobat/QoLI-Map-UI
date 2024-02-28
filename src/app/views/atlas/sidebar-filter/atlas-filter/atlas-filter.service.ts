@@ -4,8 +4,7 @@ import cloneDeep from 'lodash-es/cloneDeep';
 
 import {AtlasBaseFilter} from './atlas-filter-main-section/atlas-filter-main-section.component.types';
 import {AtlasFilter, IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
-// TODO: revisit: create an API to get config data
-import {config} from './atlas-filter-main-section/temp.const';
+import config from '@/app/views/atlas/constants/qoli.config';
 import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
 
 import {DEFAULT_YEAR} from '@/app/shared/constants/app.const';
