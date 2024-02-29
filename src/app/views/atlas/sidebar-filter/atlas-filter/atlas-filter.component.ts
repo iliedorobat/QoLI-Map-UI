@@ -23,7 +23,7 @@ export class AtlasFilterComponent implements AfterViewInit {
     @Input() onActiveButtonResets: Function = noop;
 
     protected filter: IAtlasFilter = this.atlasFilterService.getFilter();
-    protected form: FormGroup = this.atlasFilterService.initializeFilterForm(this.filter);
+    protected form: FormGroup = this.filter.initForm();
     protected headerLabel = 'Results: 0 countries';
 
     ngAfterViewInit(): void {
@@ -36,7 +36,7 @@ export class AtlasFilterComponent implements AfterViewInit {
     }
 
     onFilterApply(): void {
-        this.atlasFilterService.saveFilter(this.form);
+        this.filter.saveFilter(this.form);
         this.backendService.lifeIndexSubscription(this.filter);
     }
 
@@ -47,8 +47,7 @@ export class AtlasFilterComponent implements AfterViewInit {
 
         switch (value) {
             case 'atlas-filter-main-section':
-                // FIXME:
-                this.filter.baseFilter.resetFilterForm(this.form, this.filter);
+                this.filter.baseFilter.resetForm(this.form);
                 this.child?.resetSelectedItems();
                 break;
             default:
@@ -57,7 +56,7 @@ export class AtlasFilterComponent implements AfterViewInit {
     }
 
     onReset(): void {
-        this.atlasFilterService.resetFilterForm(this.form);
+        this.filter.resetForm(this.form);
         this.child?.resetSelectedItems();
     }
 

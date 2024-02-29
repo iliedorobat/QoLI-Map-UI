@@ -7,7 +7,7 @@ import {MatSelectChange, MatSelectModule} from '@angular/material/select';
 
 import {AtlasFilterService, EU28_MEMBER_CODES, EU28_MEMBERS} from '../atlas-filter.service';
 import {IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
-import {IQoLIIndicator} from '@/app/views/atlas/constants/qoli.types';
+import {IQoLIOptionsIndicator} from '@/app/views/atlas/constants/qoliOptions.types';
 
 import {AVAILABLE_INTERVAL} from '@/app/shared/constants/app.const';
 
@@ -25,11 +25,11 @@ export class AtlasFilterMainSectionComponent implements OnInit {
 
     protected readonly AVAILABLE_INTERVAL = AVAILABLE_INTERVAL;
     protected readonly EU28_MEMBER_CODES = EU28_MEMBER_CODES;
+    protected filter: IAtlasFilter = this.atlasFilterService.getFilter();
     protected selectedCountries: string[] = [];
     protected selectedIndicators: string[] = [];
 
-    @Input() filter: IAtlasFilter = this.atlasFilterService.getFilter();
-    @Input() form = this.atlasFilterService.initializeFilterForm(this.filter);
+    @Input() form = this.filter.initForm();
 
     ngOnInit(): void {
         this.resetSelectedItems();
@@ -41,7 +41,7 @@ export class AtlasFilterMainSectionComponent implements OnInit {
     }
 
     // Get the list of indicator keys which belongs to a specific dimension
-    private getIndicatorKeys(dimKey: string | null | undefined, filterPredicate = (item: IQoLIIndicator) => true): string[] {
+    private getIndicatorKeys(dimKey: string | null | undefined, filterPredicate = (item: IQoLIOptionsIndicator) => true): string[] {
         if (!dimKey) {
             return [];
         }
@@ -73,7 +73,7 @@ export class AtlasFilterMainSectionComponent implements OnInit {
         const dimKeys = this.getDimensionKeys();
 
         this.selectedIndicators = dimKeys.reduce((acc, dimKey) => {
-            const indKeys = this.getIndicatorKeys(dimKey, (item: IQoLIIndicator) => item.checked);
+            const indKeys = this.getIndicatorKeys(dimKey, (item: IQoLIOptionsIndicator) => item.checked);
             return [...acc, ...indKeys];
         }, [] as string[]);
     }

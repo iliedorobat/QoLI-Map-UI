@@ -3,7 +3,7 @@ import {BehaviorSubject, from, Observable} from 'rxjs';
 
 import {LifeIndexMultipleResponses, LifeIndexResponse} from '../constants/response.types';
 import {IAtlasFilter} from '../sidebar-filter/atlas-filter/atlas-filter.types';
-import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
+import {IQoLIOptions} from '@/app/views/atlas/constants/qoliOptions.types';
 
 const MAIN_URL = 'http://localhost:3070';
 
@@ -11,7 +11,7 @@ const MAIN_URL = 'http://localhost:3070';
     providedIn: 'root'
 })
 export class BackendService {
-    private _datasetConfig$: BehaviorSubject<IQoLI> = new BehaviorSubject<IQoLI>({} as IQoLI);
+    private _datasetConfig$: BehaviorSubject<IQoLIOptions> = new BehaviorSubject<IQoLIOptions>({} as IQoLIOptions);
     private _lifeIndex$: BehaviorSubject<LifeIndexResponse> = new BehaviorSubject<LifeIndexResponse>({} as LifeIndexResponse);
 
     private prepareLifeIndexResponse(filter: IAtlasFilter, data: LifeIndexMultipleResponses): LifeIndexResponse {
@@ -24,7 +24,7 @@ export class BackendService {
         }, {} as LifeIndexResponse);
     }
 
-    private getDatasetConfig(): Observable<IQoLI> {
+    private getDatasetConfig(): Observable<IQoLIOptions> {
         const promise = fetch(`${MAIN_URL}/stats/dataset/config`)
             .then(result => result.json());
 
@@ -62,7 +62,7 @@ export class BackendService {
 
     public datasetConfigSubscription(): void {
         this.getDatasetConfig()
-            .subscribe((config: IQoLI) => {
+            .subscribe((config: IQoLIOptions) => {
                 this._datasetConfig$.next(config);
             });
     }
@@ -74,7 +74,7 @@ export class BackendService {
             })
     }
 
-    get datasetConfig$(): Observable<IQoLI> {
+    get datasetConfig$(): Observable<IQoLIOptions> {
         return this._datasetConfig$.asObservable();
     }
 

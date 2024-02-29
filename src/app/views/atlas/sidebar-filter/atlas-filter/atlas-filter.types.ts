@@ -4,9 +4,11 @@ import {IAtlasBaseFilter} from './atlas-filter-main-section/atlas-filter-main-se
 
 export interface IAtlasFilter {
     baseFilter: IAtlasBaseFilter;
-    isDisabled(): boolean;
-    isEmpty(): boolean;
-    resetFilterForm(form: FormGroup, filter: IAtlasFilter): void;
+    isDisabled(form: FormGroup): boolean;
+    isEmpty(form: FormGroup): boolean;
+    initForm(): FormGroup;
+    resetForm(form: FormGroup): void;
+    saveFilter(form: FormGroup): void;
 }
 
 export class AtlasFilter implements IAtlasFilter {
@@ -16,15 +18,23 @@ export class AtlasFilter implements IAtlasFilter {
         this.baseFilter = baseFilter;
     }
 
-    isDisabled(): boolean {
-        return this.baseFilter.isDisabled();
+    isDisabled(form: FormGroup): boolean {
+        return this.baseFilter.isDisabled(form);
     }
 
-    isEmpty(): boolean {
-        return this.baseFilter.isEmpty();
+    isEmpty(form: FormGroup): boolean {
+        return this.baseFilter.isEmpty(form);
     }
 
-    resetFilterForm(form: FormGroup, filter: IAtlasFilter): void {
-        this.baseFilter.resetFilterForm(form, filter);
+    initForm(): FormGroup {
+        return this.baseFilter.initForm();
+    }
+
+    resetForm(form: FormGroup): void {
+        this.baseFilter.resetForm(form);
+    }
+
+    saveFilter(form: FormGroup): void {
+        this.baseFilter.saveFilter(form);
     }
 }

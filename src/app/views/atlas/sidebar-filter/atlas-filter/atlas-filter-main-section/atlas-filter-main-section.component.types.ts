@@ -1,44 +1,57 @@
-import {FormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 
-import {IQoLI} from '@/app/views/atlas/constants/qoli.types';
-import {IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
+import {IQoLIOptions} from '@/app/views/atlas/constants/qoliOptions.types';
+import qoliConfig from '@/app/views/atlas/constants/qoliOptions';
 
 import {DEFAULT_YEAR} from '@/app/shared/constants/app.const';
+import {EU28_MEMBER_CODES} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.service';
+import {IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 
 export interface IAtlasBaseFilter {
     countries: string[];
-    qoliOptions: IQoLI;
+    qoliOptions: IQoLIOptions;
     year: number;
-    isDisabled(): boolean;
-    isEmpty(): boolean;
-    resetFilterForm(form: FormGroup, filter: IAtlasFilter): void;
+    isDisabled(form: FormGroup): boolean;
+    isEmpty(form: FormGroup): boolean;
+    initForm(): FormGroup;
+    resetForm(form: FormGroup): void;
+    saveFilter(form: FormGroup): void;
 }
 
 export class AtlasBaseFilter implements IAtlasBaseFilter {
-    public countries: string[];
-    public qoliOptions: IQoLI;
-    public year: number;
+    public countries: string[] = [...EU28_MEMBER_CODES];
+    public qoliOptions: IQoLIOptions = qoliConfig;
+    public year: number = DEFAULT_YEAR;
 
-    constructor(countries: string[], qoliOptions: IQoLI, year?: number) {
-        this.countries = countries;
-        this.qoliOptions = qoliOptions;
-        this.year = year ?? DEFAULT_YEAR;
-    }
-
-    isDisabled(): boolean {
+    isDisabled(form: FormGroup): boolean {
         // TODO: revisit (||)
         return false;
     }
 
-    isEmpty(): boolean {
-        // TODO: revisit (&&)
+    isEmpty(form: FormGroup): boolean {
         return false;
     }
 
-    resetFilterForm(form: FormGroup, filter: IAtlasFilter): void {
-        const {countries, qoliOptions, year} = filter.baseFilter;
+    public initForm(): FormGroup {
+        const controls: {[key: string]: FormControl} = {};
+        controls['countries'] = new FormControl(this.countries);
+        controls['year'] = new FormControl(this.year);
 
-        for (const dimension of qoliOptions.aggregators) {
+        for (const dimension of this.qoliOptions.aggregators) {
+            const dimKey = dimension.filename;
+            controls[dimKey] = new FormControl(dimension.checked);
+
+            for (const indicator of dimension.aggregators) {
+                const indKey = `${dimKey}:${indicator.filename}`;
+                controls[indKey] = new FormControl(indicator.checked);
+            }
+        }
+
+        return new FormGroup(controls);
+    }
+
+    resetForm(form: FormGroup): void {
+        for (const dimension of this.qoliOptions.aggregators) {
             const dimensionName = dimension.filename;
             form.controls[dimensionName].setValue(dimension.checked);
 
@@ -48,7 +61,24 @@ export class AtlasBaseFilter implements IAtlasBaseFilter {
             }
         }
 
-        form.controls['year'].setValue(year);
-        form.controls['countries'].setValue([...countries]);
+        form.controls['year'].setValue(this.year);
+        form.controls['countries'].setValue([...this.countries]);
+    }
+
+    saveFilter(form: FormGroup): void {
+        this.countries = form.value['countries'];
+        this.year = form.value['year'];
+
+        this.qoliOptions.checked = this.qoliOptions.aggregators.every(aggr => form.value[aggr.filename]);
+
+        for (const dimension of this.qoliOptions.aggregators) {
+            const dimKey = dimension.filename;
+            dimension.checked = form.value[dimKey];
+
+            for (const indicator of dimension.aggregators) {
+                const indKey = `${dimKey}:${indicator.filename}`;
+                indicator.checked = form.value[indKey];
+            }
+        }
     }
 }
