@@ -1,9 +1,8 @@
-import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import noop from 'lodash-es/noop';
 import get from 'lodash-es/get';
 
-import {AtlasFilterMainSectionComponent} from '../atlas-filter/atlas-filter-main-section/atlas-filter-main-section.component';
 import {AtlasFilterService} from './atlas-filter.service';
 import {BackendService} from '@/app/views/atlas/services/backend.service';
 import {IAtlasFilter} from './atlas-filter.types';
@@ -13,27 +12,16 @@ import {IAtlasFilter} from './atlas-filter.types';
     templateUrl: './atlas-filter.component.html',
     styleUrls: ['./atlas-filter.component.scss']
 })
-export class AtlasFilterComponent implements AfterViewInit {
+export class AtlasFilterComponent {
     constructor(
         private atlasFilterService: AtlasFilterService,
         private backendService: BackendService
     ) {}
 
-    @ViewChild(AtlasFilterMainSectionComponent) child: AtlasFilterMainSectionComponent | undefined;
     @Input() onActiveButtonResets: Function = noop;
 
     protected filter: IAtlasFilter = this.atlasFilterService.getFilter();
-    protected form: FormGroup = this.filter.initForm();
-    protected headerLabel = 'Results: 0 countries';
-
-    ngAfterViewInit(): void {
-        // ERROR Error: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked.
-        // https://blog.angular-university.io/angular-debugging/
-        setTimeout(() => {
-            const counter = this.child?.getSelectedCountries()?.length || 0;
-            this.headerLabel = `Results: ${counter} countries`
-        }, 0);
-    }
+    protected form: FormGroup = this.atlasFilterService.getForm();
 
     onFilterApply(): void {
         this.filter.saveFilter(this.form);
@@ -48,7 +36,6 @@ export class AtlasFilterComponent implements AfterViewInit {
         switch (value) {
             case 'atlas-filter-main-section':
                 this.filter.baseFilter.resetForm(this.form);
-                this.child?.resetSelectedItems();
                 break;
             default:
                 break;
@@ -57,7 +44,6 @@ export class AtlasFilterComponent implements AfterViewInit {
 
     onReset(): void {
         this.filter.resetForm(this.form);
-        this.child?.resetSelectedItems();
     }
 
     onSubmit(): void {

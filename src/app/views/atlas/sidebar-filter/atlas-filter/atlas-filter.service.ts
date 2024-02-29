@@ -46,13 +46,19 @@ export const EU28_MEMBER_CODES = Object.keys(EU28_MEMBERS);
 })
 export class AtlasFilterService {
     private readonly filter: IAtlasFilter;
+    private readonly form: FormGroup;
 
     constructor() {
         const primaryAtlasFilter = new AtlasBaseFilter();
         this.filter = new AtlasFilter(primaryAtlasFilter);
+        this.form = this.filter.initForm();
     }
 
     public getFilter(): IAtlasFilter {
         return this.filter;
+    }
+
+    public getForm(): FormGroup {
+        return this.form;
     }
 }

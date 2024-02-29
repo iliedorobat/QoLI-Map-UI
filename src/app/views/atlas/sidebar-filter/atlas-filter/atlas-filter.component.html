@@ -1,6 +1,6 @@
 <div class="global-filter">
     <button [ngClass]="{'btn btn-counter': true, disabled: true}">
-        {{ headerLabel }}
+        Results: {{ this.form.get('countries')?.value?.length }} countries
     </button>
 
     <form class="needs-validation" [formGroup]="form">
@@ -15,7 +15,7 @@
                     </button>
                 </ng-template>
                 <ng-template ngbPanelContent>
-                    <app-atlas-filter-main-section [form]="form"></app-atlas-filter-main-section>
+                    <app-atlas-filter-main-section></app-atlas-filter-main-section>
                 </ng-template>
             </ngb-panel>
         </ngb-accordion>

@@ -26,10 +26,9 @@ export class AtlasFilterMainSectionComponent implements OnInit {
     protected readonly AVAILABLE_INTERVAL = AVAILABLE_INTERVAL;
     protected readonly EU28_MEMBER_CODES = EU28_MEMBER_CODES;
     protected filter: IAtlasFilter = this.atlasFilterService.getFilter();
+    protected form = this.atlasFilterService.getForm();
     protected selectedCountries: string[] = [];
     protected selectedIndicators: string[] = [];
-
-    @Input() form = this.filter.initForm();
 
     ngOnInit(): void {
         this.resetSelectedItems();
@@ -128,10 +127,6 @@ export class AtlasFilterMainSectionComponent implements OnInit {
 
     getCountryName(countryCode: any): string {
         return EU28_MEMBERS[countryCode as keyof typeof EU28_MEMBERS];
-    }
-
-    getSelectedCountries(): string[] {
-        return this.selectedCountries;
     }
 
     resetSelectedItems(): void {
