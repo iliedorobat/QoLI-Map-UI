@@ -1,7 +1,7 @@
 import {FormControl, FormGroup} from '@angular/forms';
+import {Injectable} from '@angular/core';
 
 import {AtlasBaseFilter, IAtlasBaseFilter} from './atlas-filter-main-section/atlas-filter-main-section.component.types';
-import {Injectable} from '@angular/core';
 
 export interface IAtlasFilter {
     baseFilter: IAtlasBaseFilter;

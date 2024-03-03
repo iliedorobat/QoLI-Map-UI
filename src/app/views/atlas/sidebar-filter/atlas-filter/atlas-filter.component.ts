@@ -14,7 +14,9 @@ export class AtlasFilterComponent {
     constructor(
         protected atlasFilter: AtlasFilter,
         private backendService: BackendService
-    ) {}
+    ) {
+        this.onReset();
+    }
 
     @Input() onActiveButtonResets: Function = noop;
 

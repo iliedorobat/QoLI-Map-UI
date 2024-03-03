@@ -21,12 +21,12 @@
         </mat-select-trigger>
 
         <div class="custom-options-group">
-            <mat-option class="custom-option" [value]="allCountriesName">
+            <mat-option class="custom-option" [value]="ALL_COUNTRIES_NAME">
                 <mat-checkbox
                     (change)="onAllCountriesChanges($event.source.checked)"
                     [checked]="atlasFilter.baseFilter.areAllCountriesChecked()"
                     [indeterminate]="someCountriesChecked()"
-                    [name]="allCountriesName"
+                    [name]="ALL_COUNTRIES_NAME"
                 >
                     All countries
                 </mat-checkbox>

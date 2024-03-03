@@ -24,8 +24,7 @@ export class AtlasFilterMainSectionComponent {
 
     protected readonly AVAILABLE_INTERVAL = AVAILABLE_INTERVAL;
     protected readonly EU28_MEMBER_CODES = EU28_MEMBER_CODES;
-
-    protected allCountriesName = 'ALL';
+    protected readonly ALL_COUNTRIES_NAME = 'ALL';
 
     // Get the list of dimension keys
     private getDimensionKeys(): string[] {
@@ -58,7 +57,7 @@ export class AtlasFilterMainSectionComponent {
     }
 
     onCountryChanges(event: MatSelectChange): void {
-        this.atlasFilter.baseFilter.selectedCountries = event.value.filter((code: string) => code !== this.allCountriesName);
+        this.atlasFilter.baseFilter.selectedCountries = event.value.filter((code: string) => code !== this.ALL_COUNTRIES_NAME);
         this.atlasFilter.form.get('countries')?.setValue(this.atlasFilter.baseFilter.selectedCountries);
     }
 
