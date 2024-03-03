@@ -9,9 +9,8 @@
 
 // Configuring the list of MUI checkboxes
 .cdk-overlay-pane {
-    .qoli-features-group {
-        .qoli-dimension,
-        .qoli-indicators {
+    .custom-options-group {
+        .custom-option {
             padding: 0;
 
             > mat-pseudo-checkbox {
@@ -36,10 +35,10 @@
                     }
                 }
             }
-        }
 
-        .qoli-indicators {
-            margin-left: 24px;
+            &.qoli-indicators {
+                margin-left: 24px;
+            }
         }
     }
 }

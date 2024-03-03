@@ -25,6 +25,9 @@ export class AtlasFilterMainSectionComponent implements OnInit {
 
     protected readonly AVAILABLE_INTERVAL = AVAILABLE_INTERVAL;
     protected readonly EU28_MEMBER_CODES = EU28_MEMBER_CODES;
+
+    protected allCountries = true;
+    protected allCountriesName = 'ALL';
     protected filter: IAtlasFilter = this.atlasFilterService.getFilter();
     protected form = this.atlasFilterService.getForm();
     protected selectedCountries: string[] = [];
@@ -77,16 +80,34 @@ export class AtlasFilterMainSectionComponent implements OnInit {
         }, [] as string[]);
     }
 
-    onCountriesChanges(event: MatSelectChange): void {
-        this.selectedCountries = [...event.value];
+    onCountryChanges(event: MatSelectChange): void {
+        this.selectedCountries = event.value.filter((code: string) => code !== this.allCountriesName);
+        this.allCountries = this.selectedCountries.length === EU28_MEMBER_CODES.length;
+        this.form.get('countries')?.setValue(this.selectedCountries);
     }
 
-    onDimensionChanges(event: MatCheckboxChange): void {
-        const dimKey = event.source.name;
+    isCountryChecked(countryCode: string): boolean {
+        return this.selectedCountries.includes(countryCode);
+    }
+
+    onAllCountriesChanges(checked: boolean): void {
+        this.selectedCountries = checked ? [...EU28_MEMBER_CODES] : [];
+    }
+
+    onAllDimensionsChanges(qoliKey: string | null, checked: boolean): void {
+        const dimKeys = this.getDimensionKeys();
+
+        for (const dimKey of dimKeys) {
+            this.form.get(dimKey)?.setValue(checked);
+            this.onDimensionChanges(dimKey, checked);
+        }
+    }
+
+    onDimensionChanges(dimKey: string | null, checked: boolean): void {
         const indKeys = this.getIndicatorKeys(dimKey);
 
         for (const indKey of indKeys) {
-            this.form.get(indKey)?.setValue(event.source.checked);
+            this.form.get(indKey)?.setValue(checked);
         }
     };
 
@@ -111,6 +132,29 @@ export class AtlasFilterMainSectionComponent implements OnInit {
         }
 
         this.selectedIndicators = selectedIndicators;
+    }
+
+    someCountriesChecked(): boolean {
+        return this.selectedCountries.length > 0 && this.selectedCountries.length < EU28_MEMBER_CODES.length;
+    }
+
+    someDimensionsChecked(): boolean {
+        const dimKeys = this.getDimensionKeys();
+
+        const checked = dimKeys.every(dimKey => {
+            const indKeys = this.getIndicatorKeys(dimKey);
+            return indKeys.every(key => this.form.get(key)?.value);
+        });
+        const unchecked = dimKeys.every(dimKey => {
+            const indKeys = this.getIndicatorKeys(dimKey);
+            return indKeys.every(key => !this.form.get(key)?.value);
+        });
+
+        if (checked || unchecked) {
+            return false;
+        }
+
+        return dimKeys.some(key => !this.form.get(key)?.value);
     }
 
     someIndicatorsChecked(dimKey: string): boolean {

@@ -10,14 +10,36 @@
 <mat-form-field [formGroup]="form">
     <mat-label>Countries</mat-label>
 
-    <mat-select formControlName="countries" multiple (selectionChange)="onCountriesChanges($event)" [value]="selectedCountries">
+    <mat-select
+        multiple
+        placeholder="No country is selected"
+        (selectionChange)="onCountryChanges($event)"
+        [value]="selectedCountries"
+    >
         <mat-select-trigger>
             {{ selectedCountries.length }} selected countries
         </mat-select-trigger>
 
-        <mat-option *ngFor="let countryCode of EU28_MEMBER_CODES" [value]="countryCode">
-            <div>{{ getCountryName(countryCode) }}</div>
-        </mat-option>
+        <div class="custom-options-group">
+            <mat-option class="custom-option" [value]="allCountriesName">
+                <mat-checkbox
+                    (change)="onAllCountriesChanges($event.source.checked)"
+                    [checked]="allCountries"
+                    [indeterminate]="someCountriesChecked()"
+                    [name]="allCountriesName"
+                >
+                    All countries
+                </mat-checkbox>
+            </mat-option>
+        </div>
+
+        <div class="custom-options-group">
+            <mat-option class="custom-option" *ngFor="let countryCode of EU28_MEMBER_CODES" [value]="countryCode">
+                <mat-checkbox [checked]="isCountryChecked(countryCode)" [name]="countryCode">
+                    {{ getCountryName(countryCode) }}
+                </mat-checkbox>
+            </mat-option>
+        </div>
     </mat-select>
 </mat-form-field>
 
@@ -26,15 +48,34 @@
 <mat-form-field [formGroup]="form">
     <mat-label>Quality of Life Index</mat-label>
 
-    <mat-select multiple (selectionChange)="onFeatureChanges()" [value]="selectedIndicators">
+    <mat-select
+        multiple
+        placeholder="No indicator is selected"
+        (selectionChange)="onFeatureChanges()"
+        [value]="selectedIndicators"
+    >
         <mat-select-trigger>
             {{ selectedIndicators.length }} selected indicators
         </mat-select-trigger>
 
-        <div class="qoli-features-group" *ngFor="let dimension of filter.baseFilter.qoliOptions.aggregators">
-            <mat-option class="qoli-dimension" [value]="dimension.filename">
+        <div class="custom-options-group">
+            <mat-option class="custom-option" [value]="filter.baseFilter.qoliOptions.filename">
                 <mat-checkbox
-                    (change)="onDimensionChanges($event)"
+                    (change)="onAllDimensionsChanges($event.source.name, $event.source.checked)"
+                    [checked]="filter.baseFilter.qoliOptions.checked"
+                    [formControlName]="filter.baseFilter.qoliOptions.filename"
+                    [indeterminate]="someDimensionsChecked()"
+                    [name]="filter.baseFilter.qoliOptions.filename"
+                >
+                    All dimensions
+                </mat-checkbox>
+            </mat-option>
+        </div>
+
+        <div class="custom-options-group" *ngFor="let dimension of filter.baseFilter.qoliOptions.aggregators">
+            <mat-option class="custom-option" [value]="dimension.filename">
+                <mat-checkbox
+                    (change)="onDimensionChanges($event.source.name, $event.source.checked)"
                     [checked]="dimension.checked"
                     [formControlName]="dimension.filename"
                     [indeterminate]="someIndicatorsChecked(dimension.filename)"
@@ -43,7 +84,7 @@
             </mat-option>
 
             <mat-option
-                class="qoli-indicators"
+                class="custom-option qoli-indicators"
                 *ngFor="let indicator of dimension.aggregators"
                 [value]="dimension.filename + ':' + indicator.filename"
             >

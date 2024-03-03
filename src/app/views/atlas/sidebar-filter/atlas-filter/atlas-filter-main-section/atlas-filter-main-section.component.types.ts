@@ -37,6 +37,9 @@ export class AtlasBaseFilter implements IAtlasBaseFilter {
         controls['countries'] = new FormControl(this.countries);
         controls['year'] = new FormControl(this.year);
 
+        const qoliKey = this.qoliOptions.filename;
+        controls[qoliKey] = new FormControl(this.qoliOptions.checked);
+
         for (const dimension of this.qoliOptions.aggregators) {
             const dimKey = dimension.filename;
             controls[dimKey] = new FormControl(dimension.checked);
