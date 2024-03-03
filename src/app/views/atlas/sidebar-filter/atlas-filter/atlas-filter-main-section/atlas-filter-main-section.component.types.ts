@@ -5,7 +5,6 @@ import qoliConfig from '@/app/views/atlas/constants/qoliOptions';
 
 import {DEFAULT_YEAR} from '@/app/shared/constants/app.const';
 import {EU28_MEMBER_CODES} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.service';
-import {IAtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 
 export interface IAtlasBaseFilter {
     countries: string[];
@@ -23,16 +22,41 @@ export class AtlasBaseFilter implements IAtlasBaseFilter {
     public qoliOptions: IQoLIOptions = qoliConfig;
     public year: number = DEFAULT_YEAR;
 
-    isDisabled(form: FormGroup): boolean {
-        // TODO: revisit (||)
+    private hasCountries(form: FormGroup): boolean {
+        return form.controls['countries'].value.length > 0;
+    }
+
+    private hasIndicators(form: FormGroup): boolean {
+        if (form.controls[this.qoliOptions.filename].value) {
+            return true;
+        }
+
+        for (const dimension of this.qoliOptions.aggregators) {
+            const dimKey = dimension.filename;
+            if (form.controls[dimKey].value) {
+                return true;
+            }
+
+            for (const indicator of dimension.aggregators) {
+                const indKey = `${dimKey}:${indicator.filename}`;
+                if (form.controls[indKey].value) {
+                    return true;
+                }
+            }
+        }
+
         return false;
+    }
+
+    isDisabled(form: FormGroup): boolean {
+        return !this.hasCountries(form) || !this.hasIndicators(form);
     }
 
     isEmpty(form: FormGroup): boolean {
-        return false;
+        return this.hasCountries(form) && this.hasIndicators(form);
     }
 
-    public initForm(): FormGroup {
+    initForm(): FormGroup {
         const controls: {[key: string]: FormControl} = {};
         controls['countries'] = new FormControl(this.countries);
         controls['year'] = new FormControl(this.year);
