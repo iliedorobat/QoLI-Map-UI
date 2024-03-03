@@ -5,9 +5,10 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {AtlasBaseFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/atlas-filter-main-section.component.types';
 import {AtlasComponent} from './views/atlas/atlas.component';
+import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {AtlasFilterComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.component';
-import {AtlasFilterService} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.service';
 import {AtlasFilterMainSectionComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/atlas-filter-main-section.component';
 import {AtlasService} from './views/atlas/services/atlas.service';
 import {BackendService} from './views/atlas/services/backend.service';
@@ -47,7 +48,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         AtlasFilterMainSectionComponent
     ],
     providers: [
-        AtlasFilterService,
+        AtlasFilter,
+        AtlasBaseFilter,
         AtlasService,
         BackendService,
         NgbActiveOffcanvas

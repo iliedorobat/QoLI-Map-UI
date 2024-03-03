@@ -1,4 +1,4 @@
-<mat-form-field [formGroup]="form">
+<mat-form-field [formGroup]="atlasFilter.form">
     <mat-label>Year of analysis</mat-label>
     <mat-select formControlName="year">
         <mat-option *ngFor="let year of AVAILABLE_INTERVAL" [value]="year">
@@ -7,24 +7,24 @@
     </mat-select>
 </mat-form-field>
 
-<mat-form-field [formGroup]="form">
+<mat-form-field [formGroup]="atlasFilter.form">
     <mat-label>Countries</mat-label>
 
     <mat-select
         multiple
         placeholder="No country is selected"
         (selectionChange)="onCountryChanges($event)"
-        [value]="selectedCountries"
+        [value]="atlasFilter.baseFilter.selectedCountries"
     >
         <mat-select-trigger>
-            {{ selectedCountries.length }} selected countries
+            {{ atlasFilter.baseFilter.selectedCountries.length }} selected countries
         </mat-select-trigger>
 
         <div class="custom-options-group">
             <mat-option class="custom-option" [value]="allCountriesName">
                 <mat-checkbox
                     (change)="onAllCountriesChanges($event.source.checked)"
-                    [checked]="allCountries"
+                    [checked]="atlasFilter.baseFilter.areAllCountriesChecked()"
                     [indeterminate]="someCountriesChecked()"
                     [name]="allCountriesName"
                 >
@@ -45,34 +45,34 @@
 
 <!-- TODO: revisit: radio buttons: 1) multiple selection; 2) simple selection -->
 <!-- TODO: revisit: https://material.angular.io/components/tree/overview -->
-<mat-form-field [formGroup]="form">
+<mat-form-field [formGroup]="atlasFilter.form">
     <mat-label>Quality of Life Index</mat-label>
 
     <mat-select
         multiple
         placeholder="No indicator is selected"
         (selectionChange)="onFeatureChanges()"
-        [value]="selectedIndicators"
+        [value]="atlasFilter.baseFilter.selectedIndicators"
     >
         <mat-select-trigger>
-            {{ selectedIndicators.length }} selected indicators
+            {{ atlasFilter.baseFilter.selectedIndicators.length }} selected indicators
         </mat-select-trigger>
 
         <div class="custom-options-group">
-            <mat-option class="custom-option" [value]="filter.baseFilter.qoliOptions.filename">
+            <mat-option class="custom-option" [value]="atlasFilter.baseFilter.qoliOptions.filename">
                 <mat-checkbox
                     (change)="onAllDimensionsChanges($event.source.name, $event.source.checked)"
-                    [checked]="filter.baseFilter.qoliOptions.checked"
-                    [formControlName]="filter.baseFilter.qoliOptions.filename"
+                    [checked]="atlasFilter.baseFilter.areAllDimensionsChecked()"
+                    [formControlName]="atlasFilter.baseFilter.qoliOptions.filename"
                     [indeterminate]="someDimensionsChecked()"
-                    [name]="filter.baseFilter.qoliOptions.filename"
+                    [name]="atlasFilter.baseFilter.qoliOptions.filename"
                 >
                     All dimensions
                 </mat-checkbox>
             </mat-option>
         </div>
 
-        <div class="custom-options-group" *ngFor="let dimension of filter.baseFilter.qoliOptions.aggregators">
+        <div class="custom-options-group" *ngFor="let dimension of atlasFilter.baseFilter.qoliOptions.aggregators">
             <mat-option class="custom-option" [value]="dimension.filename">
                 <mat-checkbox
                     (change)="onDimensionChanges($event.source.name, $event.source.checked)"

@@ -1,40 +1,48 @@
-import {FormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 
-import {IAtlasBaseFilter} from './atlas-filter-main-section/atlas-filter-main-section.component.types';
+import {AtlasBaseFilter, IAtlasBaseFilter} from './atlas-filter-main-section/atlas-filter-main-section.component.types';
+import {Injectable} from '@angular/core';
 
 export interface IAtlasFilter {
     baseFilter: IAtlasBaseFilter;
-    isDisabled(form: FormGroup): boolean;
-    isEmpty(form: FormGroup): boolean;
-    initForm(): FormGroup;
-    resetForm(form: FormGroup): void;
-    saveFilter(form: FormGroup): void;
+    form: FormGroup;
+
+    isDisabled(): boolean;
+    isEmpty(): boolean;
+    reset(): void;
+    save(): void;
 }
 
+@Injectable({
+    providedIn: 'root',
+})
 export class AtlasFilter implements IAtlasFilter {
-    public baseFilter: IAtlasBaseFilter;
+    public form: FormGroup = this.initForm();
 
-    constructor(baseFilter: IAtlasBaseFilter) {
-        this.baseFilter = baseFilter;
+    constructor(
+        public baseFilter: AtlasBaseFilter
+    ) {}
+
+    isDisabled(): boolean {
+        return this.baseFilter.isDisabled(this.form);
     }
 
-    isDisabled(form: FormGroup): boolean {
-        return this.baseFilter.isDisabled(form);
+    isEmpty(): boolean {
+        return this.baseFilter.isEmpty(this.form);
     }
 
-    isEmpty(form: FormGroup): boolean {
-        return this.baseFilter.isEmpty(form);
+    reset(): void {
+        this.baseFilter.reset(this.form);
     }
 
-    initForm(): FormGroup {
-        return this.baseFilter.initForm();
+    save(): void {
+        this.baseFilter.save(this.form);
     }
 
-    resetForm(form: FormGroup): void {
-        this.baseFilter.resetForm(form);
-    }
+    private initForm(): FormGroup {
+        const controls: {[key: string]: FormControl} = {};
+        this.baseFilter.initForm(controls);
 
-    saveFilter(form: FormGroup): void {
-        this.baseFilter.saveFilter(form);
+        return new FormGroup(controls);
     }
 }

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {NgbModal, NgbOffcanvas} from '@ng-bootstrap/ng-bootstrap';
 
-import {AtlasFilterService} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.service';
+import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {BackendService} from '@/app/views/atlas/services/backend.service';
 import {MenuItem} from '@/app/app.types';
 import {SidebarComponent} from './views/sidebar/sidebar.component';
@@ -20,7 +20,7 @@ export class AppComponent {
     protected activeMenuItemId: string = DEFAULT_ACTIVE_MENU_ITEM_ID;
 
     constructor(
-        private atlasFilterService: AtlasFilterService,
+        private atlasFilter: AtlasFilter,
         private backendService: BackendService,
         private modalService: NgbModal,
         private offcanvasService: NgbOffcanvas,
@@ -30,7 +30,7 @@ export class AppComponent {
         translate.setDefaultLang('en-US');
         translate.use('en-US');
 
-        backendService.lifeIndexSubscription(this.atlasFilterService.getFilter());
+        backendService.lifeIndexSubscription(this.atlasFilter);
     }
 
     onMenuItemClick(event: Event, menuItem: MenuItem): void {

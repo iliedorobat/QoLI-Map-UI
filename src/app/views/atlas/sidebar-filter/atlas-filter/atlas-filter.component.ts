@@ -1,11 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {FormGroup} from '@angular/forms';
 import noop from 'lodash-es/noop';
 import get from 'lodash-es/get';
 
-import {AtlasFilterService} from './atlas-filter.service';
+import {AtlasFilter} from './atlas-filter.types';
 import {BackendService} from '@/app/views/atlas/services/backend.service';
-import {IAtlasFilter} from './atlas-filter.types';
 
 @Component({
     selector: 'app-atlas-filter',
@@ -14,18 +12,15 @@ import {IAtlasFilter} from './atlas-filter.types';
 })
 export class AtlasFilterComponent {
     constructor(
-        private atlasFilterService: AtlasFilterService,
+        protected atlasFilter: AtlasFilter,
         private backendService: BackendService
     ) {}
 
     @Input() onActiveButtonResets: Function = noop;
 
-    protected filter: IAtlasFilter = this.atlasFilterService.getFilter();
-    protected form: FormGroup = this.atlasFilterService.getForm();
-
     onFilterApply(): void {
-        this.filter.saveFilter(this.form);
-        this.backendService.lifeIndexSubscription(this.filter);
+        this.atlasFilter.save();
+        this.backendService.lifeIndexSubscription(this.atlasFilter);
     }
 
     onSectionReset(event: Event): void {
@@ -35,7 +30,7 @@ export class AtlasFilterComponent {
 
         switch (value) {
             case 'atlas-filter-main-section':
-                this.filter.baseFilter.resetForm(this.form);
+                this.atlasFilter.baseFilter.reset(this.atlasFilter.form);
                 break;
             default:
                 break;
@@ -43,10 +38,6 @@ export class AtlasFilterComponent {
     }
 
     onReset(): void {
-        this.filter.resetForm(this.form);
-    }
-
-    onSubmit(): void {
-        this.onFilterApply();
+        this.atlasFilter.reset();
     }
 }

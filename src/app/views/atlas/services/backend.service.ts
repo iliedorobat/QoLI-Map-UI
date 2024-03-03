@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, from, Observable} from 'rxjs';
 
 import {LifeIndexMultipleResponses, LifeIndexResponse} from '../constants/response.types';
-import {IAtlasFilter} from '../sidebar-filter/atlas-filter/atlas-filter.types';
+import {AtlasFilter} from '../sidebar-filter/atlas-filter/atlas-filter.types';
 import {IQoLIOptions} from '@/app/views/atlas/constants/qoliOptions.types';
 
 const MAIN_URL = 'http://localhost:3070';
@@ -14,7 +14,7 @@ export class BackendService {
     private _datasetConfig$: BehaviorSubject<IQoLIOptions> = new BehaviorSubject<IQoLIOptions>({} as IQoLIOptions);
     private _lifeIndex$: BehaviorSubject<LifeIndexResponse> = new BehaviorSubject<LifeIndexResponse>({} as LifeIndexResponse);
 
-    private prepareLifeIndexResponse(filter: IAtlasFilter, data: LifeIndexMultipleResponses): LifeIndexResponse {
+    private prepareLifeIndexResponse(filter: AtlasFilter, data: LifeIndexMultipleResponses): LifeIndexResponse {
         const countries = Object.keys(data);
         const year = filter.baseFilter.year;
 
@@ -31,7 +31,7 @@ export class BackendService {
         return from(promise);
     }
 
-    private getLifeIndex(filter: IAtlasFilter): Observable<LifeIndexResponse> {
+    private getLifeIndex(filter: AtlasFilter): Observable<LifeIndexResponse> {
         const aggrs = this.extractAggregators(filter).map(aggr => `aggr=${aggr}`);
         const countryCodes = filter.baseFilter.countries.map(code => `countryCode=${code}`);
         const year = `year=${filter.baseFilter.year}`;
@@ -44,7 +44,7 @@ export class BackendService {
         return from(promise);
     }
 
-    private extractAggregators(filter: IAtlasFilter): string[] {
+    private extractAggregators(filter: AtlasFilter): string[] {
         return filter.baseFilter.qoliOptions.aggregators.reduce((acc, dimension) => {
             const arr = [...acc];
 
@@ -67,7 +67,7 @@ export class BackendService {
             });
     }
 
-    public lifeIndexSubscription(filter: IAtlasFilter): void {
+    public lifeIndexSubscription(filter: AtlasFilter): void {
         this.getLifeIndex(filter)
             .subscribe((data: LifeIndexResponse) => {
                 this._lifeIndex$.next(data);
