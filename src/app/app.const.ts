@@ -9,7 +9,7 @@ const MENU_ITEMS_IDS = {
 const MENU_ITEMS = [
     {
         id: MENU_ITEMS_IDS.FILTER,
-        iconClasses: 'bi bi-pin-map',
+        iconClasses: 'bi bi-funnel',
         label: 'Filter',
         order: 1
     },
@@ -20,7 +20,7 @@ const MENU_ITEMS = [
     },
     {
         id: MENU_ITEMS_IDS.MAP,
-        iconClasses: 'bi bi-funnel',
+        iconClasses: 'bi bi-pin-map',
         label: 'Map',
         order: 2
     },
