@@ -5,20 +5,26 @@ $offCanvasZIndex: 1045;
 ::ng-deep {
     html, body {
         height: 100%;
-        margin: 0;
-        padding: 0;
         overflow: hidden;
 
         #header {
             display: flex;
             position: relative;
-            background-color: #F8F9FA;
+            background-color: #b3cde1;
+            box-shadow: 0 1px $size-small 0 rgba(0, 0, 255, .2);
+            z-index: $mapZIndex + 1;
+            height: $atlas-header-height;
 
-            > button {
-                border-radius: 0;
+            button {
+                height: 100%;
+                display: flex;
+                align-items: center;
+
                 min-width: 150px;
-                padding: 0 12px;
-                color: midnightblue;
+                color: #292929;
+                background-color: inherit;
+                border: inherit;
+                border-radius: $size-xsmall;
 
                 &#logo-button {
                     font-family: cursive;
@@ -26,9 +32,52 @@ $offCanvasZIndex: 1045;
                     cursor: initial;
                 }
 
-                > i {
-                    margin-right: 2px;
-                    font-size: 14px;
+                &:not(#logo-button) {
+                    &.active {
+                        background-color: #8eb5d3;
+                    }
+
+                    &:hover {
+                        background-color: #a1c1d9;
+                        color: #f3f0e8;
+                    }
+                }
+
+                > .button-container {
+                    display: flex;
+                    align-items: center;
+                    gap: $size-small;
+
+                    > i {
+                        margin-right: 2px;
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            // button effects: https://codepen.io/foxeisen/pen/bqZxLa
+            button {
+                transition: all 0.2s linear 0s;
+
+                &:not(#logo-button) {
+                    &:before {
+                        content: "\f054";
+                        font-family: FontAwesome;
+                        width: 30px;
+                        transform: scale(0,1);
+                        transform-origin: left center;
+                        transition: all 0.2s linear 0s;
+                    }
+
+                    &:hover {
+                        padding: 0;
+                        text-indent: 12px;
+
+                        &:before {
+                            transform: scale(1, 1);
+                            text-indent: 0;
+                        }
+                    }
                 }
             }
         }
