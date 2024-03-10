@@ -62,7 +62,35 @@ const EU28_MEMBERS = {
     UK: 'United Kingdom',
 } as const;
 
+const NON_EU28_MEMBERS = {
+    AL: 'Albania',
+    AD: 'Andorra',
+    AM: 'Armenia',
+    AZ: 'Azerbaijan',
+    BA: 'Bosnia and Herzegovina',
+    BY: 'Belarus',
+    CH: 'Switzerland',
+    FO: 'Faroe Islands',
+    GE: 'Georgia',
+    IS: 'Iceland',
+    KZ: 'Kazakhstan',
+    LI: 'Liechtenstein',
+    MC: 'Monaco',
+    MD: 'Moldova',
+    ME: 'Montenegro',
+    MK: 'North Macedonia',
+    NO: 'Norway',
+    RU: 'Russian Federation',
+    SM: 'San Marino',
+    RS: 'Serbia',
+    TR: 'Türkiye',
+    UA: 'Ukraine',
+    VA: 'Vatican City',
+}
+
 const EU28_MEMBER_CODES = Object.keys(EU28_MEMBERS);
+
+const NON_EU28_MEMBER_CODES = Object.keys(NON_EU28_MEMBERS);
 
 export {
     AVAILABLE_INTERVAL,
@@ -72,5 +100,7 @@ export {
     EU28_MEMBER_CODES,
     ICONS,
     MAX_YEAR,
-    MIN_YEAR
+    MIN_YEAR,
+    NON_EU28_MEMBERS,
+    NON_EU28_MEMBER_CODES
 };
