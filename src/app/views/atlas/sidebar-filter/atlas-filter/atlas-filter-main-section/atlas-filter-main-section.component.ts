@@ -1,45 +1,150 @@
-import {Component, Input} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {Component} from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectChange, MatSelectModule} from '@angular/material/select';
 
-import {AtlasFilterService} from '../atlas-filter.service';
-import {IAtlasFilter} from '../atlas-filter.types';
+import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
+import {IQoLIOptionsIndicator} from '@/app/views/atlas/constants/qoliOptions.types';
 
-import {AVAILABLE_INTERVAL, LIFE_INDEX_LABELS} from '@/app/shared/constants/app.const';
+import {AVAILABLE_INTERVAL, EU28_MEMBER_CODES, EU28_MEMBERS} from '@/app/shared/constants/app.const';
 
 @Component({
     selector: 'app-atlas-filter-main-section',
-    templateUrl: './atlas-filter-main-section.component.html'
+    templateUrl: './atlas-filter-main-section.component.html',
+    styleUrls: ['./app-atlas-filter-main-section.scss'],
+    standalone: true,
+    imports: [BrowserAnimationsModule, FormsModule, MatCheckboxModule, MatInputModule, MatSelectModule, ReactiveFormsModule]
 })
 export class AtlasFilterMainSectionComponent {
     constructor(
-        private atlasFilterService: AtlasFilterService
+        protected atlasFilter: AtlasFilter
     ) {}
 
-    protected readonly LIFE_INDEX_LABELS = Object.values(LIFE_INDEX_LABELS);
     protected readonly AVAILABLE_INTERVAL = AVAILABLE_INTERVAL;
+    protected readonly EU28_MEMBER_CODES = EU28_MEMBER_CODES;
+    protected readonly ALL_COUNTRIES_NAME = 'ALL';
 
-    protected filter: IAtlasFilter = this.atlasFilterService.getTransitoryFilter();
-    @Input() form: FormGroup = this.atlasFilterService.createFilterForm(this.filter);
-
-    get category() {
-        return this.form?.get('category');
+    // Get the list of dimension keys
+    private getDimensionKeys(): string[] {
+        return this.atlasFilter.baseFilter.qoliOptions.aggregators.map(aggr => aggr.filename);
     }
 
-    get year() {
-        return this.form?.get('year');
+    // Get the list of indicator keys which belongs to a specific dimension
+    private getIndicatorKeys(dimKey: string | null | undefined, filterPredicate = (item: IQoLIOptionsIndicator) => true): string[] {
+        if (!dimKey) {
+            return [];
+        }
+
+        return this.atlasFilter.baseFilter.qoliOptions.aggregators
+            .find(aggr => aggr.filename === dimKey)?.aggregators
+            .filter(filterPredicate)
+            .map(aggr => `${dimKey}:${aggr.filename}`) || [];
     }
 
-    onCategoryLabelChanges(event: Event): void {
-        const target = event.target as HTMLSelectElement;
-        // Exclude the first option whose value is null
-        const selectedIndex = target.selectedIndex - 1;
-        this.filter.primary.onCategoryChanges(selectedIndex);
+    // Return "false" if one of the dimension indicators is false
+    private isDimensionChecked(dimKey: string): boolean {
+        const indKeys = this.getIndicatorKeys(dimKey);
+
+        for (const indKey of indKeys) {
+            if (!this.atlasFilter.form.get(indKey)?.value) {
+                return false;
+            }
+        }
+
+        return true
     }
 
-    onYearChanges(event: Event): void {
-        const target = event.target as HTMLSelectElement;
-        // Exclude the first option whose value is null
-        const selectedIndex = target.selectedIndex - 1;
-        this.filter.primary.onYearChanges(selectedIndex);
+    onCountryChanges(event: MatSelectChange): void {
+        this.atlasFilter.baseFilter.selectedCountries = event.value.filter((code: string) => code !== this.ALL_COUNTRIES_NAME);
+        this.atlasFilter.form.get('countries')?.setValue(this.atlasFilter.baseFilter.selectedCountries);
+    }
+
+    isCountryChecked(countryCode: string): boolean {
+        return this.atlasFilter.baseFilter.selectedCountries.includes(countryCode);
+    }
+
+    onAllCountriesChanges(checked: boolean): void {
+        this.atlasFilter.baseFilter.selectedCountries = checked ? [...EU28_MEMBER_CODES] : [];
+    }
+
+    onAllDimensionsChanges(qoliKey: string | null, checked: boolean): void {
+        const dimKeys = this.getDimensionKeys();
+
+        for (const dimKey of dimKeys) {
+            this.atlasFilter.form.get(dimKey)?.setValue(checked);
+            this.onDimensionChanges(dimKey, checked);
+        }
+    }
+
+    onDimensionChanges(dimKey: string | null, checked: boolean): void {
+        const indKeys = this.getIndicatorKeys(dimKey);
+
+        for (const indKey of indKeys) {
+            this.atlasFilter.form.get(indKey)?.setValue(checked);
+        }
+    };
+
+    onIndicatorChanges(event: MatCheckboxChange): void {
+        const [dimKey, indKey] = (event.source.name || '')?.split(':');
+
+        const isDimensionChecked = this.isDimensionChecked(dimKey);
+        this.atlasFilter.form.get(dimKey)?.setValue(isDimensionChecked);
+    }
+
+    onFeatureChanges(): void {
+        const selectedIndicators = [];
+        const dimKeys = this.getDimensionKeys();
+
+        for (const dimKey of dimKeys) {
+            const indKeys = this.getIndicatorKeys(dimKey);
+
+            for (const indKey of indKeys) {
+                const isSelected = this.atlasFilter.form.get(indKey)?.value;
+                isSelected && selectedIndicators.push(indKey);
+            }
+        }
+
+        this.atlasFilter.baseFilter.selectedIndicators = selectedIndicators;
+    }
+
+    someCountriesChecked(): boolean {
+        return this.atlasFilter.baseFilter.selectedCountries.length > 0 && this.atlasFilter.baseFilter.selectedCountries.length < EU28_MEMBER_CODES.length;
+    }
+
+    someDimensionsChecked(): boolean {
+        const dimKeys = this.getDimensionKeys();
+
+        const checked = dimKeys.every(dimKey => {
+            const indKeys = this.getIndicatorKeys(dimKey);
+            return indKeys.every(key => this.atlasFilter.form.get(key)?.value);
+        });
+        const unchecked = dimKeys.every(dimKey => {
+            const indKeys = this.getIndicatorKeys(dimKey);
+            return indKeys.every(key => !this.atlasFilter.form.get(key)?.value);
+        });
+
+        if (checked || unchecked) {
+            return false;
+        }
+
+        return dimKeys.some(key => !this.atlasFilter.form.get(key)?.value);
+    }
+
+    someIndicatorsChecked(dimKey: string): boolean {
+        const indKeys = this.getIndicatorKeys(dimKey);
+        const checked = indKeys.every(key => this.atlasFilter.form.get(key)?.value);
+        const unchecked = indKeys.every(key => !this.atlasFilter.form.get(key)?.value);
+
+        if (checked || unchecked) {
+            return false;
+        }
+
+        return indKeys.some(key => !this.atlasFilter.form.get(key)?.value);
+    }
+
+    getCountryName(countryCode: any): string {
+        return EU28_MEMBERS[countryCode as keyof typeof EU28_MEMBERS];
     }
 }

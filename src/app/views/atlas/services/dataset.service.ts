@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import isEmpty from 'lodash-es/isEmpty';
 
 import {LifeIndexResponse} from '../constants/response.types';
 import {GeoFeature} from '../constants/geo.types';
@@ -12,6 +11,9 @@ export type DatasetEntry = Array<number | string>;
     providedIn: 'root'
 })
 export class DatasetService {
+    /** Placeholder used to mark the filtered out countries */
+    public EXCLUDED_COUNTRY_SCORE = -1;
+
     private sortByAsc(a: DatasetEntry, b: DatasetEntry): number {
         if (a[1] < b[1]) {
             return -1;
@@ -33,9 +35,8 @@ export class DatasetService {
     public getScore(geoLand: GeoFeature, response: LifeIndexResponse): number {
         const countryCode = geoLand.id;
 
-        return countryCode && !isEmpty(response)
-            ? response[countryCode]
-            : 0 as number;
+        // Use the "-1" placeholder if the country have been filtered out
+        return response[countryCode as string] ?? this.EXCLUDED_COUNTRY_SCORE;
     }
 
     public getSortedResponse(response: LifeIndexResponse, sortOrder: SORT_ORDER): Array<DatasetEntry> {

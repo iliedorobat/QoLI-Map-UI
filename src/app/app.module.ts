@@ -5,10 +5,13 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {AtlasBaseFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/atlas-filter-main-section.component.types';
 import {AtlasComponent} from './views/atlas/atlas.component';
+import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {AtlasFilterComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.component';
 import {AtlasFilterMainSectionComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/atlas-filter-main-section.component';
 import {AtlasService} from './views/atlas/services/atlas.service';
+import {BackendService} from './views/atlas/services/backend.service';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {NgbActiveOffcanvas, NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -25,7 +28,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppComponent,
         AtlasComponent,
         AtlasFilterComponent,
-        AtlasFilterMainSectionComponent,
         SidebarComponent
     ],
     imports: [
@@ -42,10 +44,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         BrowserModule,
         LeafletModule,
         NgbModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AtlasFilterMainSectionComponent
     ],
     providers: [
+        AtlasFilter,
+        AtlasBaseFilter,
         AtlasService,
+        BackendService,
         NgbActiveOffcanvas
     ],
     bootstrap: [AppComponent]

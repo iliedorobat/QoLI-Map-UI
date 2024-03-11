@@ -9,9 +9,9 @@ const MENU_ITEMS_IDS = {
 const MENU_ITEMS = [
     {
         id: MENU_ITEMS_IDS.FILTER,
-        iconClasses: 'bi bi-pin-map',
+        iconClasses: 'fa-solid fa-filter',
         label: 'Filter',
-        order: 1
+        order: 2
     },
     {
         id: MENU_ITEMS_IDS.LOGO,
@@ -20,9 +20,9 @@ const MENU_ITEMS = [
     },
     {
         id: MENU_ITEMS_IDS.MAP,
-        iconClasses: 'bi bi-funnel',
+        iconClasses: 'fa-solid fa-map-location-dot',
         label: 'Map',
-        order: 2
+        order: 1
     },
 ].sort((a: MenuItem, b: MenuItem) => {
     if (a.order > b.order) {

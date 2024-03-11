@@ -1,7 +1,5 @@
 @import 'src/assets/styles/variables';
 
-$atlas-header-height: 26px;
-
 :host {
     display: block;
     height: calc(100% - $atlas-header-height);
@@ -9,7 +7,7 @@ $atlas-header-height: 26px;
     .map {
         height: 100%;
         padding: 0;
-        z-index: 1;
+        z-index: $mapZIndex;
 
         #filter-controller > a {
             font-size: 30px;

@@ -10,8 +10,10 @@
         }"
         (click)="onMenuItemClick($event, item)"
     >
-        <i *ngIf="item.iconClasses" [ngClass]="item.iconClasses"></i>
-        {{ item.label }}
+        <div class="button-container">
+            <i *ngIf="item.iconClasses" [ngClass]="item.iconClasses"></i>
+            {{ item.label }}
+        </div>
     </button>
 </div>
 

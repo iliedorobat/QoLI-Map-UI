@@ -1,4 +1,4 @@
-# QoLI Map
+# QoLI Map UI
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.3.
 
@@ -30,5 +30,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Countries borders: [EuroStat Geo Data](https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/countries)
 
 ## Data Visualisation
-<img width="1451" alt="European Union QoLI Map" src="https://github.com/iliedorobat/QoLI-Map/assets/40547052/36a09efc-f5f0-4143-b6b7-22f54abbd6bc">
-
+<img width="1616" alt="QoLI Map" src="https://github.com/iliedorobat/QoLI-Map-UI/assets/40547052/78f034e2-e55e-4ed6-ab5f-54a803d77797">

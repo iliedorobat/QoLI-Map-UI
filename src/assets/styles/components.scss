@@ -6,3 +6,39 @@
         color: $indigo;
     }
 }
+
+// Configuring the list of MUI checkboxes
+.cdk-overlay-pane {
+    .custom-options-group {
+        .custom-option {
+            padding: 0;
+
+            > mat-pseudo-checkbox {
+                display: none;
+            }
+
+            > span.mdc-list-item__primary-text {
+                width: 100%;
+
+                > mat-checkbox {
+                    width: 100%;
+
+                    > div.mdc-form-field {
+                        width: 100%;
+
+                        > label {
+                            width: 100%;
+                            padding: 14px 0;
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                }
+            }
+
+            &.qoli-indicators {
+                margin-left: 24px;
+            }
+        }
+    }
+}

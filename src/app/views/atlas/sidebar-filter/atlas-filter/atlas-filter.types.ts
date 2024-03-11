@@ -1,28 +1,48 @@
-import {IPrimaryAtlasFilter, PrimaryAtlasFilter} from './atlas-filter-main-section/atlas-filter-main-section.types';
+import {FormControl, FormGroup} from '@angular/forms';
+import {Injectable} from '@angular/core';
+
+import {AtlasBaseFilter, IAtlasBaseFilter} from './atlas-filter-main-section/atlas-filter-main-section.component.types';
 
 export interface IAtlasFilter {
-    primary: IPrimaryAtlasFilter;
-    isDisabled: Function;
-    isEmpty: Function;
-    reset: Function;
+    baseFilter: IAtlasBaseFilter;
+    form: FormGroup;
+
+    isDisabled(): boolean;
+    isEmpty(): boolean;
+    reset(): void;
+    save(): void;
 }
 
+@Injectable({
+    providedIn: 'root',
+})
 export class AtlasFilter implements IAtlasFilter {
-    public primary: IPrimaryAtlasFilter;
+    public form: FormGroup = this.initForm();
 
-    constructor(primary?: IPrimaryAtlasFilter) {
-        this.primary = primary ?? new PrimaryAtlasFilter();
+    constructor(
+        public baseFilter: AtlasBaseFilter
+    ) {}
+
+    isDisabled(): boolean {
+        return this.baseFilter.isDisabled(this.form);
     }
 
-    public isDisabled(): boolean {
-        return this.primary.isDisabled();
+    isEmpty(): boolean {
+        return this.baseFilter.isEmpty(this.form);
     }
 
-    public isEmpty(): boolean {
-        return this.primary.isEmpty();
+    reset(): void {
+        this.baseFilter.reset(this.form);
     }
 
-    public reset(memoizedFilter?: IAtlasFilter): void {
-        this.primary.reset(memoizedFilter?.primary);
+    save(): void {
+        this.baseFilter.save(this.form);
+    }
+
+    private initForm(): FormGroup {
+        const controls: {[key: string]: FormControl} = {};
+        this.baseFilter.initForm(controls);
+
+        return new FormGroup(controls);
     }
 }

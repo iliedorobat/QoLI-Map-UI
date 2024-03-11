@@ -6,10 +6,14 @@ import {GeoFeature} from '@/app/views/atlas/constants/geo.types';
 import {LayerEventsService} from '@/app/views/atlas/services/layer-events.service';
 import {LifeIndexResponse} from '@/app/views/atlas/constants/response.types';
 
-import * as COUNTRIES from '@/../files/geo-location/european-union.json';
+import * as COUNTRIES_NON_EU from '@/../files/geo-location/europe-non-eu.json';
+import * as COUNTRIES_EU from '@/../files/geo-location/europe-eu.json';
+import {NON_EU28_MEMBER_CODES} from '@/app/shared/constants/app.const';
 import {SORT_ORDER} from '@/app/shared/constants/math.const';
 
-const FEATURES = (COUNTRIES?.features || []) as Array<GeoFeature>;
+const FEATURES_NON_EU = (COUNTRIES_NON_EU?.features || []) as Array<GeoFeature>;
+const FEATURES_EU = (COUNTRIES_EU?.features || []) as Array<GeoFeature>;
+const FEATURES = [...FEATURES_NON_EU, ...FEATURES_EU] as Array<GeoFeature>;
 
 @Injectable({
     providedIn: 'root'
@@ -62,8 +66,10 @@ export class AtlasService {
     private getColor(response: LifeIndexResponse, score: number, countryCode: string): string {
         const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
         const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;
+        const isExcluded = score === this.datasetService.EXCLUDED_COUNTRY_SCORE;
 
         switch (true) {
+            case isExcluded: return '#838996';
             case rank <= 3: return '#001146';
             case rank <= 9: return '#00116e';
             case rank <= 15: return '#0011aa';
@@ -73,6 +79,12 @@ export class AtlasService {
             case rank <= 26: return '#fc4949';
             default: return '#e60000';
         }
+    }
+
+    private async getNonEuFeatures() {
+        const worldFeatures = await import('@/../files/geo-location/world.json');
+
+        return worldFeatures?.features?.filter(feature => NON_EU28_MEMBER_CODES.includes(feature.id)) || [];
     }
 }
 
