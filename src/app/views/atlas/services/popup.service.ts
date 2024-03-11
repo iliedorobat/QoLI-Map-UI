@@ -44,7 +44,7 @@ export class PopupService {
     }
 
     private createHeader(geoLand: GeoFeature): HTMLElement {
-        const countryName = geoLand.properties.NAME_ENGL;
+        const countryName = this.getCountryName(geoLand);
 
         return this.htmlElementsService.createElement({
             className: 'header',
@@ -83,5 +83,15 @@ export class PopupService {
         bodyElement.appendChild(rankElement);
 
         return bodyElement;
+    }
+
+    private getCountryName(geoLand: GeoFeature): string {
+        const countryName = geoLand.properties.NAME_ENGL;
+
+        if (['Kazakhstan', 'Russian Federation'].includes(countryName)) {
+            return `${countryName} (European territory)`
+        }
+
+        return countryName;
     }
 }
