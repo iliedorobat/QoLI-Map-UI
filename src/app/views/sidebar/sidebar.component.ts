@@ -12,6 +12,7 @@ export class SidebarComponent {
     ) {}
 
     @Input() onActiveButtonResets: Function = noop;
+    @Input() onToggleScore: Function = noop;
 
     onSidebarClose(): void {
         this.activeOffcanvas.dismiss('Cross click');

@@ -15,8 +15,16 @@
             {{ item.label }}
         </div>
     </button>
+    <button id="checkbox-button" (click)="onToggleScore()">
+        <mat-checkbox [checked]="showScore">
+            Show Score
+        </mat-checkbox>
+    </button>
 </div>
 
-<app-atlas (openSidebar)="onOpenSidebar($event, MENU_ITEMS_IDS.FILTER)"></app-atlas>
+<app-atlas
+    [showScore]="showScore"
+    (openSidebar)="onOpenSidebar($event, MENU_ITEMS_IDS.FILTER)"
+></app-atlas>
 
 <router-outlet></router-outlet>

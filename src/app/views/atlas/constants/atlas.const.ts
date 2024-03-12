@@ -72,6 +72,10 @@ const LAYERS = {
 
 const BASE_LAYER = LAYERS.OPEN_STREET_MAP.BASE.layer;
 
+const BASE_LAYERS = [{
+    value: BASE_LAYER
+}];
+
 const MAP_OPTIONS = {
     center: latLng(CENTER_POS),
     zoom: 5
@@ -79,6 +83,7 @@ const MAP_OPTIONS = {
 
 export {
     BASE_LAYER,
+    BASE_LAYERS,
     CENTER_POS,
     LAYERS,
     LAYER_OPTIONS,
