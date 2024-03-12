@@ -30,4 +30,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Countries borders: [EuroStat Geo Data](https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/countries)
 
 ## Data Visualisation
-<img width="1616" alt="QoLI Map" src="https://github.com/iliedorobat/QoLI-Map-UI/assets/40547052/78f034e2-e55e-4ed6-ab5f-54a803d77797">
+<img width="897" alt="QoLI Map" src="https://github.com/iliedorobat/QoLI-Map-UI/assets/40547052/5c7a311a-83e0-4b5a-8d47-11102db5133a">
