@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Control, DomUtil, geoJSON, GeoJSON, Layer, Map} from 'leaflet';
+import {Control, DomUtil, geoJSON, Map} from 'leaflet';
 
 import {DatasetService} from '@/app/views/atlas/services/dataset.service';
 import {GeoFeature} from '@/app/views/atlas/constants/geo.types';
+import {IAtlasLayer} from '@/app/views/atlas/atlas.types';
 import {LayerEventsService} from '@/app/views/atlas/services/layer-events.service';
 import {LifeIndexResponse} from '@/app/views/atlas/constants/response.types';
 
@@ -37,13 +38,17 @@ export class AtlasService {
         map.addControl(custom);
     }
 
-    public prepareLayers(map: Map, baseLayers: Array<Layer | GeoJSON>, response: LifeIndexResponse): Array<Layer | GeoJSON> {
-        const countriesLayers = FEATURES.map(county => this.getFeatureLayer(map, county, response));
+    public onToggleTooltip(layers: Array<IAtlasLayer>, response: LifeIndexResponse, showScore: boolean): void {
+        this.eventsService.onToggleTooltip(layers, response, showScore);
+    }
+
+    public prepareLayers(map: Map, baseLayers: Array<IAtlasLayer>, response: LifeIndexResponse): Array<IAtlasLayer> {
+        const countriesLayers = FEATURES.map(country => this.getFeatureLayer(map, country, response));
 
         return [...baseLayers, ...countriesLayers];
     }
 
-    private getFeatureLayer(map: Map, geoLand: GeoFeature, response: LifeIndexResponse): GeoJSON {
+    private getFeatureLayer(map: Map, geoLand: GeoFeature, response: LifeIndexResponse): IAtlasLayer {
         const countryCode = geoLand.id as string;
         const score = this.datasetService.getScore(geoLand, response);
         const geoJsonObject = geoLand.geometry;
@@ -60,7 +65,10 @@ export class AtlasService {
         const layer = geoJSON(geoJsonObject, options);
         this.eventsService.addEvents(map, layer, geoLand, response);
 
-        return layer;
+        return {
+            geoLand,
+            value: layer
+        } as IAtlasLayer;
     }
 
     private getColor(response: LifeIndexResponse, score: number, countryCode: string): string {

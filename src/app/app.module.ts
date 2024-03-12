@@ -14,6 +14,7 @@ import {AtlasService} from './views/atlas/services/atlas.service';
 import {BackendService} from './views/atlas/services/backend.service';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {NgbActiveOffcanvas, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
 import {SidebarComponent} from './views/sidebar/sidebar.component';
@@ -45,7 +46,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         LeafletModule,
         NgbModule,
         ReactiveFormsModule,
-        AtlasFilterMainSectionComponent
+        AtlasFilterMainSectionComponent,
+        MatCheckboxModule
     ],
     providers: [
         AtlasFilter,

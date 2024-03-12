@@ -59,7 +59,7 @@ $offCanvasZIndex: 1045;
             button {
                 transition: all 0.2s linear 0s;
 
-                &:not(#logo-button) {
+                &:not(#checkbox-button):not(#logo-button) {
                     &:before {
                         content: "\f054";
                         font-family: FontAwesome;

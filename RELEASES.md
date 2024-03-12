@@ -1,6 +1,7 @@
 # 2.0.0
 - Add years selector
 - Add country selector
+- Add tooltip selector
 - Extend the selector of QoLI dimensions
 - Split the "Leisure and Social Interaction" dimension into two distinct dimensions
 - Use gray layers for countries which are filtered out and for those which are part of Europe but not EU

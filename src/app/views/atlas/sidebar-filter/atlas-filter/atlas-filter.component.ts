@@ -19,10 +19,12 @@ export class AtlasFilterComponent {
     }
 
     @Input() onActiveButtonResets: Function = noop;
+    @Input() onToggleScore: Function = noop;
 
     onFilterApply(): void {
         this.atlasFilter.save();
         this.backendService.lifeIndexSubscription(this.atlasFilter);
+        this.onToggleScore(true);
     }
 
     onSectionReset(event: Event): void {

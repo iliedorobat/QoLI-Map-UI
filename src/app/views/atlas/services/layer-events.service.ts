@@ -3,6 +3,7 @@ import {GeoJSON, Map} from 'leaflet';
 
 import {DatasetService} from '../services/dataset.service';
 import {GeoFeature} from '../constants/geo.types';
+import {IAtlasLayer} from '@/app/views/atlas/atlas.types';
 import {LifeIndexResponse} from '../constants/response.types';
 import {PopupService} from './popup.service';
 import {TooltipService} from './tooltip.service';
@@ -24,6 +25,18 @@ export class LayerEventsService {
         this.onLayerMouseOut(layer);
     }
 
+    public onToggleTooltip(layers: Array<IAtlasLayer>, response: LifeIndexResponse, showScore: boolean): void {
+        if (showScore) {
+            layers.forEach(layer => {
+                if (layer.geoLand) {
+                    this.onBindTooltip(layer.value as GeoJSON, layer.geoLand, response);
+                }
+            });
+        } else {
+            layers.forEach(layer => layer.value.unbindTooltip());
+        }
+    }
+
     private onBindPopup(layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponse) {
         const options = this.popupService.getOptions();
         const content = this.popupService.createContent(geoLand, response);
@@ -33,7 +46,7 @@ export class LayerEventsService {
     private onBindTooltip(layer: GeoJSON, geoLand: GeoFeature, response: LifeIndexResponse) {
         const score = this.datasetService.getScore(geoLand, response);
 
-        // Avoid displaying the tooltip if the country have been filtered out
+        // Avoid displaying the tooltip if the country has been filtered out
         if (score === this.datasetService.EXCLUDED_COUNTRY_SCORE) {
             return;
         }

@@ -1,25 +1,27 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {GeoJSON, Layer, Map} from 'leaflet';
 
 import {AtlasService} from './services/atlas.service';
 import {BackendService} from './services/backend.service';
+import {IAtlasLayer} from '@/app/views/atlas/atlas.types';
 
-import {BASE_LAYER, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
+import {BASE_LAYERS, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
 
 @Component({
     selector: 'app-atlas',
     templateUrl: './atlas.component.html',
     styleUrls: ['./atlas.component.scss']
 })
-export class AtlasComponent implements OnInit {
+export class AtlasComponent implements OnInit, OnChanges {
     constructor(
         private atlasService: AtlasService,
         private backendService: BackendService
     ) {}
 
     private map: Map | undefined;
+    private scores = {};
     protected readonly MAP_OPTIONS = MAP_OPTIONS;
-    protected layers: Array<Layer | GeoJSON> = [BASE_LAYER];
+    protected atlasLayers: Array<IAtlasLayer> = BASE_LAYERS;
     protected readonly layersControl = {
         baseLayers: {
             [LAYERS.OPEN_STREET_MAP.BASE.name]: LAYERS.OPEN_STREET_MAP.BASE.layer,
@@ -32,16 +34,25 @@ export class AtlasComponent implements OnInit {
         }
     };
 
+    @Input() showScore = true;
     @Output() openSidebar = new EventEmitter();
+
+    get layers(): Array<Layer | GeoJSON> {
+        return this.atlasLayers.map(atlasLayer => atlasLayer.value);
+    }
 
     ngOnInit(): void {
         this.backendService.lifeIndex$
-            .subscribe(data => {
+            .subscribe(scores => {
                 if (this.map) {
-                    const baseLayers = [BASE_LAYER];
-                    this.layers = this.atlasService.prepareLayers(this.map, baseLayers, data);
+                    this.atlasLayers = this.atlasService.prepareLayers(this.map, BASE_LAYERS, scores);
+                    this.scores = scores;
                 }
             });
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        this.atlasService.onToggleTooltip(this.atlasLayers, this.scores, this.showScore);
     }
 
     onMapReady(map: Map): void {
