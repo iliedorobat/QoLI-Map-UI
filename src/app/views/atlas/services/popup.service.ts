@@ -88,7 +88,7 @@ export class PopupService {
     private getCountryName(geoLand: GeoFeature): string {
         const countryName = geoLand.properties.NAME_ENGL;
 
-        if (['Kazakhstan', 'Russian Federation'].includes(countryName)) {
+        if (['Kazakhstan', 'Russian Federation', 'Türkiye'].includes(countryName)) {
             return `${countryName} (European territory)`
         }
 
