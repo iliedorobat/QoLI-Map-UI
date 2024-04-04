@@ -1,4 +1,4 @@
-// downloaded from /stats/dataset/config
+// downloaded from /stats/config
 export default {
     checked: true,
     filename: "qoli",
@@ -6,112 +6,206 @@ export default {
     aggregators: [
         {
             checked: true,
-            filename: "education",
-            label: "Education",
+            filename: "mainActivity",
+            label: "Productive or Main Activity",
             aggregators: [
                 {
                     checked: true,
-                    filename: "digitalSkillsRatio",
-                    label: "Digital Skills Ratio"
+                    filename: "mainActivity:lowWageEarnersRatio",
+                    label: "Low Wage Earners Ratio"
                 },
                 {
                     checked: true,
-                    filename: "dropoutRatio",
-                    label: "Dropout Ratio"
+                    filename: "mainActivity:researchersRatio",
+                    label: "Researchers Ratio"
                 },
                 {
                     checked: true,
-                    filename: "earlyEducationRatio",
-                    label: "Early Education Ratio"
+                    filename: "mainActivity:lowWorkIntensityRatio",
+                    label: "Low Work Intensity Ratio"
                 },
                 {
                     checked: true,
-                    filename: "educationRatio",
-                    label: "Education Ratio"
+                    filename: "mainActivity:workingNightsRatio",
+                    label: "Working Nights Ratio"
                 },
                 {
                     checked: true,
-                    filename: "inactiveYoungRatio",
-                    label: "Inactive Young Ratio"
+                    filename: "mainActivity:longTermUnemploymentRatio",
+                    label: "Long Term Unemployment Ratio"
                 },
                 {
                     checked: true,
-                    filename: "pupilsRatio",
-                    label: "Pupils Ratio"
+                    filename: "mainActivity:involuntaryPartTimeRatio",
+                    label: "Involuntary Part-Time Ratio"
                 },
                 {
                     checked: true,
-                    filename: "trainingRatio",
-                    label: "Training Ratio"
+                    filename: "mainActivity:inactivePopulationRatio",
+                    label: "Inactive Population Ratio"
                 },
                 {
                     checked: true,
-                    filename: "zeroForeignLangRatio",
-                    label: "Zero Foreign Lang Ratio"
+                    filename: "mainActivity:employmentRatio",
+                    label: "Employment Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "mainActivity:temporaryEmploymentRatio",
+                    label: "Temporary Employment Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "mainActivity:workingFlexibilityRatio",
+                    label: "Working Flexibility Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "mainActivity:avgRemainedWorkHours",
+                    label: "Average Remained Work Hours Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "mainActivity:unemploymentRatio",
+                    label: "Unemployment Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "mainActivity:jobSatisfaction",
+                    label: "Job Satisfaction"
                 }
             ]
         },
         {
             checked: true,
             filename: "environment",
-            label: "Environment",
+            label: "Natural and Living Environment",
             aggregators: [
                 {
                     checked: true,
-                    filename: "noisePollutionRatio",
-                    label: "Noise Pollution Ratio"
+                    filename: "environment:airPollutionRatio",
+                    label: "Air Pollution Ratio"
                 },
                 {
                     checked: true,
-                    filename: "pm2_5PollutionRatio",
-                    label: "PM2.5 Pollution Ratio"
+                    filename: "environment:waterSupplyRatio",
+                    label: "Water Supply Ratio"
                 },
                 {
                     checked: true,
-                    filename: "pm10PollutionRatio",
-                    label: "PM10 Pollution Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "pollutionRatio",
+                    filename: "environment:pollutionRatio",
                     label: "Pollution Ratio"
                 },
                 {
                     checked: true,
-                    filename: "waterSupplyRatio",
-                    label: "Water Supply Ratio"
+                    filename: "environment:noisePollutionRatio",
+                    label: "Noise Pollution Ratio"
                 }
             ]
         },
         {
             checked: true,
-            filename: "governance",
-            label: "Governance and Basic Rights",
+            filename: "education",
+            label: "Education",
             aggregators: [
                 {
                     checked: true,
-                    filename: "citizenshipRatio",
-                    label: "Citizenship Ratio"
+                    filename: "education:educationRatio",
+                    label: "Education Ratio"
                 },
                 {
                     checked: true,
-                    filename: "genderEmploymentGap",
-                    label: "Gender Employment Gap"
+                    filename: "education:inactiveYoungRatio",
+                    label: "Inactive Young People Ratio"
                 },
                 {
                     checked: true,
-                    filename: "genderPayGap",
-                    label: "Gender Pay Gap"
+                    filename: "education:trainingLastMonthRatio",
+                    label: "Training Ratio (last 4 weeks)"
                 },
                 {
                     checked: true,
-                    filename: "populationTrustRatio",
-                    label: "Population Trust Ratio"
+                    filename: "education:trainingLastYearRatio",
+                    label: "Training Ratio (last year)"
                 },
                 {
                     checked: true,
-                    filename: "voterTurnout",
-                    label: "Voter Turnout"
+                    filename: "education:earlyEducationRatio",
+                    label: "Early Education Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "education:digitalSkillsRatio",
+                    label: "Digital Skills Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "education:pupilsRatio",
+                    label: "Pupils Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "education:dropoutRatio",
+                    label: "Dropout Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "education:noKnownForeignLangRatio",
+                    label: "Zero Foreign Language Ratio"
+                }
+            ]
+        },
+        {
+            checked: true,
+            filename: "overallExperience",
+            label: "Overall Experience of Life",
+            aggregators: [
+                {
+                    checked: true,
+                    filename: "overallExperience:highSatisfactionRatio",
+                    label: "High Satisfaction Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "overallExperience:happinessRatio",
+                    label: "Happiness Ratio"
+                }
+            ]
+        },
+        {
+            checked: true,
+            filename: "safety",
+            label: "Economic and Physical Safety",
+            aggregators: [
+                {
+                    checked: true,
+                    filename: "safety:unpaidRatio",
+                    label: "Non Payment Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "safety:socialProtectionPpsRatio",
+                    label: "Social Protection in PPS Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "safety:crimeRatio",
+                    label: "Crime Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "safety:pensionPpsRatio",
+                    label: "Pension in PPS Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "safety:unexpectedRatio",
+                    label: "Unexpected Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "safety:offencesRatio",
+                    label: "Total Offences Ratio"
                 }
             ]
         },
@@ -122,78 +216,182 @@ export default {
             aggregators: [
                 {
                     checked: true,
-                    filename: "alcoholicRatio",
-                    label: "Alcoholic Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "bmiObeseRatio",
-                    label: "BMI Obese Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "bmiOverweightRatio",
-                    label: "BMI Overweight Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "fruitsVegetablesRatio",
-                    label: "Fruits Vegetables Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "healthPersonnel",
-                    label: "Health Personnel"
-                },
-                {
-                    checked: true,
-                    filename: "healthyLifeRatio",
-                    label: "Healthy Life Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "healthyLifeYears",
-                    label: "Healthy Life Years"
-                },
-                {
-                    checked: true,
-                    filename: "hospitalBeds",
+                    filename: "health:hospitalBeds",
                     label: "Hospital Beds"
                 },
                 {
                     checked: true,
-                    filename: "lifeExpectancy",
+                    filename: "health:workAccidents",
+                    label: "Work Accidents Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "health:lifeExpectancy",
                     label: "Life Expectancy at Birth"
                 },
                 {
                     checked: true,
-                    filename: "longHealthIssuesRatio",
-                    label: "Long Health Issues Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "physicalActivitiesRatio",
+                    filename: "health:physicalActivitiesRatio",
                     label: "Physical Activities Ratio"
                 },
                 {
                     checked: true,
-                    filename: "smokersRatio",
+                    filename: "health:healthyLifeYears",
+                    label: "Healthy Life Years"
+                },
+                {
+                    checked: true,
+                    filename: "health:nonFruitsVegetablesRatio",
+                    label: "Non-Fruits Vegetables Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "health:personnelTotal",
+                    label: "Health Personnel Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "health:longHealthIssuesRatio",
+                    label: "Long Health Issues Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "health:smokersRatio",
                     label: "Smokers Ratio"
                 },
                 {
                     checked: true,
-                    filename: "unmetDentalRatio",
+                    filename: "health:unmetDentalStatus",
                     label: "Unmet Dental Ratio"
                 },
                 {
                     checked: true,
-                    filename: "unmetMedicalRatio",
-                    label: "Unmet Medical Ratio"
+                    filename: "health:bodyMassIndex",
+                    label: "Body Mass Index"
                 },
                 {
                     checked: true,
-                    filename: "workAccidents",
-                    label: "Work Accidents"
+                    filename: "health:nonAlcoholicRatio",
+                    label: "Non-Alcoholic Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "health:healthyLifeRatio",
+                    label: "Healthy Life Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "health:depressiveRatio",
+                    label: "Depressive Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "health:unmetMedicalStatus",
+                    label: "Unmet Medical Ratio"
+                }
+            ]
+        },
+        {
+            checked: true,
+            filename: "livingConditions",
+            label: "Material Living Conditions",
+            aggregators: [
+                {
+                    checked: true,
+                    filename: "livingConditions:povertyRiskRatio",
+                    label: "Poverty Risk Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "livingConditions:lowWorkIntensityRatio",
+                    label: "Low Work Intensity Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "livingConditions:underOccupiedRatio",
+                    label: "Under Occupied Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "livingConditions:highIncomeRatio",
+                    label: "High Income Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "livingConditions:financialSatisfactionRatio",
+                    label: "Financial Satisfaction Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "livingConditions:gdpPerCapitaPpsRatio",
+                    label: "GDP per Capita in PPS Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "livingConditions:overOccupiedRatio",
+                    label: "Over Occupied Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "livingConditions:dwellingIssuesRatio",
+                    label: "Dwelling Issues Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "livingConditions:incomeQuintileRatio",
+                    label: "Income Quintile Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "livingConditions:endMeetInabilityRatio",
+                    label: "End Meet Inability Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "livingConditions:medianIncomePpsRatio",
+                    label: "Median Income in PPS Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "livingConditions:lackOfBathsRatio",
+                    label: "Lack of Baths Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "livingConditions:materialDeprivationRatio",
+                    label: "Material Deprivation Ratio"
+                }
+            ]
+        },
+        {
+            checked: true,
+            filename: "governance",
+            label: "Governance and Basic Rights",
+            aggregators: [
+                {
+                    checked: true,
+                    filename: "governance:voterTurnout",
+                    label: "Voter Turnout"
+                },
+                {
+                    checked: true,
+                    filename: "governance:genderEmpGap",
+                    label: "Gender Employment Gap"
+                },
+                {
+                    checked: true,
+                    filename: "governance:genderPayGap",
+                    label: "Gender Pay Gap"
+                },
+                {
+                    checked: true,
+                    filename: "governance:populationTrustRatio",
+                    label: "Population Trust Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "governance:citizenshipRatio",
+                    label: "Citizenship Ratio"
                 }
             ]
         },
@@ -204,241 +402,73 @@ export default {
             aggregators: [
                 {
                     checked: true,
-                    filename: "askingRatio",
-                    label: "Asking Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "discussionRatio",
-                    label: "Discussion Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "gettingTogetherFamRatio",
-                    label: "Getting Together Fam Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "gettingTogetherFrdRatio",
-                    label: "Getting Together Frd Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "formalVoluntaryRatio",
-                    label: "Formal Voluntary Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "informalVoluntaryRatio",
-                    label: "Informal Voluntary Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "nonParticipationRatio",
-                    label: "Non Participation Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "relationshipsSatisfactionRatio",
+                    filename: "leisureInteractions:relationshipsSatisfactionRatio",
                     label: "Relationships Satisfaction Ratio"
                 },
                 {
                     checked: true,
-                    filename: "socialActivitiesRatio",
+                    filename: "leisureInteractions:frequencyContactFrdRatio",
+                    label: "Frequency Contact Ratio (Friends)"
+                },
+                {
+                    checked: true,
+                    filename: "leisureInteractions:socialActivitiesNpRatio",
+                    label: "Non-Participation in Social Activities Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "leisureInteractions:voluntaryActivitiesNpRatio",
+                    label: "Non-Participation in Voluntary Activities Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "leisureInteractions:informalVoluntaryActivitiesRatio",
+                    label: "Informal Voluntary Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "leisureInteractions:timeSpentSatisfaction",
+                    label: "Time Satisfaction Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "leisureInteractions:discussionRatio",
+                    label: "Discussion Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "leisureInteractions:frequencyContactFamRatio",
+                    label: "Frequency Contact Ratio (Family)"
+                },
+                {
+                    checked: true,
+                    filename: "leisureInteractions:areaSatisfactionRatio",
+                    label: "Green Areas Satisfaction Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "leisureInteractions:formalVoluntaryActivitiesRatio",
+                    label: "Formal Voluntary Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "leisureInteractions:gettingTogetherFamRatio",
+                    label: "Getting Together Ratio (Family)"
+                },
+                {
+                    checked: true,
+                    filename: "leisureInteractions:socialActivitiesRatio",
                     label: "Social Activities Ratio"
                 },
                 {
                     checked: true,
-                    filename: "timeSatisfactionRatio",
-                    label: "Time Satisfaction Ratio"
-                }
-            ]
-        },
-        {
-            checked: true,
-            filename: "mainActivity",
-            label: "Productive or Main Activity",
-            aggregators: [
-                {
-                    checked: true,
-                    filename: "avgRemainedWorkHours",
-                    label: "Avg Remained Work Hours"
+                    filename: "leisureInteractions:askingRatio",
+                    label: "Asking Ratio"
                 },
                 {
                     checked: true,
-                    filename: "employmentRatio",
-                    label: "Employment Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "inactivePopulationRatio",
-                    label: "Inactive Population Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "involuntaryPartTimeRatio",
-                    label: "Involuntary Part-Time Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "jobSatisfaction",
-                    label: "Job Satisfaction"
-                },
-                {
-                    checked: true,
-                    filename: "longTermUnemploymentRatio",
-                    label: "Long Term Unemployment Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "lowWageEarningsRatio",
-                    label: "Low Wage Earnings Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "overQualifiedRatio",
-                    label: "Overqualified Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "researchersRatio",
-                    label: "Researchers Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "temporaryEmploymentRatio",
-                    label: "Temporary Employment Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "unemploymentRatio",
-                    label: "Unemployment Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "workingNightsRatio",
-                    label: "Working Nights Ratio"
-                }
-            ]
-        },
-        {
-            checked: true,
-            filename: "livingConditions",
-            label: "Material and Living Conditions",
-            aggregators: [
-                {
-                    checked: true,
-                    filename: "dwellingIssuesRatio",
-                    label: "Dwelling Issues Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "endMeetInabilityRatio",
-                    label: "End Meet Inability Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "financialSatisfactionRatio",
-                    label: "Financial Satisfaction Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "highIncomeRatio",
-                    label: "High Income Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "incomeQuintileRatio",
-                    label: "Income Quintile Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "lackOfBathsRatio",
-                    label: "Lack of Baths Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "lowWorkIntensityRatio",
-                    label: "Low Work Intensity Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "materialDeprivationRatio",
-                    label: "Material Deprivation Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "medianIncomePpsRatio",
-                    label: "Median Income PPS Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "overOccupiedRatio",
-                    label: "Over Occupied Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "povertyRiskRatio",
-                    label: "Poverty Risk Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "underOccupiedRatio",
-                    label: "Under Occupied Ratio"
-                }
-            ]
-        },
-        {
-            checked: true,
-            filename: "overallExperience",
-            label: "Overal Experience",
-            aggregators: [
-                {
-                    checked: true,
-                    filename: "happinessRatio",
-                    label: "Happiness Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "highSatisfactionRatio",
-                    label: "High Satisfaction Ratio"
-                }
-            ]
-        },
-        {
-            checked: true,
-            filename: "safety",
-            label: "Safety",
-            aggregators: [
-                {
-                    checked: true,
-                    filename: "crimeRatio",
-                    label: "Crime Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "nonPaymentRatio",
-                    label: "Non Payment Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "pensionPpsRatio",
-                    label: "Pension PPS Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "socialProtectionPpsRatio",
-                    label: "Social Protection PPS Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "totalOffencesRatio",
-                    label: "Total Offences Ratio"
-                },
-                {
-                    checked: true,
-                    filename: "unexpectedRatio",
-                    label: "Unexpected Ratio"
+                    filename: "leisureInteractions:gettingTogetherFrdRatio",
+                    label: "Getting Together Ratio (Friends)"
                 }
             ]
         }

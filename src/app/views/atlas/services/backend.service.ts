@@ -4,8 +4,7 @@ import {BehaviorSubject, from, Observable} from 'rxjs';
 import {LifeIndexMultipleResponses, LifeIndexResponse} from '../constants/response.types';
 import {AtlasFilter} from '../sidebar-filter/atlas-filter/atlas-filter.types';
 import {IQoLIOptions} from '@/app/views/atlas/constants/qoliOptions.types';
-
-const MAIN_URL = 'http://localhost:3070';
+import {MAIN_URI} from '@/app/shared/constants/endpoint';
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +24,7 @@ export class BackendService {
     }
 
     private getDatasetConfig(): Observable<IQoLIOptions> {
-        const promise = fetch(`${MAIN_URL}/stats/dataset/config`)
+        const promise = fetch(`${MAIN_URI}/stats/config`)
             .then(result => result.json());
 
         return from(promise);
@@ -34,12 +33,13 @@ export class BackendService {
     private getLifeIndex(filter: AtlasFilter): Observable<LifeIndexResponse> {
         const aggrs = this.extractAggregators(filter).map(aggr => `aggr=${aggr}`);
         const countryCodes = filter.baseFilter.countries.map(code => `countryCode=${code}`);
-        const year = `year=${filter.baseFilter.year}`;
-        const search = [...aggrs, year, ...countryCodes].filter(item => !!item).join('&');
+        const startYear = `startYear=${filter.baseFilter.year}`;
+        const endYear = `endYear=${filter.baseFilter.year}`;
+        const search = [...aggrs, startYear, endYear, ...countryCodes].filter(item => !!item).join('&');
 
-        const promise = fetch(`${MAIN_URL}/stats?${search}`)
+        const promise = fetch(`${MAIN_URI}/stats?${search}`)
             .then(response => response.json())
-            .then((data: any) => this.prepareLifeIndexResponse(filter, data.scores));
+            .then((data: LifeIndexMultipleResponses) => this.prepareLifeIndexResponse(filter, data));
 
         return from(promise);
     }
