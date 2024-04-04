@@ -199,8 +199,8 @@ export default {
         },
         {
             checked: true,
-            filename: "interactions",
-            label: "Social Interactions",
+            filename: "leisureInteractions",
+            label: "Leisure and Social Interactions",
             aggregators: [
                 {
                     checked: true,
@@ -224,18 +224,6 @@ export default {
                 },
                 {
                     checked: true,
-                    filename: "satisfactionRatio",
-                    label: "Satisfaction Ratio"
-                }
-            ]
-        },
-        {
-            checked: true,
-            filename: "leisure",
-            label: "Leisure",
-            aggregators: [
-                {
-                    checked: true,
                     filename: "formalVoluntaryRatio",
                     label: "Formal Voluntary Ratio"
                 },
@@ -251,13 +239,18 @@ export default {
                 },
                 {
                     checked: true,
-                    filename: "satisfactionRatio",
-                    label: "Satisfaction Ratio"
+                    filename: "relationshipsSatisfactionRatio",
+                    label: "Relationships Satisfaction Ratio"
                 },
                 {
                     checked: true,
                     filename: "socialActivitiesRatio",
                     label: "Social Activities Ratio"
+                },
+                {
+                    checked: true,
+                    filename: "timeSatisfactionRatio",
+                    label: "Time Satisfaction Ratio"
                 }
             ]
         },
