@@ -15,16 +15,23 @@ import {AVAILABLE_INTERVAL, EU28_MEMBER_CODES, EU28_MEMBERS} from '@/app/shared/
     templateUrl: './atlas-filter-main-section.component.html',
     styleUrls: ['./app-atlas-filter-main-section.scss'],
     standalone: true,
-    imports: [BrowserAnimationsModule, FormsModule, MatCheckboxModule, MatInputModule, MatSelectModule, ReactiveFormsModule]
+    imports: [
+        BrowserAnimationsModule,
+        FormsModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatSelectModule,
+        ReactiveFormsModule
+    ]
 })
 export class AtlasFilterMainSectionComponent {
     constructor(
         protected atlasFilter: AtlasFilter
     ) {}
 
+    protected readonly ALL_COUNTRIES_NAME = 'ALL';
     protected readonly AVAILABLE_INTERVAL = AVAILABLE_INTERVAL;
     protected readonly EU28_MEMBER_CODES = EU28_MEMBER_CODES;
-    protected readonly ALL_COUNTRIES_NAME = 'ALL';
 
     // Get the list of dimension keys
     private getDimensionKeys(): string[] {

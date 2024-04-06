@@ -4,6 +4,22 @@
     </button>
 
     <form class="needs-validation" [formGroup]="atlasFilter.form">
+        <ngb-accordion activeIds="atlas-filter-analysis-type-section">
+            <ngb-panel id="atlas-filter-analysis-type-section">
+                <ng-template ngbPanelTitle>
+                    <div class="title">
+                        Analysis Type Filter
+                    </div>
+                    <button class="btn btn-link btn-reset-section" (click)="onSectionReset($event)">
+                        Reset
+                    </button>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <app-atlas-filter-analysis-type-section></app-atlas-filter-analysis-type-section>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
         <ngb-accordion activeIds="atlas-filter-main-section">
             <ngb-panel id="atlas-filter-main-section">
                 <ng-template ngbPanelTitle>

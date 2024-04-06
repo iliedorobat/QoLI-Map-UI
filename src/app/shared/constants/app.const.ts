@@ -28,6 +28,16 @@ const AVAILABLE_INTERVAL = (
     }
 )();
 
+enum ANALYSIS_TYPE {
+    AGGREGATE = 'aggregate',
+    INDICATOR = 'indicator'
+}
+const ANALYSIS_TYPE_LABELS = {
+    [ANALYSIS_TYPE.AGGREGATE]: 'Analysis by aggregators',
+    [ANALYSIS_TYPE.INDICATOR]: 'Analysis by indicators'
+};
+const DEFAULT_ANALYSIS_TYPE = ANALYSIS_TYPE.AGGREGATE;
+
 const EU28_MEMBERS = {
     // EU: 'European Union', // (EU6-1958, EU9-1973, EU10-1981, EU12-1986, EU15-1995, EU25-2004, EU27-2007, EU28-2013, EU27-2020)
     // EU27_2020: 'European Union - 27 countries', // (from 2020)
@@ -93,8 +103,11 @@ const EU28_MEMBER_CODES = Object.keys(EU28_MEMBERS);
 const NON_EU28_MEMBER_CODES = Object.keys(NON_EU28_MEMBERS);
 
 export {
+    ANALYSIS_TYPE,
+    ANALYSIS_TYPE_LABELS,
     AVAILABLE_INTERVAL,
     COPYRIGHT,
+    DEFAULT_ANALYSIS_TYPE,
     DEFAULT_YEAR,
     EU28_MEMBERS,
     EU28_MEMBER_CODES,

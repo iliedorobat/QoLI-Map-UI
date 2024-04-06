@@ -33,6 +33,9 @@ export class AtlasFilterComponent {
         const value = get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
 
         switch (value) {
+            case 'atlas-filter-analysis-type-section':
+                this.atlasFilter.analysisTypeFilter.reset(this.atlasFilter.form);
+                break;
             case 'atlas-filter-main-section':
                 this.atlasFilter.baseFilter.reset(this.atlasFilter.form);
                 break;

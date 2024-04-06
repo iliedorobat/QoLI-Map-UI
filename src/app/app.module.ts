@@ -8,6 +8,12 @@ import {AppComponent} from './app.component';
 import {AtlasBaseFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/atlas-filter-main-section.component.types';
 import {AtlasComponent} from './views/atlas/atlas.component';
 import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
+import {
+    AtlasAnalysisTypeFilter
+} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-analysis-type-section/atlas-filter-analysis-type-section.types';
+import {
+    AtlasFilterAnalysisTypeSectionComponent
+} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-analysis-type-section/atlas-filter-analysis-type-section.component';
 import {AtlasFilterComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.component';
 import {AtlasFilterMainSectionComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/atlas-filter-main-section.component';
 import {AtlasService} from './views/atlas/services/atlas.service';
@@ -46,12 +52,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         LeafletModule,
         NgbModule,
         ReactiveFormsModule,
+        AtlasFilterAnalysisTypeSectionComponent,
         AtlasFilterMainSectionComponent,
         MatCheckboxModule
     ],
     providers: [
-        AtlasFilter,
+        AtlasAnalysisTypeFilter,
         AtlasBaseFilter,
+        AtlasFilter,
         AtlasService,
         BackendService,
         NgbActiveOffcanvas

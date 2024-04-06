@@ -151,7 +151,7 @@ export class AtlasBaseFilter implements IAtlasBaseFilter {
             }
         }
 
-        form.controls['year'].setValue(this.year);
         form.controls['countries'].setValue([...this.countries]);
+        form.controls['year'].setValue(this.year);
     }
 }
