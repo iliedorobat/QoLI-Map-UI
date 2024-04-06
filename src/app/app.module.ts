@@ -5,7 +5,6 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {AtlasBaseFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/atlas-filter-main-section.component.types';
 import {AtlasComponent} from './views/atlas/atlas.component';
 import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {
@@ -14,8 +13,13 @@ import {
 import {
     AtlasFilterAnalysisTypeSectionComponent
 } from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-analysis-type-section/atlas-filter-analysis-type-section.component';
+import {
+    AtlasAggregatedFilter
+} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/aggregated/atlas-filter-aggregated-section.component.types';
+import {
+    AtlasFilterAggregatedSectionComponent
+} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/aggregated/atlas-filter-aggregated-section.component';
 import {AtlasFilterComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.component';
-import {AtlasFilterMainSectionComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/atlas-filter-main-section.component';
 import {AtlasService} from './views/atlas/services/atlas.service';
 import {BackendService} from './views/atlas/services/backend.service';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
@@ -52,13 +56,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         LeafletModule,
         NgbModule,
         ReactiveFormsModule,
+        AtlasFilterAggregatedSectionComponent,
         AtlasFilterAnalysisTypeSectionComponent,
-        AtlasFilterMainSectionComponent,
         MatCheckboxModule
     ],
     providers: [
+        AtlasAggregatedFilter,
         AtlasAnalysisTypeFilter,
-        AtlasBaseFilter,
         AtlasFilter,
         AtlasService,
         BackendService,

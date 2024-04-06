@@ -6,7 +6,7 @@ import qoliConfig from '@/app/views/atlas/constants/qoliOptions';
 
 import {DEFAULT_YEAR, EU28_MEMBER_CODES} from '@/app/shared/constants/app.const';
 
-export interface IAtlasBaseFilter {
+export interface IAtlasAggregatedFilter {
     countries: string[];
     qoliOptions: IQoLIOptions;
     selectedCountries: string[];
@@ -25,7 +25,7 @@ export interface IAtlasBaseFilter {
 @Injectable({
     providedIn: 'root',
 })
-export class AtlasBaseFilter implements IAtlasBaseFilter {
+export class AtlasAggregatedFilter implements IAtlasAggregatedFilter {
     public countries: string[] = [...EU28_MEMBER_CODES];
     public qoliOptions: IQoLIOptions = qoliConfig;
     public year: number = DEFAULT_YEAR;

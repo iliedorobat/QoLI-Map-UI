@@ -14,17 +14,17 @@
         multiple
         placeholder="No country is selected"
         (selectionChange)="onCountryChanges($event)"
-        [value]="atlasFilter.baseFilter.selectedCountries"
+        [value]="atlasFilter.aggregatedFilter.selectedCountries"
     >
         <mat-select-trigger>
-            {{ atlasFilter.baseFilter.selectedCountries.length }} selected countries
+            {{ atlasFilter.aggregatedFilter.selectedCountries.length }} selected countries
         </mat-select-trigger>
 
         <div class="custom-options-group">
             <mat-option class="custom-option" [value]="ALL_COUNTRIES_NAME">
                 <mat-checkbox
                     (change)="onAllCountriesChanges($event.source.checked)"
-                    [checked]="atlasFilter.baseFilter.areAllCountriesChecked()"
+                    [checked]="atlasFilter.aggregatedFilter.areAllCountriesChecked()"
                     [indeterminate]="someCountriesChecked()"
                     [name]="ALL_COUNTRIES_NAME"
                 >
@@ -52,27 +52,27 @@
         multiple
         placeholder="No indicator is selected"
         (selectionChange)="onFeatureChanges()"
-        [value]="atlasFilter.baseFilter.selectedIndicators"
+        [value]="atlasFilter.aggregatedFilter.selectedIndicators"
     >
         <mat-select-trigger>
-            {{ atlasFilter.baseFilter.selectedIndicators.length }} selected indicators
+            {{ atlasFilter.aggregatedFilter.selectedIndicators.length }} selected indicators
         </mat-select-trigger>
 
         <div class="custom-options-group">
-            <mat-option class="custom-option" [value]="atlasFilter.baseFilter.qoliOptions.filename">
+            <mat-option class="custom-option" [value]="atlasFilter.aggregatedFilter.qoliOptions.filename">
                 <mat-checkbox
                     (change)="onAllDimensionsChanges($event.source.name, $event.source.checked)"
-                    [checked]="atlasFilter.baseFilter.areAllDimensionsChecked()"
-                    [formControlName]="atlasFilter.baseFilter.qoliOptions.filename"
+                    [checked]="atlasFilter.aggregatedFilter.areAllDimensionsChecked()"
+                    [formControlName]="atlasFilter.aggregatedFilter.qoliOptions.filename"
                     [indeterminate]="someDimensionsChecked()"
-                    [name]="atlasFilter.baseFilter.qoliOptions.filename"
+                    [name]="atlasFilter.aggregatedFilter.qoliOptions.filename"
                 >
                     All dimensions
                 </mat-checkbox>
             </mat-option>
         </div>
 
-        <div class="custom-options-group" *ngFor="let dimension of atlasFilter.baseFilter.qoliOptions.aggregators">
+        <div class="custom-options-group" *ngFor="let dimension of atlasFilter.aggregatedFilter.qoliOptions.aggregators">
             <mat-option class="custom-option" [value]="dimension.filename">
                 <mat-checkbox
                     (change)="onDimensionChanges($event.source.name, $event.source.checked)"

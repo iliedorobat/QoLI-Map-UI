@@ -15,7 +15,7 @@ export class BackendService {
 
     private prepareLifeIndexResponse(filter: AtlasFilter, data: LifeIndexMultipleResponses): LifeIndexResponse {
         const countries = Object.keys(data);
-        const year = filter.baseFilter.year;
+        const year = filter.aggregatedFilter.year;
 
         return countries.reduce((acc, country) => {
             acc[country] = data[country][year];
@@ -32,9 +32,9 @@ export class BackendService {
 
     private getLifeIndex(filter: AtlasFilter): Observable<LifeIndexResponse> {
         const aggrs = this.extractAggregators(filter).map(aggr => `aggr=${aggr}`);
-        const countryCodes = filter.baseFilter.countries.map(code => `countryCode=${code}`);
-        const startYear = `startYear=${filter.baseFilter.year}`;
-        const endYear = `endYear=${filter.baseFilter.year}`;
+        const countryCodes = filter.aggregatedFilter.countries.map(code => `countryCode=${code}`);
+        const startYear = `startYear=${filter.aggregatedFilter.year}`;
+        const endYear = `endYear=${filter.aggregatedFilter.year}`;
         const search = [...aggrs, startYear, endYear, ...countryCodes].filter(item => !!item).join('&');
 
         const promise = fetch(`${MAIN_URI}/stats?${search}`)
@@ -45,7 +45,7 @@ export class BackendService {
     }
 
     private extractAggregators(filter: AtlasFilter): string[] {
-        return filter.baseFilter.qoliOptions.aggregators.reduce((acc, dimension) => {
+        return filter.aggregatedFilter.qoliOptions.aggregators.reduce((acc, dimension) => {
             const arr = [...acc];
 
             if (dimension.checked) {

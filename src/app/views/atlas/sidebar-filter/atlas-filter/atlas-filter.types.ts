@@ -2,11 +2,11 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {Injectable} from '@angular/core';
 
 import {AtlasAnalysisTypeFilter, IAtlasAnalysisTypeFilter} from './atlas-filter-analysis-type-section/atlas-filter-analysis-type-section.types';
-import {AtlasBaseFilter, IAtlasBaseFilter} from './atlas-filter-main-section/atlas-filter-main-section.component.types';
+import {AtlasAggregatedFilter, IAtlasAggregatedFilter} from './atlas-filter-main-section/aggregated/atlas-filter-aggregated-section.component.types';
 
 export interface IAtlasFilter {
     analysisTypeFilter: IAtlasAnalysisTypeFilter,
-    baseFilter: IAtlasBaseFilter;
+    aggregatedFilter: IAtlasAggregatedFilter;
     form: FormGroup;
 
     isDisabled(): boolean;
@@ -23,31 +23,31 @@ export class AtlasFilter implements IAtlasFilter {
 
     constructor(
         public analysisTypeFilter: AtlasAnalysisTypeFilter,
-        public baseFilter: AtlasBaseFilter
+        public aggregatedFilter: AtlasAggregatedFilter
     ) {}
 
     isDisabled(): boolean {
-        return this.analysisTypeFilter.isDisabled(this.form) || this.baseFilter.isDisabled(this.form);
+        return this.analysisTypeFilter.isDisabled(this.form) || this.aggregatedFilter.isDisabled(this.form);
     }
 
     isEmpty(): boolean {
-        return this.analysisTypeFilter.isEmpty(this.form) && this.baseFilter.isEmpty(this.form);
+        return this.analysisTypeFilter.isEmpty(this.form) && this.aggregatedFilter.isEmpty(this.form);
     }
 
     reset(): void {
         this.analysisTypeFilter.reset(this.form);
-        this.baseFilter.reset(this.form);
+        this.aggregatedFilter.reset(this.form);
     }
 
     save(): void {
         this.analysisTypeFilter.save(this.form);
-        this.baseFilter.save(this.form);
+        this.aggregatedFilter.save(this.form);
     }
 
     private initForm(): FormGroup {
         const controls: {[key: string]: FormControl} = {};
         this.analysisTypeFilter.initForm(controls);
-        this.baseFilter.initForm(controls);
+        this.aggregatedFilter.initForm(controls);
 
         return new FormGroup(controls);
     }

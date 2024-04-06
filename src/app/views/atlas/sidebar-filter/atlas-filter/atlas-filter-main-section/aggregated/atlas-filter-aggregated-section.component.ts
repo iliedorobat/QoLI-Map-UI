@@ -11,9 +11,9 @@ import {IQoLIOptionsIndicator} from '@/app/views/atlas/constants/qoliOptions.typ
 import {AVAILABLE_INTERVAL, EU28_MEMBER_CODES, EU28_MEMBERS} from '@/app/shared/constants/app.const';
 
 @Component({
-    selector: 'app-atlas-filter-main-section',
-    templateUrl: './atlas-filter-main-section.component.html',
-    styleUrls: ['./app-atlas-filter-main-section.scss'],
+    selector: 'app-atlas-filter-aggregated-section',
+    templateUrl: './atlas-filter-aggregated-section.component.html',
+    styleUrls: ['./atlas-filter-aggregated-section.component.scss'],
     standalone: true,
     imports: [
         BrowserAnimationsModule,
@@ -24,7 +24,7 @@ import {AVAILABLE_INTERVAL, EU28_MEMBER_CODES, EU28_MEMBERS} from '@/app/shared/
         ReactiveFormsModule
     ]
 })
-export class AtlasFilterMainSectionComponent {
+export class AtlasFilterAggregatedSectionComponent {
     constructor(
         protected atlasFilter: AtlasFilter
     ) {}
@@ -35,7 +35,7 @@ export class AtlasFilterMainSectionComponent {
 
     // Get the list of dimension keys
     private getDimensionKeys(): string[] {
-        return this.atlasFilter.baseFilter.qoliOptions.aggregators.map(aggr => aggr.filename);
+        return this.atlasFilter.aggregatedFilter.qoliOptions.aggregators.map(aggr => aggr.filename);
     }
 
     // Get the list of indicator keys which belongs to a specific dimension
@@ -44,7 +44,7 @@ export class AtlasFilterMainSectionComponent {
             return [];
         }
 
-        return this.atlasFilter.baseFilter.qoliOptions.aggregators
+        return this.atlasFilter.aggregatedFilter.qoliOptions.aggregators
             .find(aggr => aggr.filename === dimKey)?.aggregators
             .filter(filterPredicate)
             .map(aggr => `${dimKey}:${aggr.filename}`) || [];
@@ -64,16 +64,16 @@ export class AtlasFilterMainSectionComponent {
     }
 
     onCountryChanges(event: MatSelectChange): void {
-        this.atlasFilter.baseFilter.selectedCountries = event.value.filter((code: string) => code !== this.ALL_COUNTRIES_NAME);
-        this.atlasFilter.form.get('countries')?.setValue(this.atlasFilter.baseFilter.selectedCountries);
+        this.atlasFilter.aggregatedFilter.selectedCountries = event.value.filter((code: string) => code !== this.ALL_COUNTRIES_NAME);
+        this.atlasFilter.form.get('countries')?.setValue(this.atlasFilter.aggregatedFilter.selectedCountries);
     }
 
     isCountryChecked(countryCode: string): boolean {
-        return this.atlasFilter.baseFilter.selectedCountries.includes(countryCode);
+        return this.atlasFilter.aggregatedFilter.selectedCountries.includes(countryCode);
     }
 
     onAllCountriesChanges(checked: boolean): void {
-        this.atlasFilter.baseFilter.selectedCountries = checked ? [...EU28_MEMBER_CODES] : [];
+        this.atlasFilter.aggregatedFilter.selectedCountries = checked ? [...EU28_MEMBER_CODES] : [];
     }
 
     onAllDimensionsChanges(qoliKey: string | null, checked: boolean): void {
@@ -113,11 +113,11 @@ export class AtlasFilterMainSectionComponent {
             }
         }
 
-        this.atlasFilter.baseFilter.selectedIndicators = selectedIndicators;
+        this.atlasFilter.aggregatedFilter.selectedIndicators = selectedIndicators;
     }
 
     someCountriesChecked(): boolean {
-        return this.atlasFilter.baseFilter.selectedCountries.length > 0 && this.atlasFilter.baseFilter.selectedCountries.length < EU28_MEMBER_CODES.length;
+        return this.atlasFilter.aggregatedFilter.selectedCountries.length > 0 && this.atlasFilter.aggregatedFilter.selectedCountries.length < EU28_MEMBER_CODES.length;
     }
 
     someDimensionsChecked(): boolean {
