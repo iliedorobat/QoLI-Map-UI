@@ -1,0 +1,53 @@
+<mat-form-field [formGroup]="atlasFilter.form">
+    <mat-label>Quality of Life Index</mat-label>
+
+    <mat-select
+        multiple
+        placeholder="No indicator is selected"
+        (selectionChange)="onFeatureChanges()"
+        [value]="atlasFilter.aggregatedFilter.selectedIndicators"
+    >
+        <mat-select-trigger>
+            {{ atlasFilter.aggregatedFilter.selectedIndicators.length }} selected indicators
+        </mat-select-trigger>
+
+        <div class="custom-optgroup">
+            <mat-option class="custom-option" [value]="atlasFilter.baseFilter.qoliOptions.filename">
+                <mat-checkbox
+                    (change)="onAllDimensionsChanges($event.source.name, $event.source.checked)"
+                    [checked]="atlasFilter.aggregatedFilter.areAllDimensionsChecked()"
+                    [formControlName]="atlasFilter.baseFilter.qoliOptions.filename"
+                    [indeterminate]="someDimensionsChecked()"
+                    [name]="atlasFilter.baseFilter.qoliOptions.filename"
+                >
+                    All dimensions
+                </mat-checkbox>
+            </mat-option>
+        </div>
+
+        <div class="custom-optgroup" *ngFor="let dimension of atlasFilter.baseFilter.qoliOptions.aggregators">
+            <mat-option class="custom-option" [value]="dimension.filename">
+                <mat-checkbox
+                    (change)="onDimensionChanges($event.source.name, $event.source.checked)"
+                    [checked]="dimension.checked"
+                    [formControlName]="dimension.filename"
+                    [indeterminate]="someIndicatorsChecked(dimension.filename)"
+                    [name]="dimension.filename"
+                >{{ dimension.label }}</mat-checkbox>
+            </mat-option>
+
+            <mat-option
+                class="custom-option qoli-indicators"
+                *ngFor="let indicator of dimension.aggregators"
+                [value]="indicator.filename"
+            >
+                <mat-checkbox
+                    (change)="onIndicatorChanges($event)"
+                    [checked]="indicator.checked"
+                    [formControlName]="indicator.filename"
+                    [name]="indicator.filename"
+                >{{ indicator.label }}</mat-checkbox>
+            </mat-option>
+        </div>
+    </mat-select>
+</mat-form-field>

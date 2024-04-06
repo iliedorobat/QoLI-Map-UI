@@ -4,6 +4,8 @@ import {BehaviorSubject, from, Observable} from 'rxjs';
 import {LifeIndexMultipleResponses, LifeIndexResponse} from '../constants/response.types';
 import {AtlasFilter} from '../sidebar-filter/atlas-filter/atlas-filter.types';
 import {IQoLIOptions} from '@/app/views/atlas/constants/qoliOptions.types';
+
+import {ANALYSIS_TYPE} from '@/app/shared/constants/app.const';
 import {MAIN_URI} from '@/app/shared/constants/endpoint';
 
 @Injectable({
@@ -15,7 +17,7 @@ export class BackendService {
 
     private prepareLifeIndexResponse(filter: AtlasFilter, data: LifeIndexMultipleResponses): LifeIndexResponse {
         const countries = Object.keys(data);
-        const year = filter.aggregatedFilter.year;
+        const year = filter.baseFilter.year;
 
         return countries.reduce((acc, country) => {
             acc[country] = data[country][year];
@@ -32,10 +34,11 @@ export class BackendService {
 
     private getLifeIndex(filter: AtlasFilter): Observable<LifeIndexResponse> {
         const aggrs = this.extractAggregators(filter).map(aggr => `aggr=${aggr}`);
-        const countryCodes = filter.aggregatedFilter.countries.map(code => `countryCode=${code}`);
-        const startYear = `startYear=${filter.aggregatedFilter.year}`;
-        const endYear = `endYear=${filter.aggregatedFilter.year}`;
-        const search = [...aggrs, startYear, endYear, ...countryCodes].filter(item => !!item).join('&');
+        const analysisType = `analysisType=${filter.baseFilter.analysisType}`;
+        const countryCodes = filter.baseFilter.countries.map(code => `countryCode=${code}`);
+        const startYear = `startYear=${filter.baseFilter.year}`;
+        const endYear = `endYear=${filter.baseFilter.year}`;
+        const search = [analysisType, startYear, endYear, ...aggrs, ...countryCodes].filter(item => !!item).join('&');
 
         const promise = fetch(`${MAIN_URI}/stats?${search}`)
             .then(response => response.json())
@@ -45,7 +48,11 @@ export class BackendService {
     }
 
     private extractAggregators(filter: AtlasFilter): string[] {
-        return filter.aggregatedFilter.qoliOptions.aggregators.reduce((acc, dimension) => {
+        if (filter.baseFilter.analysisType === ANALYSIS_TYPE.INDIVIDUALLY) {
+            return [filter.individuallyFilter.selectedIndicator.filename];
+        }
+
+        return filter.baseFilter.qoliOptions.aggregators.reduce((acc, dimension) => {
             const arr = [...acc];
 
             if (dimension.checked) {

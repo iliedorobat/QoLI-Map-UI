@@ -7,9 +7,17 @@
     }
 }
 
+.cdk-overlay-pane {
+    .custom-optgroup {
+        > .mat-mdc-optgroup-label > .mdc-list-item__primary-text {
+            font-weight: 600;
+        }
+    }
+}
+
 // Configuring the list of MUI checkboxes
 .cdk-overlay-pane {
-    .custom-options-group {
+    .custom-optgroup {
         .custom-option {
             padding: 0;
 

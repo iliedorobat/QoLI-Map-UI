@@ -1,0 +1,53 @@
+<mat-form-field [formGroup]="atlasFilter.form">
+    <mat-label>Analysis type</mat-label>
+    <mat-select formControlName="analysisType">
+        <mat-option *ngFor="let analysisType of ANALYSIS_TYPES" [value]="analysisType">
+            {{ ANALYSIS_TYPE_LABELS[analysisType] }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field [formGroup]="atlasFilter.form">
+    <mat-label>Year of analysis</mat-label>
+    <mat-select formControlName="year">
+        <mat-option *ngFor="let year of AVAILABLE_INTERVAL" [value]="year">
+            {{ year }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field [formGroup]="atlasFilter.form">
+    <mat-label>Countries</mat-label>
+
+    <mat-select
+        multiple
+        placeholder="No country is selected"
+        (selectionChange)="onCountryChanges($event)"
+        [value]="atlasFilter.baseFilter.selectedCountries"
+    >
+        <mat-select-trigger>
+            {{ atlasFilter.baseFilter.selectedCountries.length }} selected countries
+        </mat-select-trigger>
+
+        <div class="custom-optgroup">
+            <mat-option class="custom-option" [value]="ALL_COUNTRIES_NAME">
+                <mat-checkbox
+                    (change)="onAllCountriesChanges($event.source.checked)"
+                    [checked]="atlasFilter.baseFilter.areAllCountriesChecked()"
+                    [indeterminate]="someCountriesChecked()"
+                    [name]="ALL_COUNTRIES_NAME"
+                >
+                    All countries
+                </mat-checkbox>
+            </mat-option>
+        </div>
+
+        <div class="custom-optgroup">
+            <mat-option class="custom-option" *ngFor="let countryCode of EU28_MEMBER_CODES" [value]="countryCode">
+                <mat-checkbox [checked]="isCountryChecked(countryCode)" [name]="countryCode">
+                    {{ getCountryName(countryCode) }}
+                </mat-checkbox>
+            </mat-option>
+        </div>
+    </mat-select>
+</mat-form-field>

@@ -30,11 +30,11 @@ const AVAILABLE_INTERVAL = (
 
 enum ANALYSIS_TYPE {
     AGGREGATE = 'aggregate',
-    INDICATOR = 'indicator'
+    INDIVIDUALLY = 'individually'
 }
 const ANALYSIS_TYPE_LABELS = {
     [ANALYSIS_TYPE.AGGREGATE]: 'Analysis by aggregators',
-    [ANALYSIS_TYPE.INDICATOR]: 'Analysis by indicators'
+    [ANALYSIS_TYPE.INDIVIDUALLY]: 'Analysis by indicators'
 };
 const DEFAULT_ANALYSIS_TYPE = ANALYSIS_TYPE.AGGREGATE;
 

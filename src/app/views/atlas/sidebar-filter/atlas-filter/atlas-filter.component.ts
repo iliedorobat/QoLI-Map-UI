@@ -4,6 +4,7 @@ import get from 'lodash-es/get';
 
 import {AtlasFilter} from './atlas-filter.types';
 import {BackendService} from '@/app/views/atlas/services/backend.service';
+import {ANALYSIS_TYPE} from '@/app/shared/constants/app.const';
 
 @Component({
     selector: 'app-atlas-filter',
@@ -11,6 +12,8 @@ import {BackendService} from '@/app/views/atlas/services/backend.service';
     styleUrls: ['./atlas-filter.component.scss']
 })
 export class AtlasFilterComponent {
+    protected readonly ANALYSIS_TYPE = ANALYSIS_TYPE;
+
     constructor(
         protected atlasFilter: AtlasFilter,
         private backendService: BackendService
@@ -33,11 +36,10 @@ export class AtlasFilterComponent {
         const value = get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
 
         switch (value) {
-            case 'atlas-filter-aggregated-section':
+            case 'atlas-filter-main-section':
                 this.atlasFilter.aggregatedFilter.reset(this.atlasFilter.form);
-                break;
-            case 'atlas-filter-analysis-type-section':
-                this.atlasFilter.analysisTypeFilter.reset(this.atlasFilter.form);
+                this.atlasFilter.baseFilter.reset(this.atlasFilter.form);
+                this.atlasFilter.individuallyFilter.reset(this.atlasFilter.form);
                 break;
             default:
                 break;

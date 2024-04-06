@@ -1,11 +1,15 @@
+# 2.1.0
+- Added individually statistics selector
+- Connected query APIs with [QoLI-Framework Service](https://github.com/iliedorobat/QoLI-Framework)
+
 # 2.0.0
-- Add years selector
-- Add country selector
-- Add tooltip selector
-- Extend the selector of QoLI dimensions
+- Added years selector
+- Added country selector
+- Added tooltip selector
+- Extended the selector of QoLI dimensions
 - Split the "Leisure and Social Interaction" dimension into two distinct dimensions
-- Use gray layers for countries which are filtered out and for those which are part of Europe but not EU
-- Connect query APIs with [QoLI-Map-Service](https://github.com/iliedorobat/QoLI-Map-Service)
+- Used gray layers for countries which are filtered out and for those which are part of Europe but not EU
+- Connected query APIs with [QoLI-Map-Service](https://github.com/iliedorobat/QoLI-Map-Service)
 
 # v1.1.0
 - Use lodash-es instead of lodash

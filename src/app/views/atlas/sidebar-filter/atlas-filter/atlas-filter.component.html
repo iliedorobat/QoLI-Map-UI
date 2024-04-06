@@ -1,27 +1,11 @@
 <div class="global-filter">
     <button [ngClass]="{'btn btn-counter': true, disabled: true}">
-        Results: {{ atlasFilter.form.get('countries')?.value?.length }} countries
+        Results: {{ atlasFilter.form.value['countries']?.length }} countries
     </button>
 
     <form class="needs-validation" [formGroup]="atlasFilter.form">
-        <ngb-accordion activeIds="atlas-filter-analysis-type-section">
-            <ngb-panel id="atlas-filter-analysis-type-section">
-                <ng-template ngbPanelTitle>
-                    <div class="title">
-                        Analysis Type Filter
-                    </div>
-                    <button class="btn btn-link btn-reset-section" (click)="onSectionReset($event)">
-                        Reset
-                    </button>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                    <app-atlas-filter-analysis-type-section></app-atlas-filter-analysis-type-section>
-                </ng-template>
-            </ngb-panel>
-        </ngb-accordion>
-
-        <ngb-accordion activeIds="atlas-filter-aggregated-section">
-            <ngb-panel id="atlas-filter-aggregated-section">
+        <ngb-accordion activeIds="atlas-filter-main-section">
+            <ngb-panel id="atlas-filter-main-section">
                 <ng-template ngbPanelTitle>
                     <div class="title">
                         Aggregated Filter
@@ -31,7 +15,9 @@
                     </button>
                 </ng-template>
                 <ng-template ngbPanelContent>
-                    <app-atlas-filter-aggregated-section></app-atlas-filter-aggregated-section>
+                    <app-atlas-base-filter></app-atlas-base-filter>
+                    <app-atlas-aggregated-filter *ngIf="atlasFilter.form.value['analysisType'] === ANALYSIS_TYPE.AGGREGATE"></app-atlas-aggregated-filter>
+                    <app-atlas-individually-filter *ngIf="atlasFilter.form.value['analysisType'] === ANALYSIS_TYPE.INDIVIDUALLY"></app-atlas-individually-filter>
                 </ng-template>
             </ngb-panel>
         </ngb-accordion>

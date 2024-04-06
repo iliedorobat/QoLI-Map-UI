@@ -1,8 +1,0 @@
-<mat-form-field [formGroup]="atlasFilter.form">
-    <mat-label>Analysis type</mat-label>
-    <mat-select formControlName="analysisType">
-        <mat-option *ngFor="let analysisType of ANALYSIS_TYPES" [value]="analysisType">
-            {{ ANALYSIS_TYPE_LABELS[analysisType] }}
-        </mat-option>
-    </mat-select>
-</mat-form-field>

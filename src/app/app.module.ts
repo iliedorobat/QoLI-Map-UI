@@ -8,17 +8,20 @@ import {AppComponent} from './app.component';
 import {AtlasComponent} from './views/atlas/atlas.component';
 import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {
-    AtlasAnalysisTypeFilter
-} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-analysis-type-section/atlas-filter-analysis-type-section.types';
-import {
-    AtlasFilterAnalysisTypeSectionComponent
-} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-analysis-type-section/atlas-filter-analysis-type-section.component';
-import {
     AtlasAggregatedFilter
-} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/aggregated/atlas-filter-aggregated-section.component.types';
+} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/aggregated/atlas-aggregated-filter.types';
 import {
-    AtlasFilterAggregatedSectionComponent
-} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/aggregated/atlas-filter-aggregated-section.component';
+    AtlasAggregatedFilterComponent
+} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/aggregated/atlas-aggregated-filter.component';
+import {
+    AtlasBaseFilter
+} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/base/atlas-base-filter.types';
+import {
+    AtlasBaseFilterComponent
+} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/base/atlas-base-filter.component';
+import {
+    AtlasIndividuallyFilterComponent
+} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/individually/atlas-individually-filter.component';
 import {AtlasFilterComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.component';
 import {AtlasService} from './views/atlas/services/atlas.service';
 import {BackendService} from './views/atlas/services/backend.service';
@@ -56,13 +59,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         LeafletModule,
         NgbModule,
         ReactiveFormsModule,
-        AtlasFilterAggregatedSectionComponent,
-        AtlasFilterAnalysisTypeSectionComponent,
+        AtlasAggregatedFilterComponent,
+        AtlasBaseFilterComponent,
+        AtlasIndividuallyFilterComponent,
         MatCheckboxModule
     ],
     providers: [
         AtlasAggregatedFilter,
-        AtlasAnalysisTypeFilter,
+        AtlasBaseFilter,
         AtlasFilter,
         AtlasService,
         BackendService,
