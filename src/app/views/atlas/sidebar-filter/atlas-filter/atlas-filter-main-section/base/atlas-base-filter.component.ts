@@ -18,7 +18,6 @@ import {
 @Component({
     selector: 'app-atlas-base-filter',
     templateUrl: './atlas-base-filter.component.html',
-    styleUrls: ['./atlas-base-filter.component.scss'],
     standalone: true,
     imports: [
         BrowserAnimationsModule,
