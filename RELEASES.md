@@ -1,6 +1,6 @@
 # 2.1.0
 - Added individually statistics selector
-- Connected query APIs with [QoLI-Framework Service](https://github.com/iliedorobat/QoLI-Framework)
+- Connected query APIs with [QoLI-Framework Service](https://github.com/iliedorobat/QoLI-Framework/tree/master/src/ro/webdata/qoli/server)
 
 # 2.0.0
 - Added years selector

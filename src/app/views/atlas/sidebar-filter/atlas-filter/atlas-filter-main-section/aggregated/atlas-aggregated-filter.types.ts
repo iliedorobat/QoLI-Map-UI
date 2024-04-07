@@ -1,7 +1,7 @@
 import {FormControl, FormGroup} from '@angular/forms';
 import {Injectable} from '@angular/core';
 
-import qoliConfig from '@/app/views/atlas/constants/qoliOptions';
+import qoliOptions from '@/app/views/atlas/constants/qoliOptions';
 
 export interface IAtlasAggregatedFilter {
     selectedIndicators: string[];
@@ -21,7 +21,7 @@ export class AtlasAggregatedFilter implements IAtlasAggregatedFilter {
     public selectedIndicators: string[] = this.initSelectedIndicators();
 
     areAllDimensionsChecked(): boolean {
-        return qoliConfig.checked;
+        return qoliOptions.checked;
     }
 
     isDisabled(form: FormGroup): boolean {
@@ -33,10 +33,10 @@ export class AtlasAggregatedFilter implements IAtlasAggregatedFilter {
     }
 
     initForm(controls: {[key: string]: FormControl}): void {
-        const qoliKey = qoliConfig.filename;
-        controls[qoliKey] = new FormControl(qoliConfig.checked);
+        const qoliKey = qoliOptions.filename;
+        controls[qoliKey] = new FormControl(qoliOptions.checked);
 
-        for (const dimension of qoliConfig.aggregators) {
+        for (const dimension of qoliOptions.aggregators) {
             const dimKey = dimension.filename;
             controls[dimKey] = new FormControl(dimension.checked);
 
@@ -48,9 +48,9 @@ export class AtlasAggregatedFilter implements IAtlasAggregatedFilter {
     }
 
     save(form: FormGroup): void {
-        qoliConfig.checked = qoliConfig.aggregators.every(aggr => form.value[aggr.filename]);
+        qoliOptions.checked = qoliOptions.aggregators.every(aggr => form.value[aggr.filename]);
 
-        for (const dimension of qoliConfig.aggregators) {
+        for (const dimension of qoliOptions.aggregators) {
             const dimKey = dimension.filename;
             dimension.checked = form.value[dimKey];
 
@@ -67,11 +67,11 @@ export class AtlasAggregatedFilter implements IAtlasAggregatedFilter {
     }
 
     private hasIndicators(form: FormGroup): boolean {
-        if (form.controls[qoliConfig.filename].value) {
+        if (form.controls[qoliOptions.filename].value) {
             return true;
         }
 
-        for (const dimension of qoliConfig.aggregators) {
+        for (const dimension of qoliOptions.aggregators) {
             const dimKey = dimension.filename;
             if (form.controls[dimKey].value) {
                 return true;
@@ -91,7 +91,7 @@ export class AtlasAggregatedFilter implements IAtlasAggregatedFilter {
     private initSelectedIndicators(): string[] {
         const selectedIndicators = [];
 
-        for (const dimension of qoliConfig.aggregators) {
+        for (const dimension of qoliOptions.aggregators) {
             for (const indicator of dimension.aggregators) {
                 const indKey = indicator.filename;
                 indicator.checked && selectedIndicators.push(indKey);
@@ -102,10 +102,10 @@ export class AtlasAggregatedFilter implements IAtlasAggregatedFilter {
     }
 
     private resetForm(form: FormGroup): void {
-        const qoliKey = qoliConfig.filename;
-        form.controls[qoliKey].setValue(qoliConfig.checked);
+        const qoliKey = qoliOptions.filename;
+        form.controls[qoliKey].setValue(qoliOptions.checked);
 
-        for (const dimension of qoliConfig.aggregators) {
+        for (const dimension of qoliOptions.aggregators) {
             const dimkey = dimension.filename;
             form.controls[dimkey].setValue(dimension.checked);
 

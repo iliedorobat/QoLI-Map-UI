@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Control, DomUtil, geoJSON, Map} from 'leaflet';
 
+import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {DatasetService} from '@/app/views/atlas/services/dataset.service';
 import {GeoFeature} from '@/app/views/atlas/constants/geo.types';
 import {IAtlasLayer} from '@/app/views/atlas/atlas.types';
@@ -21,8 +22,9 @@ const FEATURES = [...FEATURES_NON_EU, ...FEATURES_EU] as Array<GeoFeature>;
 })
 export class AtlasService {
     constructor(
-        private eventsService: LayerEventsService,
         private datasetService: DatasetService,
+        private eventsService: LayerEventsService,
+        private atlasFilter: AtlasFilter
     ) {}
 
     public onFilterControlAdd(map: Map): void {
@@ -72,7 +74,11 @@ export class AtlasService {
     }
 
     private getColor(response: LifeIndexResponse, score: number, countryCode: string): string {
-        const sortedResponse = this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
+        const isNegativeState = this.atlasFilter.baseFilter.isIndividuallyAnalysis()
+            && this.atlasFilter.individuallyFilter.isNegativeState()
+        const sortedResponse = isNegativeState
+            ? this.datasetService.getSortedResponse(response, SORT_ORDER.ASC)
+            : this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);
         const rank = sortedResponse.findIndex(item => item[0] === countryCode) + 1;
         const isExcluded = score === this.datasetService.EXCLUDED_COUNTRY_SCORE;
 

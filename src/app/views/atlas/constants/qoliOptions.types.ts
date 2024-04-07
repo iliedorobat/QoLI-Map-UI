@@ -1,19 +1,21 @@
-export interface IQoLIOptions {
+export interface IAggrQoLI {
     checked: boolean;
     filename: string;
     label: string;
-    aggregators: IQoLIOptionsDimension[];
+    aggregators: IAggrQoLIDimension[];
 }
 
-export interface IQoLIOptionsDimension {
+export interface IAggrQoLIDimension {
     checked: boolean;
     filename: string;
     label: string;
-    aggregators: IQoLIOptionsIndicator[];
+    aggregators: IAggrQoLIIndicator[];
 }
 
-export interface IQoLIOptionsIndicator {
+export interface IAggrQoLIIndicator {
     checked: boolean;
     filename: string;
     label: string;
+    negativeState: boolean;
+    units: string;
 }

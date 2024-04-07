@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, from, Observable} from 'rxjs';
 
-import {LifeIndexMultipleResponses, LifeIndexResponse} from '../constants/response.types';
 import {AtlasFilter} from '../sidebar-filter/atlas-filter/atlas-filter.types';
-import {IQoLIOptions} from '@/app/views/atlas/constants/qoliOptions.types';
+import {IAggrQoLI} from '@/app/views/atlas/constants/qoliOptions.types';
+import {LifeIndexMultipleResponses, LifeIndexResponse} from '../constants/response.types';
 
 import {ANALYSIS_TYPE} from '@/app/shared/constants/app.const';
 import {MAIN_URI} from '@/app/shared/constants/endpoint';
@@ -12,7 +12,7 @@ import {MAIN_URI} from '@/app/shared/constants/endpoint';
     providedIn: 'root'
 })
 export class BackendService {
-    private _datasetConfig$: BehaviorSubject<IQoLIOptions> = new BehaviorSubject<IQoLIOptions>({} as IQoLIOptions);
+    private _datasetConfig$: BehaviorSubject<IAggrQoLI> = new BehaviorSubject<IAggrQoLI>({} as IAggrQoLI);
     private _lifeIndex$: BehaviorSubject<LifeIndexResponse> = new BehaviorSubject<LifeIndexResponse>({} as LifeIndexResponse);
 
     private prepareLifeIndexResponse(filter: AtlasFilter, data: LifeIndexMultipleResponses): LifeIndexResponse {
@@ -25,8 +25,8 @@ export class BackendService {
         }, {} as LifeIndexResponse);
     }
 
-    private getDatasetConfig(): Observable<IQoLIOptions> {
-        const promise = fetch(`${MAIN_URI}/stats/config`)
+    private getDatasetConfig(): Observable<IAggrQoLI> {
+        const promise = fetch(`${MAIN_URI}/stats/config?analysisType=${ANALYSIS_TYPE.AGGREGATE}`)
             .then(result => result.json());
 
         return from(promise);
@@ -48,7 +48,7 @@ export class BackendService {
     }
 
     private extractAggregators(filter: AtlasFilter): string[] {
-        if (filter.baseFilter.analysisType === ANALYSIS_TYPE.INDIVIDUALLY) {
+        if (filter.baseFilter.isIndividuallyAnalysis()) {
             return [filter.individuallyFilter.selectedIndicator.filename];
         }
 
@@ -69,7 +69,7 @@ export class BackendService {
 
     public datasetConfigSubscription(): void {
         this.getDatasetConfig()
-            .subscribe((config: IQoLIOptions) => {
+            .subscribe((config: IAggrQoLI) => {
                 this._datasetConfig$.next(config);
             });
     }
@@ -81,7 +81,7 @@ export class BackendService {
             })
     }
 
-    get datasetConfig$(): Observable<IQoLIOptions> {
+    get datasetConfig$(): Observable<IAggrQoLI> {
         return this._datasetConfig$.asObservable();
     }
 

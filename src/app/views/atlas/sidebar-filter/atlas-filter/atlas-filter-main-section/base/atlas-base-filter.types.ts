@@ -1,14 +1,17 @@
 import {FormControl, FormGroup} from '@angular/forms';
 
-import {IQoLIOptions} from '@/app/views/atlas/constants/qoliOptions.types';
-import qoliConfig from '@/app/views/atlas/constants/qoliOptions';
+import {IIndividuallyQoLI} from '@/app/views/atlas/constants/qoliBaseOptions.types';
+import {IAggrQoLI} from '@/app/views/atlas/constants/qoliOptions.types';
+import qoliOptions from '@/app/views/atlas/constants/qoliOptions';
+import qoliBaseOptions from '@/app/views/atlas/constants/qoliBaseOptions';
 
 import {ANALYSIS_TYPE, DEFAULT_ANALYSIS_TYPE, DEFAULT_YEAR, EU28_MEMBER_CODES} from '@/app/shared/constants/app.const';
 
 export interface IAtlasBaseFilter {
     analysisType: ANALYSIS_TYPE;
     countries: string[];
-    qoliOptions: IQoLIOptions;
+    qoliOptions: IAggrQoLI;
+    qoliIndividuallyOptions: IIndividuallyQoLI;
     selectedCountries: string[];
     year: number;
 
@@ -16,6 +19,7 @@ export interface IAtlasBaseFilter {
     initForm(controls: {[key: string]: FormControl}): void;
     isDisabled(form: FormGroup): boolean;
     isEmpty(form: FormGroup): boolean;
+    isIndividuallyAnalysis(): boolean;
     reset(form: FormGroup): void;
     save(form: FormGroup): void;
 }
@@ -23,7 +27,8 @@ export interface IAtlasBaseFilter {
 export class AtlasBaseFilter implements IAtlasBaseFilter {
     public analysisType: ANALYSIS_TYPE = DEFAULT_ANALYSIS_TYPE;
     public countries: string[] = [...EU28_MEMBER_CODES];
-    public qoliOptions: IQoLIOptions = qoliConfig;
+    public qoliOptions: IAggrQoLI = qoliOptions;
+    public qoliIndividuallyOptions: IIndividuallyQoLI = qoliBaseOptions;
     public year: number = DEFAULT_YEAR;
 
     public selectedCountries: string[] = this.initSelectedCountries();
@@ -38,6 +43,10 @@ export class AtlasBaseFilter implements IAtlasBaseFilter {
 
     isEmpty(form: FormGroup): boolean {
         return this.hasAnalysisType(form) && this.hasCountries(form);
+    }
+
+    isIndividuallyAnalysis(): boolean {
+        return this.analysisType === ANALYSIS_TYPE.INDIVIDUALLY;
     }
 
     initForm(controls: {[key: string]: FormControl}): void {

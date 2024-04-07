@@ -46,14 +46,14 @@ export class TooltipService {
 
     private createHeader(geoLand: GeoFeature, response: LifeIndexResponse): HTMLElement {
         const countryName = geoLand.properties.NAME_ENGL;
-        const score = this.datasetService.getScore(geoLand, response);
+        const score = this.datasetService.getScoreStr(geoLand, response, 4);
         const headerElement = this.htmlElementsService.createElement({
             className: 'header',
             tagName: 'div'
         } as HTMLElementParams);
 
         const scoreLabelElement = this.htmlElementsService.createLabelElement(countryName);
-        const scoreElement = this.htmlElementsService.createValueElement(score.toFixed(4));
+        const scoreElement = this.htmlElementsService.createValueElement(score);
 
         headerElement.appendChild(scoreLabelElement);
         headerElement.appendChild(scoreElement);

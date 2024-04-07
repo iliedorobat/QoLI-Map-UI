@@ -6,7 +6,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 
 import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
-import {IQoLIOptionsIndicator} from '@/app/views/atlas/constants/qoliOptions.types';
+import {IAggrQoLIIndicator} from '@/app/views/atlas/constants/qoliOptions.types';
 
 @Component({
     selector: 'app-atlas-aggregated-filter',
@@ -32,7 +32,7 @@ export class AtlasAggregatedFilterComponent {
     }
 
     // Get the list of indicator keys which belongs to a specific dimension
-    private getIndicatorKeys(dimKey: string | null | undefined, filterPredicate = (item: IQoLIOptionsIndicator) => true): string[] {
+    private getIndicatorKeys(dimKey: string | null | undefined, filterPredicate = (item: IAggrQoLIIndicator) => true): string[] {
         if (!dimKey) {
             return [];
         }

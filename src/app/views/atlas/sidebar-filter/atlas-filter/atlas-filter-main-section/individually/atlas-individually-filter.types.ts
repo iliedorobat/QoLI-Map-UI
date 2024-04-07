@@ -2,11 +2,11 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {Injectable} from '@angular/core';
 
 import {AtlasBaseFilter} from '../base/atlas-base-filter.types';
-import {IQoLIOptionsIndicator} from '@/app/views/atlas/constants/qoliOptions.types';
+import {IIndividuallyQoLIDimension, IIndividuallyQoLIIndicator} from '@/app/views/atlas/constants/qoliBaseOptions.types';
 
 export interface IAtlasIndividuallyFilter {
-    selectedIndicator: IQoLIOptionsIndicator;
-    unsavedIndicator: IQoLIOptionsIndicator;
+    selectedIndicator: IIndividuallyQoLIIndicator;
+    unsavedIndicator: IIndividuallyQoLIIndicator;
 
     initForm(controls: {[key: string]: FormControl}): void;
     isDisabled(form: FormGroup): boolean;
@@ -19,11 +19,24 @@ export interface IAtlasIndividuallyFilter {
     providedIn: 'root',
 })
 export class AtlasIndividuallyFilter implements IAtlasIndividuallyFilter {
-    public selectedIndicator: IQoLIOptionsIndicator = this.initSelectedIndicator();
-    public unsavedIndicator: IQoLIOptionsIndicator = this.initSelectedIndicator();
+    public selectedIndicator: IIndividuallyQoLIIndicator = this.initSelectedIndicator();
+    public unsavedIndicator: IIndividuallyQoLIIndicator = this.initSelectedIndicator();
+
+    private indicators = this.atlasBaseFilter.qoliIndividuallyOptions.aggregators.reduce((acc: IIndividuallyQoLIIndicator[], dimension: IIndividuallyQoLIDimension) => {
+        return [...acc, ...dimension.aggregators];
+    }, []);
 
     constructor(public atlasBaseFilter: AtlasBaseFilter) {}
 
+    getUnits(): string | undefined {
+        const indicator = this.indicators.find(indicator => indicator.filename === this.selectedIndicator.filename);
+        return indicator?.units
+    }
+
+    isNegativeState(): boolean {
+        const indicator = this.indicators.find(indicator => indicator.filename === this.selectedIndicator.filename);
+        return indicator?.negativeState || false;
+    }
 
     isDisabled(form: FormGroup): boolean {
         return !this.hasIndicator(form);
@@ -44,15 +57,15 @@ export class AtlasIndividuallyFilter implements IAtlasIndividuallyFilter {
 
     reset(form: FormGroup): void {
         this.resetForm(form);
-        this.unsavedIndicator = {...this.selectedIndicator} as IQoLIOptionsIndicator;
+        this.unsavedIndicator = {...this.selectedIndicator} as IIndividuallyQoLIIndicator;
     }
 
     private hasIndicator(form: FormGroup): boolean {
         return !!form.controls['selectedIndicator'].value;
     }
 
-    private initSelectedIndicator(): IQoLIOptionsIndicator {
-        return this.atlasBaseFilter.qoliOptions?.aggregators[0]?.aggregators[0];
+    private initSelectedIndicator(): IIndividuallyQoLIIndicator {
+        return this.atlasBaseFilter.qoliIndividuallyOptions?.aggregators[0]?.aggregators[0];
     }
 
     private resetForm(form: FormGroup): void {

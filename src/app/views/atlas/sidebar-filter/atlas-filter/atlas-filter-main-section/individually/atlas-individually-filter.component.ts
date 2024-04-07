@@ -5,7 +5,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 
 import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
-import {IQoLIOptionsIndicator} from '@/app/views/atlas/constants/qoliOptions.types';
+import {IIndividuallyQoLIIndicator} from '@/app/views/atlas/constants/qoliBaseOptions.types';
 
 @Component({
     selector: 'app-atlas-individually-filter',
@@ -24,7 +24,7 @@ export class AtlasIndividuallyFilterComponent {
         protected atlasFilter: AtlasFilter
     ) {}
 
-    onSelectIndicator(indicator: IQoLIOptionsIndicator) {
+    onSelectIndicator(indicator: IIndividuallyQoLIIndicator) {
         this.atlasFilter.individuallyFilter.unsavedIndicator = indicator;
     }
 }
