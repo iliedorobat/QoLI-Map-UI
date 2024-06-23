@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 
-import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {LifeIndexResponse} from '../constants/response.types';
 import {GeoFeature} from '../constants/geo.types';
+import {SidebarFilter} from '@/app/views/sidebar';
 
 import {SORT_ORDER} from '@/app/shared/constants/math.const';
 
@@ -15,7 +15,7 @@ export class DatasetService {
     /** Placeholder used to mark the filtered out countries */
     public EXCLUDED_COUNTRY_SCORE = -1;
 
-    constructor(private atlasFilter: AtlasFilter) {}
+    constructor(private sidebarFilter: SidebarFilter) {}
 
     private sortByAsc(a: DatasetEntry, b: DatasetEntry): number {
         if (a[1] < b[1]) {
@@ -45,8 +45,8 @@ export class DatasetService {
     public getScoreStr(geoLand: GeoFeature, response: LifeIndexResponse, precision?: number): string {
         const score = this.getScore(geoLand, response);
 
-        if (this.atlasFilter.baseFilter.isIndividuallyAnalysis()) {
-            return `${score.toFixed(2)} (${this.atlasFilter.individuallyFilter.getUnits()})`;
+        if (this.sidebarFilter.baseFilter.isIndividuallyAnalysis()) {
+            return `${score.toFixed(2)} (${this.sidebarFilter.individuallyFilter.getUnits()})`;
         }
 
         if (!precision) {

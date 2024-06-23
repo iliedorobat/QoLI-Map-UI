@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Control, DomUtil, geoJSON, Map} from 'leaflet';
 
-import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {DatasetService} from '@/app/views/atlas/services/dataset.service';
 import {GeoFeature} from '@/app/views/atlas/constants/geo.types';
 import {IAtlasLayer} from '@/app/views/atlas/atlas.types';
 import {LayerEventsService} from '@/app/views/atlas/services/layer-events.service';
 import {LifeIndexResponse} from '@/app/views/atlas/constants/response.types';
+import {SidebarFilter} from '@/app/views/sidebar';
 
 import * as COUNTRIES_NON_EU from '@/../files/geo-location/europe-non-eu.json';
 import * as COUNTRIES_EU from '@/../files/geo-location/europe-eu.json';
@@ -24,7 +24,7 @@ export class AtlasService {
     constructor(
         private datasetService: DatasetService,
         private eventsService: LayerEventsService,
-        private atlasFilter: AtlasFilter
+        private sidebarFilter: SidebarFilter
     ) {}
 
     public onFilterControlAdd(map: Map): void {
@@ -74,8 +74,8 @@ export class AtlasService {
     }
 
     private getColor(response: LifeIndexResponse, score: number, countryCode: string): string {
-        const isNegativeState = this.atlasFilter.baseFilter.isIndividuallyAnalysis()
-            && this.atlasFilter.individuallyFilter.isNegativeState()
+        const isNegativeState = this.sidebarFilter.baseFilter.isIndividuallyAnalysis()
+            && this.sidebarFilter.individuallyFilter.isNegativeState()
         const sortedResponse = isNegativeState
             ? this.datasetService.getSortedResponse(response, SORT_ORDER.ASC)
             : this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);

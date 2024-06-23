@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {PopupOptions} from 'leaflet';
 
-import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {DatasetService} from './dataset.service';
 import {GeoFeature} from '@/app/views/atlas/constants/geo.types';
 import {HTMLElementParams, HtmlElementsService} from './html-elements.service';
 import {LifeIndexResponse} from '@/app/views/atlas/constants/response.types';
+import {SidebarFilter} from '@/app/views/sidebar';
 
 import {SORT_ORDER} from '@/app/shared/constants/math.const';
 
@@ -14,9 +14,9 @@ import {SORT_ORDER} from '@/app/shared/constants/math.const';
 })
 export class PopupService {
     constructor(
-        private atlasFilter: AtlasFilter,
         private datasetService: DatasetService,
-        private htmlElementsService: HtmlElementsService
+        private htmlElementsService: HtmlElementsService,
+        private sidebarFilter: SidebarFilter
     ) {}
 
     public createContent(geoLand: GeoFeature, response: LifeIndexResponse) {
@@ -71,7 +71,7 @@ export class PopupService {
         const scoreElement = this.htmlElementsService.createValueElement(score);
 
         const yearLabelElement = this.htmlElementsService.createLabelElement('Year');
-        const yearElement = this.htmlElementsService.createValueElement(this.atlasFilter.baseFilter.year);
+        const yearElement = this.htmlElementsService.createValueElement(this.sidebarFilter.baseFilter.year);
 
         bodyElement.appendChild(yearLabelElement);
         bodyElement.appendChild(yearElement);

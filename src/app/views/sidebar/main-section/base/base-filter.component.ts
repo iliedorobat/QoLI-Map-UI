@@ -5,7 +5,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectChange, MatSelectModule} from '@angular/material/select';
 
-import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
+import {SidebarFilter} from '@/app/views/sidebar';
 
 import {
     ANALYSIS_TYPE,
@@ -17,7 +17,7 @@ import {
 
 @Component({
     selector: 'app-atlas-base-filter',
-    templateUrl: './atlas-base-filter.component.html',
+    templateUrl: './base-filter.component.html',
     standalone: true,
     imports: [
         BrowserAnimationsModule,
@@ -28,9 +28,9 @@ import {
         ReactiveFormsModule
     ]
 })
-export class AtlasBaseFilterComponent {
+export class BaseFilterComponent {
     constructor(
-        protected atlasFilter: AtlasFilter
+        protected sidebarFilter: SidebarFilter
     ) {}
 
     protected readonly ALL_COUNTRIES_NAME = 'ALL';
@@ -40,20 +40,20 @@ export class AtlasBaseFilterComponent {
     protected readonly EU28_MEMBER_CODES = EU28_MEMBER_CODES;
 
     onCountryChanges(event: MatSelectChange): void {
-        this.atlasFilter.baseFilter.selectedCountries = event.value.filter((code: string) => code !== this.ALL_COUNTRIES_NAME);
-        this.atlasFilter.form.get('countries')?.setValue(this.atlasFilter.baseFilter.selectedCountries);
+        this.sidebarFilter.baseFilter.selectedCountries = event.value.filter((code: string) => code !== this.ALL_COUNTRIES_NAME);
+        this.sidebarFilter.form.get('countries')?.setValue(this.sidebarFilter.baseFilter.selectedCountries);
     }
 
     isCountryChecked(countryCode: string): boolean {
-        return this.atlasFilter.baseFilter.selectedCountries.includes(countryCode);
+        return this.sidebarFilter.baseFilter.selectedCountries.includes(countryCode);
     }
 
     onAllCountriesChanges(checked: boolean): void {
-        this.atlasFilter.baseFilter.selectedCountries = checked ? [...EU28_MEMBER_CODES] : [];
+        this.sidebarFilter.baseFilter.selectedCountries = checked ? [...EU28_MEMBER_CODES] : [];
     }
 
     someCountriesChecked(): boolean {
-        return this.atlasFilter.baseFilter.selectedCountries.length > 0 && this.atlasFilter.baseFilter.selectedCountries.length < EU28_MEMBER_CODES.length;
+        return this.sidebarFilter.baseFilter.selectedCountries.length > 0 && this.sidebarFilter.baseFilter.selectedCountries.length < EU28_MEMBER_CODES.length;
     }
 
     getCountryName(countryCode: any): string {

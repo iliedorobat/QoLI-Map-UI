@@ -1,4 +1,4 @@
-<mat-form-field [formGroup]="atlasFilter.form">
+<mat-form-field [formGroup]="sidebarFilter.form">
     <mat-label>Analysis type</mat-label>
     <mat-select formControlName="analysisType">
         <mat-option *ngFor="let analysisType of ANALYSIS_TYPES" [value]="analysisType">
@@ -7,7 +7,7 @@
     </mat-select>
 </mat-form-field>
 
-<mat-form-field [formGroup]="atlasFilter.form">
+<mat-form-field [formGroup]="sidebarFilter.form">
     <mat-label>Year of analysis</mat-label>
     <mat-select formControlName="year">
         <mat-option *ngFor="let year of AVAILABLE_INTERVAL" [value]="year">
@@ -16,24 +16,24 @@
     </mat-select>
 </mat-form-field>
 
-<mat-form-field [formGroup]="atlasFilter.form">
+<mat-form-field [formGroup]="sidebarFilter.form">
     <mat-label>Countries</mat-label>
 
     <mat-select
         multiple
         placeholder="No country is selected"
         (selectionChange)="onCountryChanges($event)"
-        [value]="atlasFilter.baseFilter.selectedCountries"
+        [value]="sidebarFilter.baseFilter.selectedCountries"
     >
         <mat-select-trigger>
-            {{ atlasFilter.baseFilter.selectedCountries.length }} selected countries
+            {{ sidebarFilter.baseFilter.selectedCountries.length }} selected countries
         </mat-select-trigger>
 
         <div class="custom-optgroup">
             <mat-option class="custom-option" [value]="ALL_COUNTRIES_NAME">
                 <mat-checkbox
                     (change)="onAllCountriesChanges($event.source.checked)"
-                    [checked]="atlasFilter.baseFilter.areAllCountriesChecked()"
+                    [checked]="sidebarFilter.baseFilter.areAllCountriesChecked()"
                     [indeterminate]="someCountriesChecked()"
                     [name]="ALL_COUNTRIES_NAME"
                 >

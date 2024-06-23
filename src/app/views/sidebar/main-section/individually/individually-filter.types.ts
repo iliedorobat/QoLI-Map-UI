@@ -1,10 +1,10 @@
 import {FormControl, FormGroup} from '@angular/forms';
 import {Injectable} from '@angular/core';
 
-import {AtlasBaseFilter} from '../base/atlas-base-filter.types';
+import {BaseFilter} from '@/app/views/sidebar';
 import {IIndividuallyQoLIDimension, IIndividuallyQoLIIndicator} from '@/app/views/atlas/constants/qoliBaseOptions.types';
 
-export interface IAtlasIndividuallyFilter {
+export interface IIndividuallyFilter {
     selectedIndicator: IIndividuallyQoLIIndicator;
     unsavedIndicator: IIndividuallyQoLIIndicator;
 
@@ -18,15 +18,15 @@ export interface IAtlasIndividuallyFilter {
 @Injectable({
     providedIn: 'root',
 })
-export class AtlasIndividuallyFilter implements IAtlasIndividuallyFilter {
+export class IndividuallyFilter implements IIndividuallyFilter {
     public selectedIndicator: IIndividuallyQoLIIndicator = this.initSelectedIndicator();
     public unsavedIndicator: IIndividuallyQoLIIndicator = this.initSelectedIndicator();
 
-    private indicators = this.atlasBaseFilter.qoliIndividuallyOptions.aggregators.reduce((acc: IIndividuallyQoLIIndicator[], dimension: IIndividuallyQoLIDimension) => {
+    private indicators = this.baseFilter.qoliIndividuallyOptions.aggregators.reduce((acc: IIndividuallyQoLIIndicator[], dimension: IIndividuallyQoLIDimension) => {
         return [...acc, ...dimension.aggregators];
     }, []);
 
-    constructor(public atlasBaseFilter: AtlasBaseFilter) {}
+    constructor(public baseFilter: BaseFilter) {}
 
     getUnits(): string | undefined {
         const indicator = this.indicators.find(indicator => indicator.filename === this.selectedIndicator.filename);
@@ -65,7 +65,7 @@ export class AtlasIndividuallyFilter implements IAtlasIndividuallyFilter {
     }
 
     private initSelectedIndicator(): IIndividuallyQoLIIndicator {
-        return this.atlasBaseFilter.qoliIndividuallyOptions?.aggregators[0]?.aggregators[0];
+        return this.baseFilter.qoliIndividuallyOptions?.aggregators[0]?.aggregators[0];
     }
 
     private resetForm(form: FormGroup): void {

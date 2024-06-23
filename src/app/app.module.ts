@@ -6,23 +6,15 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AtlasComponent} from './views/atlas/atlas.component';
-import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {
-    AtlasAggregatedFilter
-} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/aggregated/atlas-aggregated-filter.types';
-import {
-    AtlasAggregatedFilterComponent
-} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/aggregated/atlas-aggregated-filter.component';
-import {
-    AtlasBaseFilter
-} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/base/atlas-base-filter.types';
-import {
-    AtlasBaseFilterComponent
-} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/base/atlas-base-filter.component';
-import {
-    AtlasIndividuallyFilterComponent
-} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter-main-section/individually/atlas-individually-filter.component';
-import {AtlasFilterComponent} from './views/atlas/sidebar-filter/atlas-filter/atlas-filter.component';
+    AggregatedFilter,
+    AggregatedFilterComponent,
+    BaseFilter,
+    BaseFilterComponent,
+    IndividuallyFilterComponent,
+    SidebarComponent,
+    SidebarFilter
+} from '@/app/views/sidebar';
 import {AtlasService} from './views/atlas/services/atlas.service';
 import {BackendService} from './views/atlas/services/backend.service';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
@@ -30,7 +22,6 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {NgbActiveOffcanvas, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
-import {SidebarComponent} from './views/sidebar/sidebar.component';
 
 // AoT requires an exported function for factories: https://github.com/ngx-translate/core
 export function HttpLoaderFactory(http: HttpClient) {
@@ -41,7 +32,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     declarations: [
         AppComponent,
         AtlasComponent,
-        AtlasFilterComponent,
         SidebarComponent
     ],
     imports: [
@@ -57,20 +47,21 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppRoutingModule,
         BrowserModule,
         LeafletModule,
+        MatCheckboxModule,
         NgbModule,
         ReactiveFormsModule,
-        AtlasAggregatedFilterComponent,
-        AtlasBaseFilterComponent,
-        AtlasIndividuallyFilterComponent,
-        MatCheckboxModule
+
+        AggregatedFilterComponent,
+        BaseFilterComponent,
+        IndividuallyFilterComponent
     ],
     providers: [
-        AtlasAggregatedFilter,
-        AtlasBaseFilter,
-        AtlasFilter,
+        AggregatedFilter,
+        BaseFilter,
         AtlasService,
         BackendService,
-        NgbActiveOffcanvas
+        NgbActiveOffcanvas,
+        SidebarFilter
     ],
     bootstrap: [AppComponent]
 })

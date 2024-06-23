@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 
 import qoliOptions from '@/app/views/atlas/constants/qoliOptions';
 
-export interface IAtlasAggregatedFilter {
+export interface IAggregatedFilter {
     selectedIndicators: string[];
 
     areAllDimensionsChecked(): boolean;
@@ -17,7 +17,7 @@ export interface IAtlasAggregatedFilter {
 @Injectable({
     providedIn: 'root',
 })
-export class AtlasAggregatedFilter implements IAtlasAggregatedFilter {
+export class AggregatedFilter implements IAggregatedFilter {
     public selectedIndicators: string[] = this.initSelectedIndicators();
 
     areAllDimensionsChecked(): boolean {

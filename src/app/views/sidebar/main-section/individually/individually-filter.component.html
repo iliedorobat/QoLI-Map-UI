@@ -1,13 +1,13 @@
-<mat-form-field [formGroup]="atlasFilter.form">
+<mat-form-field [formGroup]="sidebarFilter.form">
     <mat-label>Quality of Life Index</mat-label>
 
     <mat-select formControlName="selectedIndicator" placeholder="No indicator is selected">
         <mat-select-trigger>
-            {{ atlasFilter.individuallyFilter.unsavedIndicator.label }}
+            {{ sidebarFilter.individuallyFilter.unsavedIndicator.label }}
         </mat-select-trigger>
 
         <mat-optgroup
-            *ngFor="let dimension of atlasFilter.baseFilter.qoliIndividuallyOptions.aggregators"
+            *ngFor="let dimension of sidebarFilter.baseFilter.qoliIndividuallyOptions.aggregators"
             class="custom-optgroup"
             [label]="dimension.label"
         >

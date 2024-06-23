@@ -3,10 +3,9 @@ import {Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {NgbModal, NgbOffcanvas} from '@ng-bootstrap/ng-bootstrap';
 
-import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {BackendService} from '@/app/views/atlas/services/backend.service';
 import {MenuItem} from '@/app/app.types';
-import {SidebarComponent} from './views/sidebar/sidebar.component';
+import {SidebarComponent, SidebarFilter} from '@/app/views/sidebar';
 
 import {DEFAULT_ACTIVE_MENU_ITEM_ID, MENU_ITEMS, MENU_ITEMS_IDS} from './app.const';
 
@@ -25,17 +24,17 @@ export class AppComponent {
     protected showScore: boolean = true;
 
     constructor(
-        private atlasFilter: AtlasFilter,
         private backendService: BackendService,
         private modalService: NgbModal,
         private offcanvasService: NgbOffcanvas,
+        private sidebarFilter: SidebarFilter,
         private translate: TranslateService
     ) {
         translate.addLangs(['en-US']);
         translate.setDefaultLang('en-US');
         translate.use('en-US');
 
-        backendService.lifeIndexSubscription(this.atlasFilter);
+        backendService.lifeIndexSubscription(this.sidebarFilter);
 
         this.showScore$$.subscribe(showScore => {
             this.showScore = showScore as boolean;

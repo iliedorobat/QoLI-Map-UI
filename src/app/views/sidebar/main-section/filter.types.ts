@@ -1,13 +1,17 @@
 import {FormControl, FormGroup} from '@angular/forms';
 import {Injectable} from '@angular/core';
 
-import {AtlasAggregatedFilter, IAtlasAggregatedFilter} from './atlas-filter-main-section/aggregated/atlas-aggregated-filter.types';
-import {AtlasBaseFilter} from './atlas-filter-main-section/base/atlas-base-filter.types';
-import {AtlasIndividuallyFilter, IAtlasIndividuallyFilter} from './atlas-filter-main-section/individually/atlas-individually-filter.types';
+import {
+    AggregatedFilter,
+    BaseFilter,
+    IAggregatedFilter,
+    IndividuallyFilter,
+    IIndividuallyFilter
+} from '@/app/views/sidebar';
 
-export interface IAtlasFilter {
-    aggregatedFilter: IAtlasAggregatedFilter;
-    individuallyFilter: IAtlasIndividuallyFilter;
+export interface ISidebarFilter {
+    aggregatedFilter: IAggregatedFilter;
+    individuallyFilter: IIndividuallyFilter;
     form: FormGroup;
 
     isDisabled(): boolean;
@@ -19,13 +23,13 @@ export interface IAtlasFilter {
 @Injectable({
     providedIn: 'root',
 })
-export class AtlasFilter implements IAtlasFilter {
+export class SidebarFilter implements ISidebarFilter {
     public form: FormGroup = this.initForm();
 
     constructor(
-        public aggregatedFilter: AtlasAggregatedFilter,
-        public baseFilter: AtlasBaseFilter,
-        public individuallyFilter: AtlasIndividuallyFilter
+        public aggregatedFilter: AggregatedFilter,
+        public baseFilter: BaseFilter,
+        public individuallyFilter: IndividuallyFilter
     ) {}
 
     isDisabled(): boolean {

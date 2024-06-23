@@ -5,12 +5,12 @@ import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 
-import {AtlasFilter} from '@/app/views/atlas/sidebar-filter/atlas-filter/atlas-filter.types';
 import {IAggrQoLIIndicator} from '@/app/views/atlas/constants/qoliOptions.types';
+import {SidebarFilter} from '@/app/views/sidebar';
 
 @Component({
-    selector: 'app-atlas-aggregated-filter',
-    templateUrl: './atlas-aggregated-filter.component.html',
+    selector: 'app-aggregated-filter',
+    templateUrl: './aggregated-filter.component.html',
     standalone: true,
     imports: [
         BrowserAnimationsModule,
@@ -21,14 +21,14 @@ import {IAggrQoLIIndicator} from '@/app/views/atlas/constants/qoliOptions.types'
         ReactiveFormsModule
     ]
 })
-export class AtlasAggregatedFilterComponent {
+export class AggregatedFilterComponent {
     constructor(
-        protected atlasFilter: AtlasFilter
+        protected sidebarFilter: SidebarFilter
     ) {}
 
     // Get the list of dimension keys
     private getDimensionKeys(): string[] {
-        return this.atlasFilter.baseFilter.qoliOptions.aggregators.map(aggr => aggr.filename);
+        return this.sidebarFilter.baseFilter.qoliOptions.aggregators.map(aggr => aggr.filename);
     }
 
     // Get the list of indicator keys which belongs to a specific dimension
@@ -37,7 +37,7 @@ export class AtlasAggregatedFilterComponent {
             return [];
         }
 
-        return this.atlasFilter.baseFilter.qoliOptions.aggregators
+        return this.sidebarFilter.baseFilter.qoliOptions.aggregators
             .find(aggr => aggr.filename === dimKey)?.aggregators
             .filter(filterPredicate)
             .map(aggr => aggr.filename) || [];
@@ -48,7 +48,7 @@ export class AtlasAggregatedFilterComponent {
         const indKeys = this.getIndicatorKeys(dimKey);
 
         for (const indKey of indKeys) {
-            if (!this.atlasFilter.form.value[indKey]) {
+            if (!this.sidebarFilter.form.value[indKey]) {
                 return false;
             }
         }
@@ -60,7 +60,7 @@ export class AtlasAggregatedFilterComponent {
         const dimKeys = this.getDimensionKeys();
 
         for (const dimKey of dimKeys) {
-            this.atlasFilter.form.get(dimKey)?.setValue(checked);
+            this.sidebarFilter.form.get(dimKey)?.setValue(checked);
             this.onDimensionChanges(dimKey, checked);
         }
     }
@@ -69,7 +69,7 @@ export class AtlasAggregatedFilterComponent {
         const indKeys = this.getIndicatorKeys(dimKey);
 
         for (const indKey of indKeys) {
-            this.atlasFilter.form.get(indKey)?.setValue(checked);
+            this.sidebarFilter.form.get(indKey)?.setValue(checked);
         }
     };
 
@@ -77,7 +77,7 @@ export class AtlasAggregatedFilterComponent {
         const [dimKey, indKey] = (event.source.name || '')?.split(':');
 
         const isDimensionChecked = this.isDimensionChecked(dimKey);
-        this.atlasFilter.form.get(dimKey)?.setValue(isDimensionChecked);
+        this.sidebarFilter.form.get(dimKey)?.setValue(isDimensionChecked);
     }
 
     onFeatureChanges(): void {
@@ -88,12 +88,12 @@ export class AtlasAggregatedFilterComponent {
             const indKeys = this.getIndicatorKeys(dimKey);
 
             for (const indKey of indKeys) {
-                const isSelected = this.atlasFilter.form.get(indKey)?.value;
+                const isSelected = this.sidebarFilter.form.get(indKey)?.value;
                 isSelected && selectedIndicators.push(indKey);
             }
         }
 
-        this.atlasFilter.aggregatedFilter.selectedIndicators = selectedIndicators;
+        this.sidebarFilter.aggregatedFilter.selectedIndicators = selectedIndicators;
     }
 
     someDimensionsChecked(): boolean {
@@ -101,29 +101,29 @@ export class AtlasAggregatedFilterComponent {
 
         const checked = dimKeys.every(dimKey => {
             const indKeys = this.getIndicatorKeys(dimKey);
-            return indKeys.every(key => this.atlasFilter.form.value[key]);
+            return indKeys.every(key => this.sidebarFilter.form.value[key]);
         });
         const unchecked = dimKeys.every(dimKey => {
             const indKeys = this.getIndicatorKeys(dimKey);
-            return indKeys.every(key => !this.atlasFilter.form.value[key]);
+            return indKeys.every(key => !this.sidebarFilter.form.value[key]);
         });
 
         if (checked || unchecked) {
             return false;
         }
 
-        return dimKeys.some(key => !this.atlasFilter.form.value[key]);
+        return dimKeys.some(key => !this.sidebarFilter.form.value[key]);
     }
 
     someIndicatorsChecked(dimKey: string): boolean {
         const indKeys = this.getIndicatorKeys(dimKey);
-        const checked = indKeys.every(key => this.atlasFilter.form.value[key]);
-        const unchecked = indKeys.every(key => !this.atlasFilter.form.value[key]);
+        const checked = indKeys.every(key => this.sidebarFilter.form.value[key]);
+        const unchecked = indKeys.every(key => !this.sidebarFilter.form.value[key]);
 
         if (checked || unchecked) {
             return false;
         }
 
-        return indKeys.some(key => !this.atlasFilter.form.value[key]);
+        return indKeys.some(key => !this.sidebarFilter.form.value[key]);
     }
 }

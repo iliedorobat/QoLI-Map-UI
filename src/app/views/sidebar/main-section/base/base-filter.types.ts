@@ -7,7 +7,7 @@ import qoliBaseOptions from '@/app/views/atlas/constants/qoliBaseOptions';
 
 import {ANALYSIS_TYPE, DEFAULT_ANALYSIS_TYPE, DEFAULT_YEAR, EU28_MEMBER_CODES} from '@/app/shared/constants/app.const';
 
-export interface IAtlasBaseFilter {
+export interface IBaseFilter {
     analysisType: ANALYSIS_TYPE;
     countries: string[];
     qoliOptions: IAggrQoLI;
@@ -24,7 +24,7 @@ export interface IAtlasBaseFilter {
     save(form: FormGroup): void;
 }
 
-export class AtlasBaseFilter implements IAtlasBaseFilter {
+export class BaseFilter implements IBaseFilter {
     public analysisType: ANALYSIS_TYPE = DEFAULT_ANALYSIS_TYPE;
     public countries: string[] = [...EU28_MEMBER_CODES];
     public qoliOptions: IAggrQoLI = qoliOptions;
