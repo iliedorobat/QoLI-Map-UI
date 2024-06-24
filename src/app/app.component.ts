@@ -6,6 +6,7 @@ import {NgbModal, NgbOffcanvas} from '@ng-bootstrap/ng-bootstrap';
 import {BackendService} from '@/app/views/atlas/services/backend.service';
 import {MenuItem} from '@/app/app.types';
 import {SidebarComponent, SidebarFilter} from '@/app/views/sidebar';
+import {StatsScreenComponent} from '@/app/views/stats/stats-screen.component';
 
 import {DEFAULT_ACTIVE_MENU_ITEM_ID, MENU_ITEMS, MENU_ITEMS_IDS} from './app.const';
 
@@ -49,9 +50,20 @@ export class AppComponent {
 
         if (id === this.MENU_ITEMS_IDS.FILTER) {
             this.onOpenSidebar(event, id);
+        } else if (id === this.MENU_ITEMS_IDS.STATS) {
+            this.onOpenStats(event, id);
         } else {
             this.onActiveButtonChange(id);
         }
+    }
+
+    onOpenStats(event: Event, buttonId: string) {
+        this.onActiveButtonChange(buttonId);
+        const modalRef = this.modalService.open(StatsScreenComponent, {fullscreen: true});
+        modalRef.componentInstance.onActiveButtonReset = this.onActiveButtonReset; // TODO: remove
+        modalRef.hidden.subscribe(value => {
+            this.onActiveButtonReset();
+        });
     }
 
     onOpenSidebar(event: Event, itemId: string): void {

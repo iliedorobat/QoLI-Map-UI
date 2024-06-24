@@ -4,6 +4,7 @@ const MENU_ITEMS_IDS = {
     FILTER: 'filter-button',
     LOGO: 'logo-button',
     MAP: 'map-button',
+    STATS: 'stats-button',
 };
 
 const MENU_ITEMS = [
@@ -23,6 +24,12 @@ const MENU_ITEMS = [
         iconClasses: 'fa-solid fa-map-location-dot',
         label: 'Map',
         order: 1
+    },
+    {
+        id: MENU_ITEMS_IDS.STATS,
+        iconClasses: 'fa-solid fa-pie-chart',
+        label: 'Stats',
+        order: 3
     },
 ].sort((a: MenuItem, b: MenuItem) => {
     if (a.order > b.order) {
