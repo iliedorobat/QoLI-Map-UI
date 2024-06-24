@@ -19,7 +19,7 @@
         ::ng-deep {
             .accordion-item {
                 &:first-of-type {
-                    margin-top: $cho-filter-padding;
+                    margin-top: $sidebar-filter-padding;
                 }
 
                 .accordion-header {
@@ -57,8 +57,8 @@
 
         > .form-footer {
             position: absolute;
-            top: calc(100% - (4 * #{$cho-filter-padding}));
-            width: calc(100% - (3 * #{$cho-filter-padding}));
+            top: calc(100% - (4 * #{$sidebar-filter-padding}));
+            width: calc(100% - (3 * #{$sidebar-filter-padding}));
             display: flex;
             gap: 16px;
 
