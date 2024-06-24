@@ -1,5 +1,11 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {NgbActiveOffcanvas, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ReactiveFormsModule} from '@angular/forms';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 
@@ -17,11 +23,6 @@ import {
 } from '@/app/views/sidebar';
 import {AtlasService} from './views/atlas/services/atlas.service';
 import {BackendService} from './views/atlas/services/backend.service';
-import {LeafletModule} from '@asymmetrik/ngx-leaflet';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {NgbActiveOffcanvas, NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ReactiveFormsModule} from '@angular/forms';
 
 // AoT requires an exported function for factories: https://github.com/ngx-translate/core
 export function HttpLoaderFactory(http: HttpClient) {
@@ -46,6 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
         AppRoutingModule,
         BrowserModule,
+        BrowserAnimationsModule,
         LeafletModule,
         MatCheckboxModule,
         NgbModule,

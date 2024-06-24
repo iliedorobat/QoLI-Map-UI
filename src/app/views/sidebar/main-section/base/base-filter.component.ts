@@ -1,5 +1,5 @@
+import {CommonModule} from '@angular/common';
 import {Component} from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
@@ -20,7 +20,7 @@ import {
     templateUrl: './base-filter.component.html',
     standalone: true,
     imports: [
-        BrowserAnimationsModule,
+        CommonModule,
         FormsModule,
         MatCheckboxModule,
         MatInputModule,

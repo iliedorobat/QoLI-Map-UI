@@ -10,7 +10,7 @@ import {ANALYSIS_TYPE} from '@/app/shared/constants/app.const';
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
-    styleUrls: ['./sidebar.component.scss']
+    styleUrls: ['../../../assets/styles/filter.scss']
 })
 export class SidebarComponent {
     constructor(

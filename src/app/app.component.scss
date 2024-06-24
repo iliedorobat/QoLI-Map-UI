@@ -1,6 +1,8 @@
 @import 'src/assets/styles/variables.scss';
 
+/** @deprecated */
 $offCanvasZIndex: 1045;
+$overlayContainerZIndex: 1070;
 
 ::ng-deep {
     html, body {
@@ -83,7 +85,7 @@ $offCanvasZIndex: 1045;
         }
 
         .cdk-overlay-container {
-            z-index: $offCanvasZIndex + 1;
+            z-index: $overlayContainerZIndex;
         }
 
         .leaflet-popup {

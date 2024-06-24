@@ -12,14 +12,10 @@ $mapZIndex: 1;
 
 $bootstrap-modal-margin: 1.75rem;
 
-$sidebar-filter-padding: 16px; // 1rem // var(--bs-offcanvas-padding-y);
-$sidebar-width: 400px; // var(--bs-offcanvas-width);
-$sidebar-padding: 16px; // 1rem // var(--bs-offcanvas-padding-y)
-
-/** @deprecated */
-$sidebar-filter-header-height: 30px;
-/** @deprecated */
-$sidebar-filter-header-box: $sidebar-filter-header-height + (2 * $sidebar-filter-padding);
+$filter-item-padding: 16px; // 1rem // var(--bs-offcanvas-padding-x; --bs-offcanvas-padding-y)
+$filter-header-height: 30px;
+$filter-box-header-box: $filter-header-height + (2 * $filter-item-padding);
+$filter-box-body-width: 367px;
 
 $size-xxsmall: 2px;
 $size-xsmall: 4px;

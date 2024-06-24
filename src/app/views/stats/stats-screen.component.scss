@@ -1,0 +1,18 @@
+@import 'src/assets/styles/variables.scss';
+
+:host {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .filter-box {
+        .global-filter {
+            width: $filter-box-body-width;
+
+            .form-footer {
+                width: calc(#{$filter-box-body-width} - #{$size-medium});
+            }
+        }
+    }
+}
+

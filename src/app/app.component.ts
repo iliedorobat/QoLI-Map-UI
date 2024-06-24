@@ -60,7 +60,7 @@ export class AppComponent {
     onOpenStats(event: Event, buttonId: string) {
         this.onActiveButtonChange(buttonId);
         const modalRef = this.modalService.open(StatsScreenComponent, {fullscreen: true});
-        modalRef.componentInstance.onActiveButtonReset = this.onActiveButtonReset; // TODO: remove
+        modalRef.componentInstance.onActiveButtonResets = this.onActiveButtonReset; // TODO: remove
         modalRef.hidden.subscribe(value => {
             this.onActiveButtonReset();
         });

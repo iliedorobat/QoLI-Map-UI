@@ -1,4 +1,4 @@
-@import 'src/assets/styles/variables';
+@import 'src/assets/styles/variables.scss';
 //@import 'node_modules/bootstrap/scss/bootstrap.scss';
 
 .global-filter {
@@ -19,7 +19,7 @@
         ::ng-deep {
             .accordion-item {
                 &:first-of-type {
-                    margin-top: $sidebar-filter-padding;
+                    margin-top: $filter-item-padding;
                 }
 
                 .accordion-header {
@@ -41,7 +41,7 @@
 
                         .btn-reset-section {
                             padding: 0;
-                            margin-right: 16px;
+                            margin-right: $size-medium;
                             text-decoration: none;
                         }
                     }
@@ -57,10 +57,10 @@
 
         > .form-footer {
             position: absolute;
-            top: calc(100% - (4 * #{$sidebar-filter-padding}));
-            width: calc(100% - (3 * #{$sidebar-filter-padding}));
+            top: calc(100% - (4 * #{$filter-item-padding}));
+            width: calc(100% - (3 * #{$filter-item-padding}));
             display: flex;
-            gap: 16px;
+            gap: $size-medium;
 
             > button[type='submit'] {
                 width: 50%;
