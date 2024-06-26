@@ -1,24 +1,24 @@
 import {Component, Input} from '@angular/core';
 import {NgbActiveOffcanvas} from '@ng-bootstrap/ng-bootstrap';
-import get from 'lodash-es/get';
 import noop from 'lodash-es/noop';
 
-import {BackendService} from '@/app/views/atlas/services/backend.service';
+import {FilterService} from '@/app/shared/filter/filter.service';
 import {SidebarFilter} from '@/app/views/sidebar';
 import {ANALYSIS_TYPE} from '@/app/shared/constants/app.const';
 
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
-    styleUrls: ['../../../assets/styles/filter.scss']
+    styleUrls: ['../../../assets/styles/filter.scss'],
+    providers: [FilterService]
 })
 export class SidebarComponent {
     constructor(
         public activeOffcanvas: NgbActiveOffcanvas,
-        private backendService: BackendService,
+        protected filterService: FilterService,
         protected sidebarFilter: SidebarFilter
     ) {
-        this.onReset();
+        this.filterService.onReset();
     }
 
     protected readonly ANALYSIS_TYPE = ANALYSIS_TYPE;
@@ -29,31 +29,5 @@ export class SidebarComponent {
     onSidebarClose(): void {
         this.activeOffcanvas.dismiss('Cross click');
         this.onActiveButtonResets();
-    }
-
-    onFilterApply(): void {
-        this.sidebarFilter.save();
-        this.backendService.lifeIndexSubscription(this.sidebarFilter);
-        this.onToggleScore(true);
-    }
-
-    onSectionReset(event: Event): void {
-        event.stopPropagation();
-        const target = event.target as HTMLElement;
-        const value = get(target, ['offsetParent', 'attributes', 'aria-controls', 'value']);
-
-        switch (value) {
-            case 'sidebar-main-section':
-                this.sidebarFilter.aggregatedFilter.reset(this.sidebarFilter.form);
-                this.sidebarFilter.baseFilter.reset(this.sidebarFilter.form);
-                this.sidebarFilter.individuallyFilter.reset(this.sidebarFilter.form);
-                break;
-            default:
-                break;
-        }
-    }
-
-    onReset(): void {
-        this.sidebarFilter.reset();
     }
 }

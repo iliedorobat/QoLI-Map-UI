@@ -22,7 +22,7 @@
                             {{ sidebarFilter.form.value['analysisType'] === ANALYSIS_TYPE.AGGREGATE ? 'Aggregated Filter' : '' }}
                             {{ sidebarFilter.form.value['analysisType'] === ANALYSIS_TYPE.INDIVIDUALLY ? 'Individually Filter' : '' }}
                         </div>
-                        <button class="btn btn-link btn-reset-section" (click)="onSectionReset($event)">
+                        <button class="btn btn-link btn-reset-section" (click)="filterService.onSectionReset($event)">
                             Reset
                         </button>
                     </ng-template>
@@ -35,10 +35,10 @@
             </ngb-accordion>
 
             <div class="form-footer">
-                <button class="btn btn-md btn-success" type="submit" (click)="onFilterApply()" [disabled]="sidebarFilter.isDisabled()">
+                <button class="btn btn-md btn-success" type="submit" (click)="filterService.onFilterApply(onToggleScore)" [disabled]="sidebarFilter.isDisabled()">
                     Apply Filter
                 </button>
-                <button class="btn btn-md btn-secondary" type="submit" (click)="onReset()">
+                <button class="btn btn-md btn-secondary" type="submit" (click)="filterService.onReset()">
                     Reset Filter
                 </button>
             </div>

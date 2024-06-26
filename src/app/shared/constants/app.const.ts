@@ -38,7 +38,7 @@ const ANALYSIS_TYPE_LABELS = {
 };
 const DEFAULT_ANALYSIS_TYPE = ANALYSIS_TYPE.AGGREGATE;
 
-const EU28_MEMBERS = {
+const EU28_MEMBERS: {[index: string]: string} = {
     // EU: 'European Union', // (EU6-1958, EU9-1973, EU10-1981, EU12-1986, EU15-1995, EU25-2004, EU27-2007, EU28-2013, EU27-2020)
     // EU27_2020: 'European Union - 27 countries', // (from 2020)
     // EU28: 'European Union - 28 countries', // (2013-2020)
@@ -72,7 +72,7 @@ const EU28_MEMBERS = {
     UK: 'United Kingdom',
 } as const;
 
-const NON_EU28_MEMBERS = {
+const NON_EU28_MEMBERS: {[index: string]: string} = {
     AL: 'Albania',
     AD: 'Andorra',
     AM: 'Armenia',
@@ -96,7 +96,12 @@ const NON_EU28_MEMBERS = {
     TR: 'Türkiye',
     UA: 'Ukraine',
     VA: 'Vatican City',
-}
+} as const;
+
+const COUNTRIES: {[index: string]: string} = {
+    ...EU28_MEMBERS,
+    ...NON_EU28_MEMBERS
+};
 
 const EU28_MEMBER_CODES = Object.keys(EU28_MEMBERS);
 
@@ -107,6 +112,7 @@ export {
     ANALYSIS_TYPE_LABELS,
     AVAILABLE_INTERVAL,
     COPYRIGHT,
+    COUNTRIES,
     DEFAULT_ANALYSIS_TYPE,
     DEFAULT_YEAR,
     EU28_MEMBERS,
