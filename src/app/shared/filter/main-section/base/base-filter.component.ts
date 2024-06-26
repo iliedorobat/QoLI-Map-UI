@@ -5,7 +5,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectChange, MatSelectModule} from '@angular/material/select';
 
-import {SidebarFilter} from '@/app/views/sidebar';
+import {Filter} from '@/app/shared/filter';
 
 import {
     ANALYSIS_TYPE,
@@ -30,7 +30,7 @@ import {
 })
 export class BaseFilterComponent {
     constructor(
-        protected sidebarFilter: SidebarFilter
+        protected filter: Filter
     ) {}
 
     protected readonly ALL_COUNTRIES_NAME = 'ALL';
@@ -40,20 +40,20 @@ export class BaseFilterComponent {
     protected readonly EU28_MEMBER_CODES = EU28_MEMBER_CODES;
 
     onCountryChanges(event: MatSelectChange): void {
-        this.sidebarFilter.baseFilter.selectedCountries = event.value.filter((code: string) => code !== this.ALL_COUNTRIES_NAME);
-        this.sidebarFilter.form.get('countries')?.setValue(this.sidebarFilter.baseFilter.selectedCountries);
+        this.filter.baseFilter.selectedCountries = event.value.filter((code: string) => code !== this.ALL_COUNTRIES_NAME);
+        this.filter.form.get('countries')?.setValue(this.filter.baseFilter.selectedCountries);
     }
 
     isCountryChecked(countryCode: string): boolean {
-        return this.sidebarFilter.baseFilter.selectedCountries.includes(countryCode);
+        return this.filter.baseFilter.selectedCountries.includes(countryCode);
     }
 
     onAllCountriesChanges(checked: boolean): void {
-        this.sidebarFilter.baseFilter.selectedCountries = checked ? [...EU28_MEMBER_CODES] : [];
+        this.filter.baseFilter.selectedCountries = checked ? [...EU28_MEMBER_CODES] : [];
     }
 
     someCountriesChecked(): boolean {
-        return this.sidebarFilter.baseFilter.selectedCountries.length > 0 && this.sidebarFilter.baseFilter.selectedCountries.length < EU28_MEMBER_CODES.length;
+        return this.filter.baseFilter.selectedCountries.length > 0 && this.filter.baseFilter.selectedCountries.length < EU28_MEMBER_CODES.length;
     }
 
     getCountryName(countryCode: any): string {

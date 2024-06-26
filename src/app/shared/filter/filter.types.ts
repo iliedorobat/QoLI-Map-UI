@@ -7,9 +7,9 @@ import {
     IAggregatedFilter,
     IndividuallyFilter,
     IIndividuallyFilter
-} from '@/app/views/sidebar';
+} from '@/app/shared/filter/index';
 
-export interface ISidebarFilter {
+export interface IFilter {
     aggregatedFilter: IAggregatedFilter;
     individuallyFilter: IIndividuallyFilter;
     form: FormGroup;
@@ -23,7 +23,7 @@ export interface ISidebarFilter {
 @Injectable({
     providedIn: 'root',
 })
-export class SidebarFilter implements ISidebarFilter {
+export class Filter implements IFilter {
     public form: FormGroup = this.initForm();
 
     constructor(

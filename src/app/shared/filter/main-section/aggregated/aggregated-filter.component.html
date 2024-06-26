@@ -1,31 +1,31 @@
-<mat-form-field [formGroup]="sidebarFilter.form">
+<mat-form-field [formGroup]="filter.form">
     <mat-label>Quality of Life Index</mat-label>
 
     <mat-select
         multiple
         placeholder="No indicator is selected"
         (selectionChange)="onFeatureChanges()"
-        [value]="sidebarFilter.aggregatedFilter.selectedIndicators"
+        [value]="filter.aggregatedFilter.selectedIndicators"
     >
         <mat-select-trigger>
-            {{ sidebarFilter.aggregatedFilter.selectedIndicators.length }} selected indicators
+            {{ filter.aggregatedFilter.selectedIndicators.length }} selected indicators
         </mat-select-trigger>
 
         <div class="custom-optgroup">
-            <mat-option class="custom-option" [value]="sidebarFilter.baseFilter.qoliOptions.filename">
+            <mat-option class="custom-option" [value]="filter.baseFilter.qoliOptions.filename">
                 <mat-checkbox
                     (change)="onAllDimensionsChanges($event.source.name, $event.source.checked)"
-                    [checked]="sidebarFilter.aggregatedFilter.areAllDimensionsChecked()"
-                    [formControlName]="sidebarFilter.baseFilter.qoliOptions.filename"
+                    [checked]="filter.aggregatedFilter.areAllDimensionsChecked()"
+                    [formControlName]="filter.baseFilter.qoliOptions.filename"
                     [indeterminate]="someDimensionsChecked()"
-                    [name]="sidebarFilter.baseFilter.qoliOptions.filename"
+                    [name]="filter.baseFilter.qoliOptions.filename"
                 >
                     All dimensions
                 </mat-checkbox>
             </mat-option>
         </div>
 
-        <div class="custom-optgroup" *ngFor="let dimension of sidebarFilter.baseFilter.qoliOptions.aggregators">
+        <div class="custom-optgroup" *ngFor="let dimension of filter.baseFilter.qoliOptions.aggregators">
             <mat-option class="custom-option" [value]="dimension.filename">
                 <mat-checkbox
                     (change)="onDimensionChanges($event.source.name, $event.source.checked)"

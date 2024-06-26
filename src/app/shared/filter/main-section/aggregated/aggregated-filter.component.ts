@@ -6,7 +6,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 
 import {IAggrQoLIIndicator} from '@/app/views/atlas/constants/qoliOptions.types';
-import {SidebarFilter} from '@/app/views/sidebar';
+import {Filter} from '@/app/shared/filter';
 
 @Component({
     selector: 'app-aggregated-filter',
@@ -23,12 +23,12 @@ import {SidebarFilter} from '@/app/views/sidebar';
 })
 export class AggregatedFilterComponent {
     constructor(
-        protected sidebarFilter: SidebarFilter
+        protected filter: Filter
     ) {}
 
     // Get the list of dimension keys
     private getDimensionKeys(): string[] {
-        return this.sidebarFilter.baseFilter.qoliOptions.aggregators.map(aggr => aggr.filename);
+        return this.filter.baseFilter.qoliOptions.aggregators.map(aggr => aggr.filename);
     }
 
     // Get the list of indicator keys which belongs to a specific dimension
@@ -37,7 +37,7 @@ export class AggregatedFilterComponent {
             return [];
         }
 
-        return this.sidebarFilter.baseFilter.qoliOptions.aggregators
+        return this.filter.baseFilter.qoliOptions.aggregators
             .find(aggr => aggr.filename === dimKey)?.aggregators
             .filter(filterPredicate)
             .map(aggr => aggr.filename) || [];
@@ -48,7 +48,7 @@ export class AggregatedFilterComponent {
         const indKeys = this.getIndicatorKeys(dimKey);
 
         for (const indKey of indKeys) {
-            if (!this.sidebarFilter.form.value[indKey]) {
+            if (!this.filter.form.value[indKey]) {
                 return false;
             }
         }
@@ -60,7 +60,7 @@ export class AggregatedFilterComponent {
         const dimKeys = this.getDimensionKeys();
 
         for (const dimKey of dimKeys) {
-            this.sidebarFilter.form.get(dimKey)?.setValue(checked);
+            this.filter.form.get(dimKey)?.setValue(checked);
             this.onDimensionChanges(dimKey, checked);
         }
     }
@@ -69,7 +69,7 @@ export class AggregatedFilterComponent {
         const indKeys = this.getIndicatorKeys(dimKey);
 
         for (const indKey of indKeys) {
-            this.sidebarFilter.form.get(indKey)?.setValue(checked);
+            this.filter.form.get(indKey)?.setValue(checked);
         }
     };
 
@@ -77,7 +77,7 @@ export class AggregatedFilterComponent {
         const [dimKey, indKey] = (event.source.name || '')?.split(':');
 
         const isDimensionChecked = this.isDimensionChecked(dimKey);
-        this.sidebarFilter.form.get(dimKey)?.setValue(isDimensionChecked);
+        this.filter.form.get(dimKey)?.setValue(isDimensionChecked);
     }
 
     onFeatureChanges(): void {
@@ -88,12 +88,12 @@ export class AggregatedFilterComponent {
             const indKeys = this.getIndicatorKeys(dimKey);
 
             for (const indKey of indKeys) {
-                const isSelected = this.sidebarFilter.form.get(indKey)?.value;
+                const isSelected = this.filter.form.get(indKey)?.value;
                 isSelected && selectedIndicators.push(indKey);
             }
         }
 
-        this.sidebarFilter.aggregatedFilter.selectedIndicators = selectedIndicators;
+        this.filter.aggregatedFilter.selectedIndicators = selectedIndicators;
     }
 
     someDimensionsChecked(): boolean {
@@ -101,29 +101,29 @@ export class AggregatedFilterComponent {
 
         const checked = dimKeys.every(dimKey => {
             const indKeys = this.getIndicatorKeys(dimKey);
-            return indKeys.every(key => this.sidebarFilter.form.value[key]);
+            return indKeys.every(key => this.filter.form.value[key]);
         });
         const unchecked = dimKeys.every(dimKey => {
             const indKeys = this.getIndicatorKeys(dimKey);
-            return indKeys.every(key => !this.sidebarFilter.form.value[key]);
+            return indKeys.every(key => !this.filter.form.value[key]);
         });
 
         if (checked || unchecked) {
             return false;
         }
 
-        return dimKeys.some(key => !this.sidebarFilter.form.value[key]);
+        return dimKeys.some(key => !this.filter.form.value[key]);
     }
 
     someIndicatorsChecked(dimKey: string): boolean {
         const indKeys = this.getIndicatorKeys(dimKey);
-        const checked = indKeys.every(key => this.sidebarFilter.form.value[key]);
-        const unchecked = indKeys.every(key => !this.sidebarFilter.form.value[key]);
+        const checked = indKeys.every(key => this.filter.form.value[key]);
+        const unchecked = indKeys.every(key => !this.filter.form.value[key]);
 
         if (checked || unchecked) {
             return false;
         }
 
-        return indKeys.some(key => !this.sidebarFilter.form.value[key]);
+        return indKeys.some(key => !this.filter.form.value[key]);
     }
 }

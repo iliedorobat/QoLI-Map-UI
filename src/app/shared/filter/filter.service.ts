@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import get from 'lodash-es/get';
 
 import {BackendService} from '@/app/views/atlas/services/backend.service';
-import {SidebarFilter} from '@/app/views/sidebar';
+import {Filter} from '@/app/shared/filter/index';
 
 @Injectable({
     providedIn: 'root'
@@ -10,12 +10,12 @@ import {SidebarFilter} from '@/app/views/sidebar';
 export class FilterService {
     constructor(
         private backendService: BackendService,
-        private sidebarFilter: SidebarFilter
+        private filter: Filter
     ) {}
 
     onFilterApply(onToggleScore?: Function): void {
-        this.sidebarFilter.save();
-        this.backendService.lifeIndexSubscription(this.sidebarFilter);
+        this.filter.save();
+        this.backendService.lifeIndexSubscription(this.filter);
         onToggleScore && onToggleScore(true);
     }
 
@@ -26,9 +26,9 @@ export class FilterService {
 
         switch (value) {
             case 'sidebar-main-section':
-                this.sidebarFilter.aggregatedFilter.reset(this.sidebarFilter.form);
-                this.sidebarFilter.baseFilter.reset(this.sidebarFilter.form);
-                this.sidebarFilter.individuallyFilter.reset(this.sidebarFilter.form);
+                this.filter.aggregatedFilter.reset(this.filter.form);
+                this.filter.baseFilter.reset(this.filter.form);
+                this.filter.individuallyFilter.reset(this.filter.form);
                 break;
             default:
                 break;
@@ -36,6 +36,6 @@ export class FilterService {
     }
 
     public onReset(): void {
-        this.sidebarFilter.reset();
+        this.filter.reset();
     }
 }

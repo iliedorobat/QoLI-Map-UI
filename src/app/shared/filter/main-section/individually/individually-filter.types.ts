@@ -1,7 +1,7 @@
 import {FormControl, FormGroup} from '@angular/forms';
 import {Injectable} from '@angular/core';
 
-import {BaseFilter} from '@/app/views/sidebar';
+import {BaseFilter} from '@/app/shared/filter';
 import {IIndividuallyQoLIDimension, IIndividuallyQoLIIndicator} from '@/app/views/atlas/constants/qoliBaseOptions.types';
 
 export interface IIndividuallyFilter {

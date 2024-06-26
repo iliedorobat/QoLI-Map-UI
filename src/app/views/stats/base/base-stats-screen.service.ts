@@ -1,27 +1,27 @@
 import {Injectable} from '@angular/core';
 import Chart from 'chart.js/auto';
 
-import {SidebarFilter} from '@/app/views/sidebar';
+import {Filter} from '@/app/shared/filter';
 import {ANALYSIS_TYPE, COUNTRIES} from '@/app/shared/constants/app.const';
 
 @Injectable({
     providedIn: 'root'
 })
-export class StatsScreenService {
-    constructor(protected sidebarFilter: SidebarFilter) {}
+export class BaseStatsScreenService {
+    constructor(protected filter: Filter) {}
 
     private isAggregateAnalysis = () => {
-        return this.sidebarFilter.baseFilter.analysisType === ANALYSIS_TYPE.AGGREGATE;
+        return this.filter.baseFilter.analysisType === ANALYSIS_TYPE.AGGREGATE;
     }
 
     private getChartLabel = () => {
         return this.isAggregateAnalysis()
-            ? `${this.sidebarFilter.aggregatedFilter.selectedIndicators.length} Selected Indicators`
-            : this.sidebarFilter.individuallyFilter.selectedIndicator.label;
+            ? `${this.filter.aggregatedFilter.selectedIndicators.length} Selected Indicators`
+            : this.filter.individuallyFilter.selectedIndicator.label;
     };
 
     private getChartTitle = () => {
-        return `QoLI Stats For The Year ${this.sidebarFilter.baseFilter.year}`;
+        return `QoLI Stats For The Year ${this.filter.baseFilter.year}`;
     };
 
     private updateChartDatasets = (chart: Chart, scores: {[index: string]: number}) => {
@@ -34,12 +34,12 @@ export class StatsScreenService {
     private updateChartLabel = (chart: Chart) => {
         const tooltip = chart?.options?.plugins?.tooltip;
         const isAggregateAnalysis = this.isAggregateAnalysis();
-        const sidebarFilter = this.sidebarFilter;
+        const filter = this.filter;
 
         if (tooltip?.callbacks) {
             tooltip.callbacks.label = function(context) {
                 let units = !isAggregateAnalysis
-                    ? sidebarFilter.individuallyFilter.selectedIndicator.units
+                    ? filter.individuallyFilter.selectedIndicator.units
                     : '';
 
                 if (units === 'number') {

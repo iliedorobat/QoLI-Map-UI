@@ -2,8 +2,8 @@ import {Component, Input} from '@angular/core';
 import {NgbActiveOffcanvas} from '@ng-bootstrap/ng-bootstrap';
 import noop from 'lodash-es/noop';
 
+import {Filter} from '@/app/shared/filter';
 import {FilterService} from '@/app/shared/filter/filter.service';
-import {SidebarFilter} from '@/app/views/sidebar';
 import {ANALYSIS_TYPE} from '@/app/shared/constants/app.const';
 
 @Component({
@@ -15,8 +15,8 @@ import {ANALYSIS_TYPE} from '@/app/shared/constants/app.const';
 export class SidebarComponent {
     constructor(
         public activeOffcanvas: NgbActiveOffcanvas,
-        protected filterService: FilterService,
-        protected sidebarFilter: SidebarFilter
+        protected filter: Filter,
+        protected filterService: FilterService
     ) {
         this.filterService.onReset();
     }

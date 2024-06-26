@@ -3,10 +3,10 @@ import {Control, DomUtil, geoJSON, Map} from 'leaflet';
 
 import {DatasetService} from '@/app/views/atlas/services/dataset.service';
 import {GeoFeature} from '@/app/views/atlas/constants/geo.types';
+import {Filter} from '@/app/shared/filter';
 import {IAtlasLayer} from '@/app/views/atlas/atlas.types';
 import {LayerEventsService} from '@/app/views/atlas/services/layer-events.service';
 import {LifeIndexResponse} from '@/app/views/atlas/constants/response.types';
-import {SidebarFilter} from '@/app/views/sidebar';
 
 import * as COUNTRIES_NON_EU from '@/../files/geo-location/europe-non-eu.json';
 import * as COUNTRIES_EU from '@/../files/geo-location/europe-eu.json';
@@ -24,7 +24,7 @@ export class AtlasService {
     constructor(
         private datasetService: DatasetService,
         private eventsService: LayerEventsService,
-        private sidebarFilter: SidebarFilter
+        private filter: Filter
     ) {}
 
     public onFilterControlAdd(map: Map): void {
@@ -74,8 +74,8 @@ export class AtlasService {
     }
 
     private getColor(response: LifeIndexResponse, score: number, countryCode: string): string {
-        const isNegativeState = this.sidebarFilter.baseFilter.isIndividuallyAnalysis()
-            && this.sidebarFilter.individuallyFilter.isNegativeState()
+        const isNegativeState = this.filter.baseFilter.isIndividuallyAnalysis()
+            && this.filter.individuallyFilter.isNegativeState()
         const sortedResponse = isNegativeState
             ? this.datasetService.getSortedResponse(response, SORT_ORDER.ASC)
             : this.datasetService.getSortedResponse(response, SORT_ORDER.DESC);

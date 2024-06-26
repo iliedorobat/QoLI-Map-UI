@@ -5,7 +5,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 
 import {IIndividuallyQoLIIndicator} from '@/app/views/atlas/constants/qoliBaseOptions.types';
-import {SidebarFilter} from '@/app/views/sidebar';
+import {Filter} from '@/app/shared/filter';
 
 @Component({
     selector: 'app-atlas-individually-filter',
@@ -21,10 +21,10 @@ import {SidebarFilter} from '@/app/views/sidebar';
 })
 export class IndividuallyFilterComponent {
     constructor(
-        protected sidebarFilter: SidebarFilter
+        protected filter: Filter
     ) {}
 
     onSelectIndicator(indicator: IIndividuallyQoLIIndicator) {
-        this.sidebarFilter.individuallyFilter.unsavedIndicator = indicator;
+        this.filter.individuallyFilter.unsavedIndicator = indicator;
     }
 }
