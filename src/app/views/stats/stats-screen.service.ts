@@ -7,7 +7,7 @@ import {ANALYSIS_TYPE, COUNTRIES} from '@/app/shared/constants/app.const';
 @Injectable({
     providedIn: 'root'
 })
-export class BaseStatsScreenService {
+export class StatsScreenService {
     constructor(protected filter: Filter) {}
 
     private isAggregateAnalysis = () => {

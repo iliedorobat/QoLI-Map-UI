@@ -13,16 +13,16 @@ import {
 } from '@/app/shared/filter';
 import {ANALYSIS_TYPE} from '@/app/shared/constants/app.const';
 import {BackendService} from '@/app/views/atlas/services/backend.service';
-import {BaseStatsScreenService} from '@/app/views/stats/base/base-stats-screen.service';
 import {FilterService} from '@/app/shared/filter/filter.service';
+import {StatsScreenService} from '@/app/views/stats/stats-screen.service';
 
 @Component({
     selector: 'app-stats-screen',
-    templateUrl: './base-stats-screen.component.html',
+    templateUrl: './stats-screen.component.html',
     standalone: true,
     styleUrls: [
-        '../../../../assets/styles/filter.scss',
-        './base-stats-screen.component.scss'
+        '../../../assets/styles/filter.scss',
+        './stats-screen.component.scss'
     ],
     imports: [
         AggregatedFilterComponent,
@@ -35,15 +35,15 @@ import {FilterService} from '@/app/shared/filter/filter.service';
         NgbPanelTitle,
         ReactiveFormsModule
     ],
-    providers: [BaseStatsScreenService]
+    providers: [StatsScreenService]
 })
-export class BaseStatsScreenComponent implements OnInit {
+export class StatsScreenComponent implements OnInit {
     constructor(
         private activeModal: NgbActiveModal,
         private backendService: BackendService,
         protected filter: Filter,
         protected filterService: FilterService,
-        private statsService: BaseStatsScreenService
+        private statsService: StatsScreenService
     ) {}
 
     protected readonly ANALYSIS_TYPE = ANALYSIS_TYPE;

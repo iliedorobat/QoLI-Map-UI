@@ -4,10 +4,10 @@ import {TranslateService} from '@ngx-translate/core';
 import {NgbModal, NgbOffcanvas} from '@ng-bootstrap/ng-bootstrap';
 
 import {BackendService} from '@/app/views/atlas/services/backend.service';
-import {BaseStatsScreenComponent} from '@/app/views/stats/base/base-stats-screen.component';
 import {Filter} from '@/app/shared/filter';
 import {MenuItem} from '@/app/app.types';
 import {SidebarComponent} from '@/app/views/sidebar/sidebar.component';
+import {StatsScreenComponent} from '@/app/views/stats/stats-screen.component';
 
 import {DEFAULT_ACTIVE_MENU_ITEM_ID, MENU_ITEMS, MENU_ITEMS_IDS} from './app.const';
 
@@ -60,7 +60,7 @@ export class AppComponent {
 
     onOpenStats(event: Event, buttonId: string) {
         this.onActiveButtonChange(buttonId);
-        const modalRef = this.modalService.open(BaseStatsScreenComponent, {fullscreen: true});
+        const modalRef = this.modalService.open(StatsScreenComponent, {fullscreen: true});
         modalRef.componentInstance.onActiveButtonResets = this.onActiveButtonReset; // TODO: remove
         modalRef.hidden.subscribe(value => {
             this.onActiveButtonReset();
