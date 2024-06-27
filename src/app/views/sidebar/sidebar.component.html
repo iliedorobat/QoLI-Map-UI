@@ -27,9 +27,9 @@
                         </button>
                     </ng-template>
                     <ng-template ngbPanelContent>
-                        <app-atlas-base-filter></app-atlas-base-filter>
-                        <app-aggregated-filter *ngIf="filter.form.value['analysisType'] === ANALYSIS_TYPE.AGGREGATE"></app-aggregated-filter>
-                        <app-atlas-individually-filter *ngIf="filter.form.value['analysisType'] === ANALYSIS_TYPE.INDIVIDUALLY"></app-atlas-individually-filter>
+                        <qoli-atlas-base-filter></qoli-atlas-base-filter>
+                        <qoli-aggregated-filter *ngIf="filter.form.value['analysisType'] === ANALYSIS_TYPE.AGGREGATE"></qoli-aggregated-filter>
+                        <qoli-atlas-individually-filter *ngIf="filter.form.value['analysisType'] === ANALYSIS_TYPE.INDIVIDUALLY"></qoli-atlas-individually-filter>
                     </ng-template>
                 </ngb-panel>
             </ngb-accordion>

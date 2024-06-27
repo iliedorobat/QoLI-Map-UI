@@ -17,7 +17,7 @@ import {FilterService} from '@/app/shared/filter/filter.service';
 import {StatsScreenService} from '@/app/views/stats/stats-screen.service';
 
 @Component({
-    selector: 'app-stats-screen',
+    selector: 'qoli-stats-screen',
     templateUrl: './stats-screen.component.html',
     standalone: true,
     styleUrls: [

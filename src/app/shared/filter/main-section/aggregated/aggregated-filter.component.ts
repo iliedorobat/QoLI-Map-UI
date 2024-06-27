@@ -9,7 +9,7 @@ import {IAggrQoLIIndicator} from '@/app/views/atlas/constants/qoliOptions.types'
 import {Filter} from '@/app/shared/filter';
 
 @Component({
-    selector: 'app-aggregated-filter',
+    selector: 'qoli-aggregated-filter',
     templateUrl: './aggregated-filter.component.html',
     standalone: true,
     imports: [

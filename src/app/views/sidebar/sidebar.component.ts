@@ -7,7 +7,7 @@ import {FilterService} from '@/app/shared/filter/filter.service';
 import {ANALYSIS_TYPE} from '@/app/shared/constants/app.const';
 
 @Component({
-    selector: 'app-sidebar',
+    selector: 'qoli-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['../../../assets/styles/filter.scss'],
     providers: [FilterService]

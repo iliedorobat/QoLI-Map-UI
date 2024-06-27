@@ -9,7 +9,7 @@ import {IAtlasLayer} from '@/app/views/atlas/atlas.types';
 import {BASE_LAYERS, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
 
 @Component({
-    selector: 'app-atlas',
+    selector: 'qoli-atlas',
     templateUrl: './atlas.component.html',
     styleUrls: ['./atlas.component.scss']
 })

@@ -8,7 +8,7 @@ import {IIndividuallyQoLIIndicator} from '@/app/views/atlas/constants/qoliBaseOp
 import {Filter} from '@/app/shared/filter';
 
 @Component({
-    selector: 'app-atlas-individually-filter',
+    selector: 'qoli-atlas-individually-filter',
     templateUrl: './individually-filter.component.html',
     standalone: true,
     imports: [

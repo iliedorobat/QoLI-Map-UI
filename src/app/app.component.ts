@@ -12,7 +12,7 @@ import {StatsScreenComponent} from '@/app/views/stats/stats-screen.component';
 import {DEFAULT_ACTIVE_MENU_ITEM_ID, MENU_ITEMS, MENU_ITEMS_IDS} from './app.const';
 
 @Component({
-    selector: 'app-root',
+    selector: 'qoli-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })

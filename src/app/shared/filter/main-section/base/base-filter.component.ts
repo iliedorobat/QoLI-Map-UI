@@ -16,7 +16,7 @@ import {
 } from '@/app/shared/constants/app.const';
 
 @Component({
-    selector: 'app-atlas-base-filter',
+    selector: 'qoli-atlas-base-filter',
     templateUrl: './base-filter.component.html',
     standalone: true,
     imports: [
