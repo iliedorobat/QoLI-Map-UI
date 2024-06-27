@@ -132,7 +132,9 @@ export class StatsScreenService {
                                 },
                                 title: (context) => {
                                     const countryCode = context[0].label;
-                                    return COUNTRIES[countryCode];
+                                    const year = context[0].dataset.label;
+
+                                    return `${COUNTRIES[countryCode]} (${year})`;
                                 }
                             }
                         }
