@@ -8,12 +8,35 @@
 </mat-form-field>
 
 <mat-form-field [formGroup]="filter.form">
-    <mat-label>Year of analysis</mat-label>
-    <mat-select formControlName="year">
+    <mat-label>
+        {{ isAoristicAnalysis ? 'Start Year' : 'Year of analysis' }}
+    </mat-label>
+
+    <mat-select formControlName="startYear" (selectionChange)="onStartYearChanges($event)">
         <mat-option *ngFor="let year of AVAILABLE_INTERVAL" [value]="year">
             {{ year }}
         </mat-option>
     </mat-select>
+
+    <mat-error *ngIf="filter.form.get('startYear')?.hasError('invalidStartYear')">
+        {{ filter.form.get('startYear')?.errors?.['invalidStartYear'].message }}
+    </mat-error>
+</mat-form-field>
+
+<mat-form-field [formGroup]="filter.form" [hidden]="!isAoristicAnalysis">
+    <mat-label>
+        {{ isAoristicAnalysis ? 'End Year' : 'Year of analysis' }}
+    </mat-label>
+
+    <mat-select formControlName="endYear" (selectionChange)="onEndYearChanges($event)">
+        <mat-option *ngFor="let year of AVAILABLE_INTERVAL" [value]="year">
+            {{ year }}
+        </mat-option>
+    </mat-select>
+
+    <mat-error *ngIf="filter.form.get('endYear')?.hasError('invalidEndYear')">
+        {{ filter.form.get('endYear')?.errors?.['invalidEndYear'].message }}
+    </mat-error>
 </mat-form-field>
 
 <mat-form-field [formGroup]="filter.form">

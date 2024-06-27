@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
@@ -33,6 +33,8 @@ export class BaseFilterComponent {
         protected filter: Filter
     ) {}
 
+    @Input() isAoristicAnalysis: boolean = false;
+
     protected readonly ALL_COUNTRIES_NAME = 'ALL';
     protected readonly ANALYSIS_TYPE_LABELS = ANALYSIS_TYPE_LABELS;
     protected readonly ANALYSIS_TYPES = Object.values(ANALYSIS_TYPE);
@@ -42,6 +44,17 @@ export class BaseFilterComponent {
     onCountryChanges(event: MatSelectChange): void {
         this.filter.baseFilter.selectedCountries = event.value.filter((code: string) => code !== this.ALL_COUNTRIES_NAME);
         this.filter.form.get('countries')?.setValue(this.filter.baseFilter.selectedCountries);
+    }
+
+    onEndYearChanges(event: MatSelectChange): void {
+        this.filter.form.controls['startYear'].updateValueAndValidity();
+    }
+
+    onStartYearChanges(event: MatSelectChange): void {
+        if (!this.isAoristicAnalysis) {
+            this.filter.form.get('endYear')?.setValue(event.value);
+        }
+        this.filter.form.controls['endYear'].updateValueAndValidity();
     }
 
     isCountryChecked(countryCode: string): boolean {

@@ -5,8 +5,8 @@ import {
     AggregatedFilter,
     BaseFilter,
     IAggregatedFilter,
-    IndividuallyFilter,
-    IIndividuallyFilter
+    IIndividuallyFilter,
+    IndividuallyFilter
 } from '@/app/shared/filter/index';
 
 export interface IFilter {

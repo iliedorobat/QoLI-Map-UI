@@ -21,7 +21,11 @@ export class StatsScreenService {
     };
 
     private getChartTitle = () => {
-        return `QoLI Stats For The Year ${this.filter.baseFilter.year}`;
+        if (this.filter.baseFilter.startYear === this.filter.baseFilter.endYear) {
+            return `QoLI Stats For The Year ${this.filter.baseFilter.startYear}`;
+        }
+
+        return `QoLI Stats For The Period ${this.filter.baseFilter.startYear} - ${this.filter.baseFilter.endYear}`;
     };
 
     private updateChartDatasets = (chart: Chart, scores: {[index: string]: number}) => {

@@ -13,11 +13,10 @@ import {MAIN_URI} from '@/app/shared/constants/endpoint';
 })
 export class BackendService {
     private _datasetConfig$: BehaviorSubject<IAggrQoLI> = new BehaviorSubject<IAggrQoLI>({} as IAggrQoLI);
-    private _lifeIndex$: BehaviorSubject<LifeIndexResponse> = new BehaviorSubject<LifeIndexResponse>({} as LifeIndexResponse);
+    private _lifeIndex$: BehaviorSubject<LifeIndexMultipleResponses> = new BehaviorSubject<LifeIndexMultipleResponses>({} as LifeIndexMultipleResponses);
 
-    private prepareLifeIndexResponse(filter: Filter, data: LifeIndexMultipleResponses): LifeIndexResponse {
+    public prepareLifeIndex(data: LifeIndexMultipleResponses, year: number): LifeIndexResponse {
         const countries = Object.keys(data);
-        const year = filter.baseFilter.year;
 
         return countries.reduce((acc, country) => {
             acc[country] = data[country][year];
@@ -32,17 +31,16 @@ export class BackendService {
         return from(promise);
     }
 
-    private getLifeIndex(filter: Filter): Observable<LifeIndexResponse> {
+    private getLifeIndex(filter: Filter): Observable<LifeIndexMultipleResponses> {
         const aggrs = this.extractAggregators(filter).map(aggr => `aggr=${aggr}`);
         const analysisType = `analysisType=${filter.baseFilter.analysisType}`;
         const countryCodes = filter.baseFilter.countries.map(code => `countryCode=${code}`);
-        const startYear = `startYear=${filter.baseFilter.year}`;
-        const endYear = `endYear=${filter.baseFilter.year}`;
+        const startYear = `startYear=${filter.baseFilter.startYear}`;
+        const endYear = `endYear=${filter.baseFilter.endYear}`;
         const search = [analysisType, startYear, endYear, ...aggrs, ...countryCodes].filter(item => !!item).join('&');
 
         const promise = fetch(`${MAIN_URI}/stats?${search}`)
-            .then(response => response.json())
-            .then((data: LifeIndexMultipleResponses) => this.prepareLifeIndexResponse(filter, data));
+            .then(response => response.json());
 
         return from(promise);
     }
@@ -76,7 +74,7 @@ export class BackendService {
 
     public lifeIndexSubscription(filter: Filter): void {
         this.getLifeIndex(filter)
-            .subscribe((data: LifeIndexResponse) => {
+            .subscribe((data: LifeIndexMultipleResponses) => {
                 this._lifeIndex$.next(data);
             })
     }
@@ -85,7 +83,7 @@ export class BackendService {
         return this._datasetConfig$.asObservable();
     }
 
-    get lifeIndex$(): Observable<LifeIndexResponse> {
+    get lifeIndex$(): Observable<LifeIndexMultipleResponses> {
         return this._lifeIndex$.asObservable();
     }
 }

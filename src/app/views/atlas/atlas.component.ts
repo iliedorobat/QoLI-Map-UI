@@ -3,6 +3,7 @@ import {GeoJSON, Layer, Map} from 'leaflet';
 
 import {AtlasService} from './services/atlas.service';
 import {BackendService} from './services/backend.service';
+import {Filter} from '@/app/shared/filter';
 import {IAtlasLayer} from '@/app/views/atlas/atlas.types';
 
 import {BASE_LAYERS, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
@@ -15,7 +16,8 @@ import {BASE_LAYERS, LAYERS, MAP_OPTIONS} from './constants/atlas.const';
 export class AtlasComponent implements OnInit, OnChanges {
     constructor(
         private atlasService: AtlasService,
-        private backendService: BackendService
+        private backendService: BackendService,
+        private filter: Filter,
     ) {}
 
     private map: Map | undefined;
@@ -45,8 +47,9 @@ export class AtlasComponent implements OnInit, OnChanges {
         this.backendService.lifeIndex$
             .subscribe(scores => {
                 if (this.map) {
-                    this.atlasLayers = this.atlasService.prepareLayers(this.map, BASE_LAYERS, scores);
-                    this.scores = scores;
+                    // TODO: prepareLifeIndex
+                    this.scores = this.backendService.prepareLifeIndex(scores, this.filter.baseFilter.startYear);
+                    this.atlasLayers = this.atlasService.prepareLayers(this.map, BASE_LAYERS, this.scores);
                 }
             });
     }

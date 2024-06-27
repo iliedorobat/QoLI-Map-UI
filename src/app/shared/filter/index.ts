@@ -1,4 +1,5 @@
 export * from '@/app/shared/filter/filter.types';
+export * from '@/app/shared/filter/filter.validators';
 export * from '@/app/shared/filter/main-section/base/base-filter.component';
 export * from '@/app/shared/filter/main-section/base/base-filter.types';
 export * from '@/app/shared/filter/main-section/aggregated/aggregated-filter.component';
