@@ -15,7 +15,7 @@ export class BackendService {
     private _datasetConfig$: BehaviorSubject<IAggrQoLI> = new BehaviorSubject<IAggrQoLI>({} as IAggrQoLI);
     private _lifeIndex$: BehaviorSubject<LifeIndexMultipleResponses> = new BehaviorSubject<LifeIndexMultipleResponses>({} as LifeIndexMultipleResponses);
 
-    public prepareLifeIndex(data: LifeIndexMultipleResponses, year: number): LifeIndexResponse {
+    public reduceLifeIndexes(data: LifeIndexMultipleResponses, year: number): LifeIndexResponse {
         const countries = Object.keys(data);
 
         return countries.reduce((acc, country) => {

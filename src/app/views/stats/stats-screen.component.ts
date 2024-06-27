@@ -53,11 +53,7 @@ export class StatsScreenComponent implements OnInit {
         this.chart = this.statsService.initChart('stats');
         this.backendService.lifeIndex$
             .subscribe(scores => {
-                this.statsService.updateChart(
-                    this.chart,
-                    // TODO: prepareLifeIndex
-                    this.backendService.prepareLifeIndex(scores, this.filter.baseFilter.startYear)
-                );
+                this.statsService.updateChart(this.chart, scores);
             });
     }
 

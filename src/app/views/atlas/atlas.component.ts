@@ -47,8 +47,7 @@ export class AtlasComponent implements OnInit, OnChanges {
         this.backendService.lifeIndex$
             .subscribe(scores => {
                 if (this.map) {
-                    // TODO: prepareLifeIndex
-                    this.scores = this.backendService.prepareLifeIndex(scores, this.filter.baseFilter.startYear);
+                    this.scores = this.backendService.reduceLifeIndexes(scores, this.filter.baseFilter.startYear);
                     this.atlasLayers = this.atlasService.prepareLayers(this.map, BASE_LAYERS, this.scores);
                 }
             });

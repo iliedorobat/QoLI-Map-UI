@@ -1,38 +1,58 @@
 import {Injectable} from '@angular/core';
 import Chart from 'chart.js/auto';
 
+import {BackendService} from '@/app/views/atlas/services/backend.service';
 import {Filter} from '@/app/shared/filter';
+import {LifeIndexMultipleResponses} from '@/app/views/atlas/constants/response.types';
 import {ANALYSIS_TYPE, COUNTRIES} from '@/app/shared/constants/app.const';
 
 @Injectable({
     providedIn: 'root'
 })
 export class StatsScreenService {
-    constructor(protected filter: Filter) {}
+    constructor(
+        private backendService: BackendService,
+        protected filter: Filter
+    ) {}
 
     private isAggregateAnalysis = () => {
         return this.filter.baseFilter.analysisType === ANALYSIS_TYPE.AGGREGATE;
     }
 
-    private getChartLabel = () => {
-        return this.isAggregateAnalysis()
-            ? `${this.filter.aggregatedFilter.selectedIndicators.length} Selected Indicators`
+    private getChartTitle = () => {
+        const {startYear, endYear} = this.filter.baseFilter;
+        const label = this.isAggregateAnalysis()
+            ? 'QoLI Stats'
             : this.filter.individuallyFilter.selectedIndicator.label;
+
+        return startYear === endYear
+            ? `${label} For The Year ${this.filter.baseFilter.startYear}`
+            : `${label} For The Period ${startYear} - ${endYear}`;
     };
 
-    private getChartTitle = () => {
-        if (this.filter.baseFilter.startYear === this.filter.baseFilter.endYear) {
-            return `QoLI Stats For The Year ${this.filter.baseFilter.startYear}`;
+    private initDataset = (data: number[] = []) => {
+        return {
+            label: 'QoLI Stats',
+            data,
+            borderWidth: 2,
+            borderRadius: 4,
+            borderSkipped: false
+        };
+    };
+
+    private updateChartDatasets = (chart: Chart, scores: LifeIndexMultipleResponses) => {
+        const {startYear, endYear} = this.filter.baseFilter;
+        const datasets = [];
+
+        for (let year = startYear; year <= endYear; year++) {
+            const data = this.backendService.reduceLifeIndexes(scores, year);
+            const dataset = this.initDataset(Object.values(data));
+            dataset.label = year.toString();
+            datasets.push(dataset);
         }
 
-        return `QoLI Stats For The Period ${this.filter.baseFilter.startYear} - ${this.filter.baseFilter.endYear}`;
-    };
-
-    private updateChartDatasets = (chart: Chart, scores: {[index: string]: number}) => {
-        chart.data.datasets.forEach(dataset => {
-            dataset.label = this.getChartLabel();
-            dataset.data = Object.values(scores);
-        });
+        chart.data.datasets = datasets;
+        chart.update();
     };
 
     private updateChartLabel = (chart: Chart) => {
@@ -61,8 +81,8 @@ export class StatsScreenService {
         chart.update();
     };
 
-    private updateChartLabels = (chart: Chart, scores: {[index: string]: number}) => {
-        chart.data.labels = Object.keys(scores);
+    private updateChartLabels = (chart: Chart, scores: LifeIndexMultipleResponses) => {
+        chart.data.labels = this.filter.baseFilter.countries;
         chart.update();
     };
 
@@ -76,7 +96,7 @@ export class StatsScreenService {
         chart.update();
     };
 
-    public updateChart = (chart: Chart | undefined, scores: { [p: string]: number }) => {
+    public updateChart = (chart: Chart | undefined, scores: LifeIndexMultipleResponses) => {
         if (chart === undefined) {
             return;
         }
@@ -95,13 +115,7 @@ export class StatsScreenService {
                 data: {
                     labels: [],
                     datasets: [
-                        {
-                            label: this.getChartLabel(),
-                            data: [],
-                            borderWidth: 2,
-                            borderRadius: 4,
-                            borderSkipped: false
-                        }
+                        this.initDataset()
                     ]
                 },
                 options: {
